@@ -2,8 +2,8 @@
 
 pragma solidity 0.8.4;
 
-import "https://github.com/f-nft/f-nft-ERC721/FNFTRewards.sol";
-import "https://github.com/f-nft/f-nft-ERC721/Collection.sol";
+import "https://github.com/f-nft/f-fnt-Fantasy-Collection/tree/main/contract/FNFTRewards.sol";
+import "https://github.com/f-nft/f-fnt-Fantasy-Collection/tree/main/contract/Collection.sol";
 
 contract NFTStaking is Ownable, IERC721Receiver {
 

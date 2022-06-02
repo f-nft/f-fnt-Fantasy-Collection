@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT LICENSE
 // File: @openzeppelin/contracts/utils/introspection/IERC165.sol
-pragma solidity ^0.8.0;
+// contracts/Collection.sol
+
+pragma solidity >=0.7.0 <0.9.0;
 
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -24,7 +26,7 @@ interface IERC165 {
 }
 
 // File: @openzeppelin/contracts/token/ERC721/IERC721.sol
-pragma solidity ^0.8.0;
+pragma solidity >=0.7.0 <0.9.0;
 /**
  * @dev Required interface of an ERC721 compliant contract.
  */
@@ -165,10 +167,7 @@ interface IERC721 is IERC165 {
 
 // File: @openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol
 
-
-
-pragma solidity ^0.8.0;
-
+pragma solidity >=0.7.0 <0.9.0;
 
 /**
  * @title ERC-721 Non-Fungible Token Standard, optional enumeration extension
@@ -197,7 +196,7 @@ interface IERC721Enumerable is IERC721 {
 
 
 
-pragma solidity ^0.8.0;
+pragma solidity >=0.7.0 <0.9.0;
 
 
 /**
@@ -227,7 +226,7 @@ abstract contract ERC165 is IERC165 {
 
 
 
-pragma solidity ^0.8.0;
+pragma solidity >=0.7.0 <0.9.0;
 
 /**
  * @dev String operations.
@@ -296,7 +295,7 @@ library Strings {
 
 
 
-pragma solidity ^0.8.0;
+pragma solidity >=0.7.0 <0.9.0;
 
 /**
  * @dev Collection of functions related to the address type
@@ -515,7 +514,7 @@ library Address {
 
 
 
-pragma solidity ^0.8.0;
+pragma solidity >=0.7.0 <0.9.0;
 
 
 /**
@@ -543,7 +542,7 @@ interface IERC721Metadata is IERC721 {
 
 
 
-pragma solidity ^0.8.0;
+pragma solidity >=0.7.0 <0.9.0;
 
 /**
  * @title ERC721 token receiver interface
@@ -570,7 +569,7 @@ interface IERC721Receiver {
 
 
 // File: @openzeppelin/contracts/token/ERC721/ERC721.sol
-pragma solidity ^0.8.0;
+pragma solidity >=0.7.0 <0.9.0;
 
 import "@openzeppelin/contracts/utils/Context.sol";
 /**
@@ -977,7 +976,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
 
 
 
-pragma solidity ^0.8.0;
+pragma solidity >=0.7.0 <0.9.0;
 
 
 
@@ -1138,37 +1137,91 @@ abstract contract ERC721Enumerable is ERC721, IERC721Enumerable {
 }
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
-pragma solidity ^0.8.0;
+
+pragma solidity >=0.7.0 <0.9.0;
+
+contract PriceConsumerV3 {
+
+    AggregatorV3Interface internal priceFeed;
+
+    /**
+     * Network: Polygon
+     * Aggregator: ETH/USD
+     * Address: 0xF9680D99D6C9589e2a93a78A04A279e509205945
+     */
+    constructor() {
+        priceFeed = AggregatorV3Interface(0xF9680D99D6C9589e2a93a78A04A279e509205945);
+    }
+
+    /**
+     * Returns the latest price
+     */
+    function getLatestPrice() public view returns (int) {
+        (
+            /*uint80 roundID*/,
+            int price,
+            /*uint startedAt*/,
+            /*uint timeStamp*/,
+            /*uint80 answeredInRound*/
+        ) = priceFeed.latestRoundData();
+        return price;
+    }
+}
 
 contract Collection is ERC721Enumerable, Ownable {
+    struct TokenInfo {
+        IERC20 paytoken;
+        uint256 costvalue;
+    }
+    TokenInfo[] public AllowedCrypto;
+    
     using Strings for uint256;
     string public baseURI;
     string public baseExtension = ".json";
-        uint256 public cost = 0.001 ether;
     uint256 public maxSupply = 100000;
     uint256 public maxMintAmount = 10000;
     bool public paused = false;
 
-    constructor() ERC721("Fantasy Collections", "FTS") {}
+
+    constructor() ERC721("Fantasy_Collection", "f-nft") {}
+
+    function addCurrency(
+        IERC20 _paytoken,
+        uint256 _costvalue
+    )
+    public onlyOwner {
+        AllowedCrypto.push(
+            TokenInfo({
+                paytoken: _paytoken,
+                costvalue: _costvalue
+            })
+        );
+    }
         // internal
         function _baseURI() internal view virtual override returns (string memory) {
         return "ipfs://bafybeignxrcpowsucxvo2sxg5vv6z75e6bdt3ob6w665epcvhud6yjspqq/";
     }
         // public
 
-        function mint(address _to, uint256 _mintAmount) public payable {
+        function mint(address _to, uint256 _mintAmount, uint256 _pid) public payable {
+            TokenInfo storage tokens = AllowedCrypto[_pid];
+            IERC20 paytoken;
+            paytoken = tokens.paytoken;
+            uint256 cost;
+            cost = tokens.costvalue;
             uint256 supply = totalSupply();
-            require(!paused);
             require(_mintAmount > 0);
             require(_mintAmount <= maxMintAmount);
             require(supply + _mintAmount <= maxSupply);
             
             if (msg.sender != owner()) {
-            require(msg.value == cost * _mintAmount, "Need to send 0.08 ether!");
+            require(msg.value == cost * _mintAmount);
             }
-            
             for (uint256 i = 1; i <= _mintAmount; i++) {
+                paytoken.transferFrom(msg.sender, address(this), cost);
                 _safeMint(_to, supply + i);
             }
         }
@@ -1222,7 +1275,10 @@ contract Collection is ERC721Enumerable, Ownable {
             paused = _state;
         }
         
-        function withdraw() public payable onlyOwner() {
-            require(payable(msg.sender).send(address(this).balance));
+        function withdraw(uint256 _pid) public payable onlyOwner() {
+            TokenInfo storage tokens = AllowedCrypto[_pid];
+            IERC20 paytoken;
+            paytoken = tokens.paytoken;
+            paytoken.transfer(msg.sender, paytoken.balanceOf(address(this)));
         }
 }
