@@ -110,7 +110,8 @@ render() {
     contract = new web3.eth.Contract(ABI, NFTCONTRACT);
     vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
 
-    var getstakednfts = await vaultcontract.methods.tokensOfOwner(account).call();
+    var getstakednfts = await vaultcontract.methods.tokensOfOwner(account, 0).call();
+    
     document.getElementById('yournfts').textContent = getstakednfts;
 
     var getbalance = Number(await vaultcontract.methods.balanceOf(account).call());
@@ -152,7 +153,7 @@ render() {
     <div className="App nftapp">
         <nav class="navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-4">
           <div class="container-fluid" style={{ fontFamily: "SF Pro Display" }}>
-            <a class="navbar-brand px-5" style={{ fontWeight: "800", fontSize: '25px' }} href="#"></a><img src="FNFT.png" width="7%" />
+            <a class="navbar-brand px-5" style={{ fontWeight: "800", fontSize: '25px' }}></a><img src="FNFT.png" width="7%" />
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
