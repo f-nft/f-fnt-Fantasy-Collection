@@ -1072,8 +1072,8 @@ var vaultcontract = null;
 const NFTCONTRACT = "0xBB8f03c811f8045188Adb74A1fB42F11d69A6b2E";
 const STAKINGCONTRACT = "0x2Adf70283A3cd6927068790524D3cc9190824aB1"
 const apikey = "QW34TJU2T87NCU4HWKR7TGUEC1I8TYVDHW";
-const endpoint = "https://api.polygonscan.io/api/"
-const nftpng = "https://ipfs.io/ipfs/QmVrpVZX5DxnaKLpxRgbjrsUZY3JcnDHmRE57sxGQVf7gm?filename=";
+const endpoint = "https://api.polygonscan.io/api"
+const nftpng = "https://ipfs.io/ipfs/QmetESUb7wTPr8mBHWFsiSKMw6HTLWUGoL8DrkcaY9TTyh/";
 
 const providerOptions = {
 	binancechainwallet: {
