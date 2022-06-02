@@ -2,18 +2,13 @@
 
 pragma solidity 0.8.4;
 
-import "https://github.com/f-nft/f-fnt-Fantasy-Collection/tree/main/contract/FNFTRewards.sol";
-import "https://github.com/f-nft/f-fnt-Fantasy-Collection/tree/main/contract/Collection.sol";
+import "contracts/FNFTRewards.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 contract NFTStaking is Ownable, IERC721Receiver {
 
-  struct vaultInfo {
-        Collection nft;
-        fnftRewards token;
-        string name;
-  }
-
-  vaultInfo[] public VaultInfo;
+  uint256 public totalStaked;
 
   // struct to store a stake's token, owner, and earning values
   struct Stake {
@@ -22,36 +17,31 @@ contract NFTStaking is Ownable, IERC721Receiver {
     address owner;
   }
 
-  uint256 public totalStaked;
-  mapping(uint256 => Stake) public vault; 
   event NFTStaked(address owner, uint256 tokenId, uint256 value);
   event NFTUnstaked(address owner, uint256 tokenId, uint256 value);
   event Claimed(address owner, uint256 amount);
 
-function addVault(
-        Collection _nft,
-        fnftRewards _token,
-        string calldata _name
-    ) public {
-        VaultInfo.push(
-            vaultInfo({
-                nft: _nft,
-                token: _token,
-                name: _name
-            })
-        );
-    }
+  // reference to the Block NFT contract
+  ERC721Enumerable nft;
+  FNFTRewards token;
 
-  function stake(uint256 _pid, uint256[] calldata tokenIds) external {
+  // maps tokenId to stake
+  mapping(uint256 => Stake) public vault; 
+
+   constructor(ERC721Enumerable _nft, FNFTRewards _token) { 
+    nft = _nft;
+    token = _token;
+  }
+
+  function stake(uint256[] calldata tokenIds) external {
     uint256 tokenId;
     totalStaked += tokenIds.length;
-    vaultInfo storage vaultid = VaultInfo[_pid];
     for (uint i = 0; i < tokenIds.length; i++) {
       tokenId = tokenIds[i];
-      require(vaultid.nft.ownerOf(tokenId) == msg.sender, "not your token");
+      require(nft.ownerOf(tokenId) == msg.sender, "not your token");
       require(vault[tokenId].tokenId == 0, 'already staked');
 
-      vaultid.nft.transferFrom(msg.sender, address(this), tokenId);
+      nft.transferFrom(msg.sender, address(this), tokenId);
       emit NFTStaked(msg.sender, tokenId, block.timestamp);
 
       vault[tokenId] = Stake({
@@ -62,10 +52,9 @@ function addVault(
     }
   }
 
-  function _unstakeMany(address account, uint256[] calldata tokenIds, uint256 _pid) internal {
+  function _unstakeMany(address account, uint256[] calldata tokenIds) internal {
     uint256 tokenId;
     totalStaked -= tokenIds.length;
-    vaultInfo storage vaultid = VaultInfo[_pid];
     for (uint i = 0; i < tokenIds.length; i++) {
       tokenId = tokenIds[i];
       Stake memory staked = vault[tokenId];
@@ -73,67 +62,82 @@ function addVault(
 
       delete vault[tokenId];
       emit NFTUnstaked(account, tokenId, block.timestamp);
-      vaultid.nft.transferFrom(address(this), account, tokenId);
+      nft.transferFrom(address(this), account, tokenId);
     }
   }
 
-  function claim(uint256[] calldata tokenIds, uint256 _pid) external {
-      _claim(msg.sender, tokenIds, _pid, false);
+  function claim(uint256[] calldata tokenIds) external {
+      _claim(msg.sender, tokenIds, false);
   }
 
-  function claimForAddress(address account, uint256[] calldata tokenIds, uint256 _pid) external {
-      _claim(account, tokenIds, _pid, false);
+  function claimForAddress(address account, uint256[] calldata tokenIds) external {
+      _claim(account, tokenIds, false);
   }
 
-  function unstake(uint256[] calldata tokenIds, uint256 _pid) external {
-      _claim(msg.sender, tokenIds, _pid, true);
+  function unstake(uint256[] calldata tokenIds) external {
+      _claim(msg.sender, tokenIds, true);
   }
 
-  function _claim(address account, uint256[] calldata tokenIds, uint256 _pid, bool _unstake) internal {
+
+// TOKEN REWARDS CALCULATION
+// MAKE SURE YOU CHANGE THE VALUE ON BOTH CLAIM AND EARNINGINFO FUNCTIONS.
+// Find the following line and update accordingly based on how much you want 
+// to reward users with ERC-20 reward tokens.
+// rewardmath = 100 ether .... (This gives 1 token per day per NFT staked to the staker)
+// rewardmath = 200 ether .... (This gives 2 tokens per day per NFT staked to the staker)
+// rewardmath = 500 ether .... (This gives 5 tokens per day per NFT staked to the staker)
+// rewardmath = 1000 ether .... (This gives 10 tokens per day per NFT staked to the staker)
+
+  function _claim(address account, uint256[] calldata tokenIds, bool _unstake) internal {
     uint256 tokenId;
     uint256 earned = 0;
-    vaultInfo storage vaultid = VaultInfo[_pid];
+    uint256 rewardmath = 0;
+
     for (uint i = 0; i < tokenIds.length; i++) {
       tokenId = tokenIds[i];
       Stake memory staked = vault[tokenId];
       require(staked.owner == account, "not an owner");
       uint256 stakedAt = staked.timestamp;
-      earned += 100000 ether * (block.timestamp - stakedAt) / 1 days;
+      rewardmath = 100 ether * (block.timestamp - stakedAt) / 86400 ;
+      earned = rewardmath / 100;
       vault[tokenId] = Stake({
         owner: account,
         tokenId: uint24(tokenId),
         timestamp: uint48(block.timestamp)
       });
-
     }
     if (earned > 0) {
-      earned = earned / 10;
-      vaultid.token.mint(account, earned);
+      token.mint(account, earned);
     }
     if (_unstake) {
-      _unstakeMany(account, tokenIds, _pid);
+      _unstakeMany(account, tokenIds);
     }
     emit Claimed(account, earned);
   }
 
-  function earningInfo(uint256[] calldata tokenIds) external view returns (uint256[2] memory info) {
+  function earningInfo(address account, uint256[] calldata tokenIds) external view returns (uint256[1] memory info) {
      uint256 tokenId;
-     uint256 totalScore = 0;
      uint256 earned = 0;
+     uint256 rewardmath = 0;
+
+    for (uint i = 0; i < tokenIds.length; i++) {
+      tokenId = tokenIds[i];
       Stake memory staked = vault[tokenId];
+      require(staked.owner == account, "not an owner");
       uint256 stakedAt = staked.timestamp;
-      earned += 100000 ether * (block.timestamp - stakedAt) / 1 days;
-    uint256 earnRatePerSecond = totalScore * 1 ether / 1 days;
-    earnRatePerSecond = earnRatePerSecond / 100000;
-    // earned, earnRatePerSecond
-    return [earned, earnRatePerSecond];
-  }
+      rewardmath = 100 ether * (block.timestamp - stakedAt) / 86400;
+      earned = rewardmath / 100;
+
+    }
+    if (earned > 0) {
+      return [earned];
+    }
+}
 
   // should never be used inside of transaction because of gas fee
-  function balanceOf(address account,uint256 _pid) public view returns (uint256) {
+  function balanceOf(address account) public view returns (uint256) {
     uint256 balance = 0;
-    vaultInfo storage vaultid = VaultInfo[_pid];
-    uint256 supply = vaultid.nft.totalSupply();
+    uint256 supply = nft.totalSupply();
     for(uint i = 1; i <= supply; i++) {
       if (vault[i].owner == account) {
         balance += 1;
@@ -143,9 +147,9 @@ function addVault(
   }
 
   // should never be used inside of transaction because of gas fee
-  function tokensOfOwner(address account, uint256 _pid) public view returns (uint256[] memory ownerTokens) {
-    vaultInfo storage vaultid = VaultInfo[_pid];
-    uint256 supply = vaultid.nft.totalSupply();
+  function tokensOfOwner(address account) public view returns (uint256[] memory ownerTokens) {
+
+    uint256 supply = nft.totalSupply();
     uint256[] memory tmp = new uint256[](supply);
 
     uint256 index = 0;
