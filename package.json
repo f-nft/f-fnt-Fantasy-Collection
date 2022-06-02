@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@web3-react/injected-connector": "^6.0.7"
+  }
+}
