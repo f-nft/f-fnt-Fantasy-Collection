@@ -5,7 +5,7 @@ pragma solidity 0.8.4;
 import "contracts/FNFTRewards.sol";
 import "contracts/Collection.sol";
 
-contract FNFTSVault is Ownable, IERC721Receiver {
+contract NFTStaking is Ownable, IERC721Receiver {
 
   struct vaultInfo {
         Collection nft;
@@ -130,7 +130,7 @@ function addVault(
   }
 
   // should never be used inside of transaction because of gas fee
-  function balanceOf(address account,uint256 _pid) public view returns (uint256) {
+  function balanceOf(address account, uint256 _pid) public view returns (uint256) {
     uint256 balance = 0;
     vaultInfo storage vaultid = VaultInfo[_pid];
     uint256 supply = vaultid.nft.totalSupply();
