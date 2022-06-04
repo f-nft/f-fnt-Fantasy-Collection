@@ -6,7 +6,7 @@ import "contracts/FNFTRewards.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract NFTStaking is Ownable, IERC721Receiver {
+contract FNFTStaking is Ownable, IERC721Receiver {
 
   uint256 public totalStaked;
 

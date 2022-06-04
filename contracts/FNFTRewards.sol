@@ -17,7 +17,7 @@ contract FNFTRewards is ERC20, ERC20Burnable, Ownable {
   uint256 private MAXSUP;
   uint256 constant MAXIMUMSUPPLY=1000000*10**18;
 
-  constructor() ERC20("FNFTRewards", "FNFTR") {
+  constructor() ERC20("FNFTRewards", "FOT") {
       _mint(msg.sender, 1000000 * 10 ** 18);
 
   }
