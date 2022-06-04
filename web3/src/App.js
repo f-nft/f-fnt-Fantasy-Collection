@@ -3,6 +3,8 @@ import { Button, ButtonToolbar,ButtonGroup, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Web3 from 'web3';
 import axios from 'axios';
+import TOKENABI1 from './TOKENABI1.json';
+import TOKENABI2 from './TOKENABI2.json';
 import React, { Component } from 'react';
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -128,6 +130,32 @@ import "sf-font";
 					"internalType": "uint256",
 					"name": "costvalue",
 					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "_name",
+			"outputs": [
+				{
+					"internalType": "string",
+					"name": "",
+					"type": "string"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "_symbol",
+			"outputs": [
+				{
+					"internalType": "string",
+					"name": "",
+					"type": "string"
 				}
 			],
 			"stateMutability": "view",
@@ -727,47 +755,6 @@ import "sf-font";
 
 	const VAULTABI = [
 		{
-			"inputs": [
-				{
-					"internalType": "contract Collection",
-					"name": "_nft",
-					"type": "address"
-				},
-				{
-					"internalType": "contract FNFTRewards",
-					"name": "_token",
-					"type": "address"
-				},
-				{
-					"internalType": "string",
-					"name": "_name",
-					"type": "string"
-				}
-			],
-			"name": "addVault",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256[]",
-					"name": "tokenIds",
-					"type": "uint256[]"
-				},
-				{
-					"internalType": "uint256",
-					"name": "_pid",
-					"type": "uint256"
-				}
-			],
-			"name": "claim",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
 			"anonymous": false,
 			"inputs": [
 				{
@@ -785,29 +772,6 @@ import "sf-font";
 			],
 			"name": "Claimed",
 			"type": "event"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "account",
-					"type": "address"
-				},
-				{
-					"internalType": "uint256[]",
-					"name": "tokenIds",
-					"type": "uint256[]"
-				},
-				{
-					"internalType": "uint256",
-					"name": "_pid",
-					"type": "uint256"
-				}
-			],
-			"name": "claimForAddress",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
 		},
 		{
 			"anonymous": false,
@@ -879,57 +843,53 @@ import "sf-font";
 			"type": "event"
 		},
 		{
-			"inputs": [],
-			"name": "renounceOwnership",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
 			"inputs": [
 				{
 					"internalType": "uint256",
-					"name": "_pid",
+					"name": "",
 					"type": "uint256"
-				},
-				{
-					"internalType": "uint256[]",
-					"name": "tokenIds",
-					"type": "uint256[]"
 				}
 			],
-			"name": "stake",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
+			"name": "VaultInfo",
+			"outputs": [
 				{
-					"internalType": "address",
-					"name": "newOwner",
+					"internalType": "contract Collection",
+					"name": "nft",
 					"type": "address"
+				},
+				{
+					"internalType": "contract FNFTRewards",
+					"name": "token",
+					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "name",
+					"type": "string"
 				}
 			],
-			"name": "transferOwnership",
-			"outputs": [],
-			"stateMutability": "nonpayable",
+			"stateMutability": "view",
 			"type": "function"
 		},
 		{
 			"inputs": [
 				{
-					"internalType": "uint256[]",
-					"name": "tokenIds",
-					"type": "uint256[]"
+					"internalType": "contract Collection",
+					"name": "_nft",
+					"type": "address"
 				},
 				{
-					"internalType": "uint256",
-					"name": "_pid",
-					"type": "uint256"
+					"internalType": "contract FNFTRewards",
+					"name": "_token",
+					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "_name",
+					"type": "string"
 				}
 			],
-			"name": "unstake",
+			"name": "addVault",
 			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"
@@ -956,6 +916,47 @@ import "sf-font";
 				}
 			],
 			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256[]",
+					"name": "tokenIds",
+					"type": "uint256[]"
+				},
+				{
+					"internalType": "uint256",
+					"name": "_pid",
+					"type": "uint256"
+				}
+			],
+			"name": "claim",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "account",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256[]",
+					"name": "tokenIds",
+					"type": "uint256[]"
+				},
+				{
+					"internalType": "uint256",
+					"name": "_pid",
+					"type": "uint256"
+				}
+			],
+			"name": "claimForAddress",
+			"outputs": [],
+			"stateMutability": "nonpayable",
 			"type": "function"
 		},
 		{
@@ -1025,6 +1026,31 @@ import "sf-font";
 			"type": "function"
 		},
 		{
+			"inputs": [],
+			"name": "renounceOwnership",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "_pid",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256[]",
+					"name": "tokenIds",
+					"type": "uint256[]"
+				}
+			],
+			"name": "stake",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
 			"inputs": [
 				{
 					"internalType": "address",
@@ -1064,6 +1090,37 @@ import "sf-font";
 		{
 			"inputs": [
 				{
+					"internalType": "address",
+					"name": "newOwner",
+					"type": "address"
+				}
+			],
+			"name": "transferOwnership",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256[]",
+					"name": "tokenIds",
+					"type": "uint256[]"
+				},
+				{
+					"internalType": "uint256",
+					"name": "_pid",
+					"type": "uint256"
+				}
+			],
+			"name": "unstake",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
 					"internalType": "uint256",
 					"name": "",
 					"type": "uint256"
@@ -1085,35 +1142,6 @@ import "sf-font";
 					"internalType": "address",
 					"name": "owner",
 					"type": "address"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"name": "VaultInfo",
-			"outputs": [
-				{
-					"internalType": "contract Collection",
-					"name": "nft",
-					"type": "address"
-				},
-				{
-					"internalType": "contract FNFTRewards",
-					"name": "token",
-					"type": "address"
-				},
-				{
-					"internalType": "string",
-					"name": "name",
-					"type": "string"
 				}
 			],
 			"stateMutability": "view",
@@ -1539,16 +1567,13 @@ import "sf-font";
 		}
 	]
 
-	var TOKENABI1 = [{"inputs":[{"internalType":"address","name":"_proxyTo","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"_new","type":"address"},{"indexed":false,"internalType":"address","name":"_old","type":"address"}],"name":"ProxyOwnerUpdate","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_new","type":"address"},{"indexed":true,"internalType":"address","name":"_old","type":"address"}],"name":"ProxyUpdated","type":"event"},{"stateMutability":"payable","type":"fallback"},{"inputs":[],"name":"implementation","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxyOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxyType","outputs":[{"internalType":"uint256","name":"proxyTypeId","type":"uint256"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferProxyOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_newProxyTo","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"updateAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"_newProxyTo","type":"address"}],"name":"updateImplementation","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}]
-	var TOKENABI2 = []
-
 	var account = null;
 	var contract = null;
 	var vaultcontract = null;
 	var web3 = null;
 
-	const NFTCONTRACT = "0xBb00E372CE028aB76E8D829975299c686Fc3ece9";
-	const STAKINGCONTRACT = "0xE51FB66E1FBFFd374504d6828736A3c6dcdEeC4b";
+	const NFTCONTRACT = "0x3AdEaEe8926485108c6e13983f51A4f6f8D1fA77";
+	const STAKINGCONTRACT = "0xdBa11414449e7cFC29eb1341fc36C992f01eBbd5";
 	const polygonscanapikey = "QW34TJU2T87NCU4HWKR7TGUEC1I8TYVDHW";
 	const polygonscanapi = "https://api.polygonscan.com/api/";
 	const moralisapi = "https://deep-index.moralis.io/api/v2/";
@@ -1656,7 +1681,7 @@ import "sf-font";
   		async function mint1() {
 	  	  var _pid = "1";
 		  var erc20address = await contract.methods.getCryptotoken(_pid).call();
-		  var currency = new web3.eth.Contract(TOKENABI1, erc20address);
+		  var currency = new web3.eth.Contract(TOKENABI, erc20address);
 		  var mintRate = await contract.methods.getNFTCost(_pid).call();
 		  var _mintAmount = Number(outvalue);
 		  var totalAmount = mintRate * _mintAmount;
@@ -1671,7 +1696,7 @@ import "sf-font";
   		async function mint2() {
 	  	  var _pid = "2";
 		  var erc20address = await contract.methods.getCryptotoken(_pid).call();
-		  var currency = new web3.eth.Contract(TOKENABI2, erc20address);
+		  var currency = new web3.eth.Contract(TOKENABI, erc20address);
 		  var mintRate = await contract.methods.getNFTCost(_pid).call();
 		  var _mintAmount = Number(outvalue);
 		  var totalAmount = mintRate * _mintAmount;
