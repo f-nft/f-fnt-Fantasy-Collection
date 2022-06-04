@@ -120,7 +120,7 @@
     font-family: "SF Pro Display";
     font-weight: 300;
     box-shadow: 1px 1px 15px #ffffff;
-    background: radial-gradient(circle at 50% 50%, #000000, #050604, #0a0c08, #0f130b, #14190f, #191f13, #1e2517, #232b1b, #28321e, #2d3822, #323e26);
+    background: radial-gradient(circle at 50% 50%, #000000, #060406, #0c080c, #130b13, #190f19, #1e131f, #251724, #2a1b2b, #321e32, #372238, #3e263d);
 }
 
 .modal-style1 {
