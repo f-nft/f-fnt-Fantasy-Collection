@@ -118,6 +118,7 @@
 
 .stakingrewards {
     font-family: "SF Pro Display";
+    width: auto;
     font-weight: 300;
     box-shadow: 1px 1px 15px #ffffff;
     background: radial-gradient(circle at 50% 50%, #000000, #060406, #0c080c, #130b13, #190f19, #1e131f, #251724, #2a1b2b, #321e32, #372238, #3e263d);
@@ -179,4 +180,12 @@
 
 .navbarglow {
   box-shadow: 0px 8px 10px #17b2ff;
+}
+
+.center {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }
