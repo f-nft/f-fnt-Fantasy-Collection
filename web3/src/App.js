@@ -25,7 +25,7 @@ const NFTCONTRACT = "0x3AdEaEe8926485108c6e13983f51A4f6f8D1fA77";
 const STAKINGCONTRACT = "0xdBa11414449e7cFC29eb1341fc36C992f01eBbd5";
 const polygonscanapi = "https://api.polygonscan.com/api";
 const moralisapi = "https://deep-index.moralis.io/api/v2";
-const nftpng = "ipfs://bafybeibb4ds7e4yi2q46b44eoxwfay2p6hpwhamkvd7heoga6jetz6vo5q/Fantasy%20%23";
+const nftpng = "https://bafybeidw6ei2srqovsoeoy5kck4iwzp2tskonq42ztoxy4rvtblob7k7pe.ipfs.nftstorage.link/Fantasy%20%23";
 
 const providerOptions = {
 	binancechainwallet: {
@@ -246,13 +246,13 @@ class App extends Component {
 						<input id="connectbtn" type="button" className="connectbutton" onClick={connectwallet} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", fontFamily: 'Rambla' }} value="Connect Your Wallet" />
 					</div>
 				</nav>
-				<div className='row container container-style'>
+				<div className='row'>
 					<div className='col'>
-						<body className='nftminter'>
+						<body className='nftstaker container border-1' style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", minWidth: '70%', maxWidth: '500px', minHeight: '700px', maxHeight: "700px" }}>
 							<form>
-								<div className="row pt-8">
+								<div className="row pt-4">
 									<div>
-										<h1 className="pt-2" style={{ fontWeight: "20", fontFamily: 'Blaka' }}>NFT Minted</h1>
+										<h1 className="pt-2" style={{ fontWeight: "500", fontFamily: 'Blaka' }}>NFT Minted</h1>
 									</div>
 									<h3 style={{ fontFamily: 'Blaka' }}>{balance.result}/10,000</h3>
 									<h6>Your Wallet Address</h6>
@@ -270,7 +270,7 @@ class App extends Component {
 								<ButtonGroup size="lg"
 									aria-label="First group"
 									name="amount"
-									style={{ boxShadow: "1px 1px 5px #000000", fontFamily: 'Blaka' }}
+									style={{ boxShadow: "1px 1px 5px #000000", fontFamily: 'Blaka', fontSize:'20px', marginTop:'5px' }}
 									onClick={nftamount => this.handleNFT(nftamount, "value")}>
 									<Button value="1">1</Button>
 									<Button value="5">5</Button>
@@ -278,21 +278,21 @@ class App extends Component {
 									<Button value="50">50</Button>
 									<Button value="100">100</Button>
 								</ButtonGroup>
-								<h6 className="pt-2" style={{ fontFamily: 'Rambla', fontWeight: "300", fontSize: "18px" }}>Buy with your preferred crypto!</h6>
-								<div className="row px-2 pb-2 row-style">
-									<div className="col ">
+								<h6 className="pt-2" style={{ fontFamily: 'Rambla', fontWeight: "300", fontSize: "18px", marginBottom:'1px' }}>Buy with your preferred crypto!</h6>
+								<div className="row px-2 pb-2 row-style" style={{ marginTop:'1px', fontFamily: 'Rambla', fontWeight: "300", fontSize: "12px" }}>
+									<div className="col">
 										<Button className="button-style" onClick={mint0} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000" }}>
-											<img src={"FNFT.png"} width="70%" />
+											<img src={"FNFT.png"} width="50%" />
 										</Button>
 									</div>
 									<div className="col">
 										<Button className="button-style" style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000" }}>
-											<img src="usdt.png" width="70%" />
+											<img src="usdt.png" width="50%" />
 										</Button>
 									</div>
 									<div className="col">
 										<Button className="button-style" onClick={mintnative} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000" }}>
-											<img src="matic.png" width="70%" />
+											<img src="matic.png" width="50%" />
 										</Button>
 									</div>
 									<div>
@@ -300,18 +300,19 @@ class App extends Component {
 											<p style={{ fontSize: "20px" }}>Transfer Status</p>
 										</label>
 									</div>
+									<img className="center" src="fnft-features.png" />
 								</div>
 							</form>
 						</body>
 					</div>
 					<div className='col'>
-						<body className='nftstaker border-0'>
+						<body className='nftstaker container border-1'style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", minWidth: '600px', maxWidth: '70%', minHeight: '700px' , maxHeight: "700px" }}>
 							<form style={{ fontFamily: 'Rambla' }} >
-								<h2 style={{ borderRadius: '14px', fontWeight: "300", fontSize: "25px", fontFamily: 'Blaka' }}>Fantasy NFT Staking Vault </h2>
+								<h1 style={{ fontWeight: "500", fontFamily: 'Blaka', marginTop:'25px' }}>Fantasy NFT Staking Vault </h1>
 								<h6 style={{ fontWeight: "300" }}>First time staking?</h6>
 								<Button className="btn" style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Authorize Your Wallet</Button>
-								<div className="row px-3">
-									<div className="col">
+								<div className="row px-3" >
+									<div className="col container" style={{ minWidth: '300px', maxWidth: '70%', maxHeight: "300px" }}>
 										<form class="stakingrewards" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff" }}>
 											<h5 style={{ color: "#FFFFFF", fontWeight: '300' }}>Your Vault Activity</h5>
 											<h6 style={{ color: "#FFFFFF" }}>Verify Staked Amount</h6>
@@ -333,8 +334,7 @@ class App extends Component {
 											</table>
 										</form>
 									</div>
-									<img className="col-lg-4" src="fnft-features.png" />
-									<div className="col">
+									<div className="col container" style={{ minWidth: '300px', maxWidth: '70%', maxHeight: "300px" }}>
 										<form className='stakingrewards' style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: 'Rambla' }}>
 											<h5 style={{ color: "#FFFFFF", fontWeight: '300' }}> Staking Rewards</h5>
 											<Button style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Earned FOT Rewards</Button>
@@ -346,10 +346,13 @@ class App extends Component {
 										</form>
 									</div>
 								</div>
-								<div className="row px-4 pt-2">
+							</form>
+						</body>
+					</div>
+					<div className="row px-4 pt-2">
 									<div className="header">
 										<div style={{ fontSize: '25px', borderRadius: '14px', color: "#ffffff", fontWeight: "300", fontFamily: 'Black Ops One' }}>Fantasy NFT Staking Pool Active Rewards</div>
-										<table className='table px-3 table-bordered table-dark'>
+										<table className='table px-3 table-bordered table-dark' style={{ fontSize:'20px'}}>
 											<thead className='thead-light'>
 												<tr>
 													<th scope="col">Collection</th>
@@ -357,7 +360,7 @@ class App extends Component {
 													<th scope="col">Exchangeable Items</th>
 												</tr>
 											</thead>
-											<tbody>
+											<tbody style={{ fontSize:'18px'}}>
 												<tr>
 													<td>Discovery</td>
 													<td className="amount" data-test-id="rewards-summary-ads">
@@ -387,15 +390,15 @@ class App extends Component {
 											</tbody>
 										</table>
 										<div className="header">
-											<div style={{ fontSize: '25px', borderRadius: '14px', fontWeight: '300', fontFamily: 'Black Ops One' }}>FOT Token Stake Farms</div>
+											<div style={{ fontSize: '25px', borderRadius: '14px', fontWeight: '300', fontFamily: 'Black Ops One', color:'white' }}>FOT Token Stake Farms</div>
 											<table className='table table-bordered table-dark' style={{ borderRadius: '14px' }} >
-												<thead className='thead-light'>
+												<thead className='thead-light'style={{ fontSize:'20px'}}>
 													<tr>
 														<th scope="col">Farm Pools</th>
 														<th scope="col">Harvest Daily Earnings</th>
 													</tr>
 												</thead>
-												<tbody>
+												<tbody style={{ fontSize:'18px'}}>
 													<tr>
 														<td>Stake FOT to Earn FOT</td>
 														<td className="amount" data-test-id="rewards-summary-ads">
@@ -413,9 +416,6 @@ class App extends Component {
 										</div>
 									</div>
 								</div>
-							</form>
-						</body>
-					</div>
 				</div>
 				<div className="container col-lg-11">
 					<div className="row items px-3 pt-3">

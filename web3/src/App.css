@@ -58,7 +58,7 @@
 }
 
 .nftapp {
-  background: radial-gradient(circle at 50% 50%, #ac5e9b, #9550a3, #85358f, #7a1f66, #5f1771);
+  background: radial-gradient(circle at 50% 50%, #000000, #060406, #0c080c, #130b13, #190f19, #1e131f, #251724, #2a1b2b, #321e32, #372238, #3e263d);
 }
 
 @-webkit-keyframes AnimationName {
@@ -198,7 +198,7 @@
 }
 
 .center {
-  height: 200px;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -207,10 +207,11 @@
 
 .row {
   display: flex; /* equal height of the children */
+  padding: 1em;
 }
 
 .col {
-  flex: 2; /* additionally, equal width */
-  
+  font-size: 14;
+  flex: 1; /* additionally, equal width */
   padding: 1em;
 }
