@@ -108,6 +108,7 @@ class App extends Component {
 		const expectedBlockTime = 10000;
 
 		async function connectwallet() {
+			var _pid = "0";
 			var provider = await web3Modal.connect();
 			web3 = new Web3(provider);
 			await provider.send('eth_requestAccounts');
@@ -116,9 +117,9 @@ class App extends Component {
 			document.getElementById('wallet-address').textContent = account;
 			contract = new web3.eth.Contract(ABI, NFTCONTRACT);
 			vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
-			var getstakednfts = await vaultcontract.methods.tokensOfOwner(account).call();
+			var getstakednfts = await vaultcontract.methods.tokensOfOwner(account, _pid).call();
 			document.getElementById('yournfts').textContent = getstakednfts;
-			var getbalance = Number(await vaultcontract.methods.balanceOf(account).call());
+			var getbalance = Number(await vaultcontract.methods.balanceOf(account, _pid).call());
 			document.getElementById('stakedbalance').textContent = getbalance;
 			const arraynft = Array.from(getstakednfts.map(Number));
 			const tokenid = arraynft.filter(Number);
@@ -237,7 +238,7 @@ class App extends Component {
 									<a className="nav-link" href="#">List NFTs</a>
 								</li>
 								<li className="nav-item">
-									<a className="nav-link">Upgrade NFTs</a>
+									<a className="nav-link" href="#">Upgrade NFTs</a>
 								</li>
 							</ul>
 						</div>
@@ -300,7 +301,6 @@ class App extends Component {
 											<p style={{ fontSize: "20px" }}>Transfer Status</p>
 										</label>
 									</div>
-									<img className="center" src="fnft-features.png" />
 								</div>
 							</form>
 						</body>
@@ -435,11 +435,11 @@ class App extends Component {
 										<div className="card-caption col-12 p-0">
 											<div className="card-body">
 												<h5 className="mb-0">Fantasy NFT #{result.token_id}</h5>
-												<h5 className="mb-0 mt-2">Owner<p style={{ color: "#39FF14", textShadow: "1px 1px 2px #000000" }}>{result.owner_of}</p></h5>
+												<h6 className="mb-0 mt-2">Owner<p style={{ color: "#39FF14", textShadow: "1px 1px 2px #000000", fontWeight: '100', fontSize: '12' }}>{result.owner_of}</p></h6>
 												<div className="card-bottom d-flex justify-content-between">
 													<input key={i} type="hidden" id='stakeid' value={result.token_id} />
-													<Button style={{ marginLeft: '2px', backgroundColor: "#ffffff10" }} onClick={stakeit}>Stake</Button>
-													<Button style={{ marginLeft: '2px', backgroundColor: "#ffffff10" }} onClick={unstakeit}>Unstake</Button>
+													<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={stakeit}>Stake</Button>
+													<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={unstakeit}>Unstake</Button>
 												</div>
 											</div>
 										</div>
