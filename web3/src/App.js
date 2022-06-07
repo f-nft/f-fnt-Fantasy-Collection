@@ -57,7 +57,7 @@ class App extends Component {
 		this.state = {
 			balance: [],
 			nftdata: [],
-			// rawearn: [],
+			rawearn: [],
 		};
 	}
 
@@ -105,9 +105,7 @@ class App extends Component {
 
 		web3Modal.clearCachedProvider();
 		const expectedBlockTime = 10000;
-
 		async function connectwallet() {
-			var _pid = "0";
 			var provider = await web3Modal.connect();
 			web3 = new Web3(provider);
 			await provider.send('eth_requestAccounts');
@@ -116,9 +114,9 @@ class App extends Component {
 			document.getElementById('wallet-address').textContent = account;
 			contract = new web3.eth.Contract(ABI, NFTCONTRACT);
 			vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
-			var getstakednfts = await vaultcontract.methods.tokensOfOwner(account, _pid).call();
+			var getstakednfts = await vaultcontract.methods.tokensOfOwner(account).call();
 			document.getElementById('yournfts').textContent = getstakednfts;
-			var getbalance = Number(await vaultcontract.methods.balanceOf(account, _pid).call());
+			var getbalance = Number(await vaultcontract.methods.balanceOf(account).call());
 			document.getElementById('stakedbalance').textContent = getbalance;
 			const arraynft = Array.from(getstakednfts.map(Number));
 			const tokenid = arraynft.filter(Number);
@@ -153,26 +151,6 @@ class App extends Component {
 			return processArray([rwdArray]);
 		}
 
-		async function mintnative() {
-			var _mintAmount = Number(outvalue);
-			var mintRate = Number(await contract.methods.cost().call());
-			var totalAmount = mintRate * _mintAmount;
-			await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
-				Web3Alc.eth.getBlock('pending').then((block) => {
-					var baseFee = Number(block.baseFeePerGas);
-					var maxPriority = Number(tip);
-					var maxFee = baseFee + maxPriority
-					contract.methods.mint(account, _mintAmount)
-						.send({
-							from: account,
-							value: String(totalAmount),
-							maxFeePerGas: maxFee,
-							maxPriorityFeePerGas: maxPriority
-						});
-				});
-			})
-		}
-
 		async function mint0() {
 			var _pid = "0";
 			var erc20address = await contract.methods.getCryptotoken(_pid).call();
@@ -187,14 +165,15 @@ class App extends Component {
 					var maxFee = maxPriority + baseFee;
 					currency.methods.approve(NFTCONTRACT, String(totalAmount))
 						.send({
-							from: account
-						})
-						.then(currency.methods.transfer(NFTCONTRACT, String(totalAmount))
+							from: account,
+							maxFeePerGas: maxFee,
+							maxPriorityFeePerGas: maxPriority})
+							.then(currency.methods.transfer(NFTCONTRACT, String(totalAmount))
 							.send({
 								from: account,
 								maxFeePerGas: maxFee,
 								maxPriorityFeePerGas: maxPriority
-							},
+								},
 								async function (error, transactionHash) {
 									console.log("Transfer Submitted, Hash: ", transactionHash)
 									let transactionReceipt = null
@@ -220,6 +199,27 @@ class App extends Component {
 				});
 			});
 		}
+
+		async function mintnative() {
+			var _mintAmount = Number(outvalue);
+			var mintRate = Number(await contract.methods.cost().call());
+			var totalAmount = mintRate * _mintAmount;
+			await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+				Web3Alc.eth.getBlock('pending').then((block) => {
+					var baseFee = Number(block.baseFeePerGas);
+					var maxPriority = Number(tip);
+					var maxFee = baseFee + maxPriority
+					contract.methods.mint(account, _mintAmount)
+						.send({
+							from: account,
+							value: String(totalAmount),
+							maxFeePerGas: maxFee,
+							maxPriorityFeePerGas: maxPriority
+						});
+				});
+			})
+		}
+
 		return (
 			<div className="App nftapp">
 				<nav className="navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-4">
@@ -248,7 +248,7 @@ class App extends Component {
 				</nav>
 				<div className='row'>
 					<div className='col'>
-						<body className='nftstaker container border-1' style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", minWidth: '395px', maxWidth: '395px', minHeight: '700px', maxHeight: "700px" }}>
+						<body className='nftstaker container border-1' style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", minWidth: '385px', maxWidth: '385px', minHeight: '700px', maxHeight: "700px" }}>
 							<form>
 								<div className="row pt-4">
 									<div>
@@ -256,9 +256,9 @@ class App extends Component {
 									</div>
 									<h2 style={{ fontFamily: 'Blaka' }}>{balance.result}/10,000</h2>
 									<h4>Your Wallet Address</h4>
-									<div className="pb-3" id='wallet-address' style={{
+									<div className="pb-1" id='wallet-address' style={{
 										color: "#39FF14",
-										fontWeight: "400",
+										fontWeight: "300",
 										textShadow: "1px 1px 1px black",
 									}}>
 										<label for="floatingInput">Please Connect Wallet</label>
@@ -310,8 +310,8 @@ class App extends Component {
 								<h1 style={{ fontWeight: "500", fontFamily: 'Blaka', marginTop: '25px' }}>Fantasy NFT Staking Vault </h1>
 								<h6 style={{ fontWeight: "300" }}>First time staking?</h6>
 								<Button className="btn" style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Authorize Your Wallet</Button>
-								<div className="row px-3" >
-									<div className="col container" style={{ minWidth: '400px', maxWidth: '100%', maxHeight: "300px", minHeight: '300px' }}>
+								<div className="row px-3 center" >
+									<div className="col" style={{ minWidth: '385px', maxWidth: '100%', maxHeight: "300px", minHeight: '300px' }}>
 										<form class="stakingrewards" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff" }}>
 											<h4 style={{ color: "#FFFFFF", fontWeight: '300' }}>Your Vault Activity</h4>
 											<h6 style={{ color: "#FFFFFF" }}>Verify Staked Amount</h6>
@@ -333,7 +333,7 @@ class App extends Component {
 											</table>
 										</form>
 									</div>
-									<div className="col container" style={{ minWidth: '400px', maxWidth: '100%', maxHeight: "300px", minHeight: '300px' }}>
+									<div className="col container" style={{ minWidth: '385px', maxWidth: '100%', maxHeight: "300px", minHeight: '300px' }}>
 										<form className='stakingrewards' style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: 'Rambla' }}>
 											<h4 style={{ color: "#FFFFFF", fontWeight: '300' }}> Staking Rewards</h4>
 											<Button style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Earned FOT Rewards</Button>
@@ -416,35 +416,35 @@ class App extends Component {
 						</div>
 					</div>
 				</div>
-				<div className="container col-lg-11">
-					<div className="row items px-3 pt-3">
-						<div id='wallet-address' className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
-							{nftdata.map((result, i) => {
-								async function stakeit() {
-									vaultcontract.methods.stake([result.token_id]).send({ from: account });
-								}
-								async function unstakeit() {
-									vaultcontract.methods.unstake([result.token_id]).send({ from: account });
-								}
-								return (
-									<div className="card nft-card mt-3" key={i} >
-										<div className="image-over">
-											<img className="card-img-top" src={nftpng + result.token_id} alt="" />
-										</div>
-										<div className="card-caption col-12 p-0">
-											<div className="card-body">
-												<h5 className="mb-0">Fantasy NFT #{result.token_id}</h5>
-												<div className="mb-0 mt-0">Owner<p style={{ color: "#39FF14", textShadow: "1px 1px 2px #000000", fontSize: '12px', marginTop:'5px' }}>{result.owner_of}</p></div>
-												<div className="card-bottom d-flex justify-content-between">
-													<input key={i} type="hidden" id='stakeid' value={result.token_id} />
-													<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={stakeit}>Stake</Button>
-													<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={unstakeit}>Unstake</Button>
+				<div className="container-style col-lg-12 center" style={{ marginTop:"-15px"}} >
+					<div className="row items px-5 pt-5">
+						<div className="ml-5 mr-5" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "15px", marginTop:'-15px' }}>
+								{nftdata.map((result, i) => {
+									async function stakeit() {
+										vaultcontract.methods.stake([result.token_id]).send({ from: account });
+									}
+									async function unstakeit() {
+										vaultcontract.methods.unstake([result.token_id]).send({ from: account });
+									}
+									return (
+										<div className='card nft-card mt-3 stakegoldeffect2' key={i} style={{ minWidth: '200px'}}>
+											<div className="image-over">
+												<img className="card-img-top" src={nftpng + result.token_id} alt="" />
+											</div>
+											<div className="card-caption col-12 p-0" >
+												<div className="card-body" >
+													<h5 className="mb-0">Fantasy NFT #{result.token_id}</h5>
+													<div className="mb-0 mt-0">Owner<p style={{ color: "#39FF14", textShadow: "1px 1px 2px #000000", marginTop:'5px' }}>{result.owner_of}</p></div>
+													<div className="card-bottom d-flex justify-content-between">
+														<input key={i} type="hidden" id='stakeid' value={result.token_id} />
+														<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={stakeit}>Stake</Button>
+														<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={unstakeit}>Unstake</Button>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								);
-							})}
+									);
+								})}
 						</div>
 					</div>
 				</div>
