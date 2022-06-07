@@ -255,8 +255,8 @@ class App extends Component {
 									<div>
 										<h1 className="pt-2" style={{ fontWeight: "500", fontFamily: 'Blaka' }}>NFT Minted</h1>
 									</div>
-									<h2 style={{ fontFamily: 'Blaka' }}>{balance.result}/10,000</h2>
-									<h4>Your Wallet Address</h4>
+									<h3 style={{ fontFamily: 'Blaka' }}>{balance.result}/10,000</h3>
+									<h6>Your Wallet Address</h6>
 									<div className="pb-3" id='wallet-address' style={{
 										color: "#39FF14",
 										fontWeight: "400",
@@ -314,7 +314,7 @@ class App extends Component {
 								<div className="row px-3" >
 									<div className="col container" style={{ minWidth: '300px', maxWidth: '70%', maxHeight: "300px" }}>
 										<form class="stakingrewards" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff" }}>
-											<h4 style={{ color: "#FFFFFF", fontWeight: '300'}}>Your Vault Activity</h4>
+											<h5 style={{ color: "#FFFFFF", fontWeight: '300' }}>Your Vault Activity</h5>
 											<h6 style={{ color: "#FFFFFF" }}>Verify Staked Amount</h6>
 											<Button style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Verify</Button>
 											<table className='table mt-3 mb-5 px-3 table-dark'>
@@ -336,7 +336,7 @@ class App extends Component {
 									</div>
 									<div className="col container" style={{ minWidth: '300px', maxWidth: '70%', maxHeight: "300px" }}>
 										<form className='stakingrewards' style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: 'Rambla' }}>
-											<h4 style={{ color: "#FFFFFF", fontWeight: '300' }}> Staking Rewards</h4>
+											<h5 style={{ color: "#FFFFFF", fontWeight: '300' }}> Staking Rewards</h5>
 											<Button style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Earned FOT Rewards</Button>
 											<div id='earned' style={{ color: "#39FF14", marginTop: "5px", fontSize: '25px', fontWeight: '500', textShadow: "1px 1px 2px #000000" }}><p style={{ fontSize: "20px" }}>Earned Tokens</p></div>
 											<div className='col-12 mt-2'>
