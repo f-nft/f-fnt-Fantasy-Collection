@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Blaka&family=Kdam+Thmor+Pro&family=Rambla&display=swap');
+
 .App {
   text-align: center;
+  max-width: '1080px';
+  min-width: '400px';
 }
 
 .App-logo {
@@ -25,7 +29,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #dc61fb;
 }
 
 @keyframes App-logo-spin {
@@ -54,7 +58,7 @@
 }
 
 .nftapp {
-  background: radial-gradient(circle at 50% 50%, #5e99ac, #508aa3, #35678f, #1f457a, #173771);
+  background: radial-gradient(circle at 50% 50%, #ac5e9b, #9550a3, #85358f, #7a1f66, #5f1771);
 }
 
 @-webkit-keyframes AnimationName {
@@ -74,26 +78,26 @@
 }
 
 .connectbutton {
-  background: #00000010;
+  background: #ff00ddd5;
   box-shadow: 0px 1px 10px #011824;
   color: #4d2b2b;
   border-radius: 14px;
   padding: 5px 12px;
   font-size: large;
-  font-weight: 200;
+  font-weight: 500;
 }
 
 .navbarfont {
-  font-family: "Blaka";
+  font-family: 'Blaka', cursive;
   font-weight: 300;
 }
 
 .nftminter {
     background: radial-gradient(circle at 50% 50%, #090f11, #0c1519, #101e2b, #0f223c, #0e2144);
-    font-family: "SF Pro Display";
+    font-family: 'Kdam Thmor Pro', sans-serif;
     font-weight: 300;
     color: white;
-    box-shadow: 0 0 1px 1px #17b2ff;
+    box-shadow: 0 0 1px 1px #1774ff;
     -webkit-border-radius: 20px !important;
     -moz-border-radius: 20px !important;
     border-radius: 20px !important;
@@ -104,10 +108,10 @@
 
 .nftstaker {
   background: radial-gradient(circle at 50% 50%, #090f11, #0c1519, #101e2b, #0f223c, #0e2144);
-  font-family: "SF Pro Display";
+  font-family: 'Kdam Thmor Pro', sans-serif;
   font-weight: 300;
   color: white;
-  box-shadow: 0 0 1px 1px #17b2ff;
+  box-shadow: 0 0 1px 1px #1797ff;
   -webkit-border-radius: 20px !important;
   -moz-border-radius: 20px !important;
   border-radius: 20px !important;
@@ -117,7 +121,7 @@
 }
 
 .stakingrewards {
-    font-family: "SF Pro Display";
+    font-family: 'Rambla', sans-serif;
     width: auto;
     font-weight: 300;
     box-shadow: 1px 1px 15px #ffffff;
@@ -126,7 +130,7 @@
 
 .modal-style1 {
   background: radial-gradient(circle at 50% 50%, #090f11, #0c1519, #101e2b, #0f223c, #0e2144);
-  font-family: "SF Pro Display";
+  font-family: 'Rambla', sans-serif;
   font-weight: 300;
   color: white;
   box-shadow: 0 0 1px 1px #17b2ff;
@@ -140,11 +144,22 @@
 
 .container-style {
   display: grid;
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: 600px 1fr;
   grid-column-gap: 20px;
   grid-row-gap: 20px;
   justify-items: stretch;
   align-items: stretch
+}
+
+.container {
+  overflow: hidden;
+}
+.column {
+  float: left;
+  margin: 20px;
+  background-color: grey;
+  padding-bottom: 100%;
+  margin-bottom: -100%;
 }
 
 @keyframes glow2 {
@@ -157,7 +172,7 @@
 }
 
 .stakegoldeffect {
-    font-family: "SF Pro Display";
+    font-family: 'Black Ops One', cursive;
     font-weight: 300;
     animation: glow2 3s infinite alternate;
     background: linear-gradient(
@@ -173,7 +188,7 @@
 
 .nft-card {
   background-image: linear-gradient(125.83deg, rgb(30, 42, 34) 0%, rgb(17, 3, 141) 80.09%);
-  font-family: "SF Pro Display";
+  font-family: 'Black Ops One', cursive;
   color: white;
   box-shadow: 1px 1px 15px #000000;
 }
@@ -188,4 +203,14 @@
   align-items: center;
   justify-content: center;
 
+}
+
+.row {
+  display: flex; /* equal height of the children */
+}
+
+.col {
+  flex: 2; /* additionally, equal width */
+  
+  padding: 1em;
 }

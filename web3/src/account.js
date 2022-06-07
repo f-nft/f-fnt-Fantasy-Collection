@@ -1,8 +1,5 @@
-import './App.css';
 import { Button, ButtonGroup } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
-import 'sf-font';
 import axios from 'axios';
 import ABI from './ABI.json';
 import VAULTABI from './VAULTABI.json';
@@ -17,7 +14,6 @@ var account = null;
 var contract = null;
 var vaultcontract = null;
 var web3 = null;
-
 const Web3Alc = createAlchemyWeb3("https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk");
 const polygonscanapikey = "QW34TJU2T87NCU4HWKR7TGUEC1I8TYVDHW";
 const moralisapikey = "1ByvMyujsaXkDVTlnUjQIje5e09J2zLHGaS2P6JytHVA1LxfAPPYE8UdOpEjc6ca";
@@ -25,8 +21,7 @@ const NFTCONTRACT = "0x3AdEaEe8926485108c6e13983f51A4f6f8D1fA77";
 const STAKINGCONTRACT = "0xdBa11414449e7cFC29eb1341fc36C992f01eBbd5";
 const polygonscanapi = "https://api.polygonscan.com/api";
 const moralisapi = "https://deep-index.moralis.io/api/v2";
-const nftpng = "ipfs://bafybeibb4ds7e4yi2q46b44eoxwfay2p6hpwhamkvd7heoga6jetz6vo5q/Fantasy%20%23";
-
+const nftpng = "ipfs.io/ipfs/QmaEL7JDG5BvF898gmB13y5oe99RjPzbAA6Ne1W9my1UmW?filename=Fantasy_";
 const providerOptions = {
 	binancechainwallet: {
 		package: true
@@ -42,33 +37,31 @@ const providerOptions = {
 		options: {
 			appName: "f-nft Polygon",
 			infuraId: "50f6635fbcc742f18ce7a2a5cbe73ffa",
-			rpc: "https://polygon-mainnet.infura.io/v3",
+			rpc: "https://polygon-mainnet.infura.io/v3/",
 			chainId: 137,
 			appLogoUrl: null,
 			darkMode: true
 		}
 	},
 };
-
 const web3Modal = new Web3Modal({
 	network: "mainnet",
 	theme: "dark",
 	cacheProvider: true,
 	providerOptions
 });
-
 class App extends Component {
 	constructor() {
 		super();
 		this.state = {
 			balance: [],
 			nftdata: [],
-			// rawearn: [],
+			rawearn: [],
 		};
 	}
 
 	handleModal() {
-		this.setState({ show: !this.state.show })
+		this.setState({ show: !this.state.show });
 	}
 
 	handleNFT(nftamount) {
@@ -81,18 +74,18 @@ class App extends Component {
 			.then(outputa => {
 				this.setState({
 					balance: outputa.data
-				})
-				console.log(outputa.data)
-			})
+				});
+				console.log(outputa.data);
+			});
 		let config = { 'X-API-Key': moralisapikey, 'accept': 'application/json' };
 		await axios.get((moralisapi + `/nft/${NFTCONTRACT}/owners?chain=polygon&format=decimal`), { headers: config })
 			.then(outputb => {
-				const { result } = outputb.data
+				const { result } = outputb.data;
 				this.setState({
 					nftdata: result
-				})
-				console.log(outputb.data)
-			})
+				});
+				console.log(outputb.data);
+			});
 	}
 
 
@@ -102,10 +95,10 @@ class App extends Component {
 		const { nftdata } = this.state;
 
 		const sleep = (milliseconds) => {
-			return new Promise(resolve => setTimeout(resolve, milliseconds))
-		}
+			return new Promise(resolve => setTimeout(resolve, milliseconds));
+		};
 
-		const expectedBlockTime = 10000;
+		const expectedBlockTime = 1000;
 
 		async function connectwallet() {
 			var provider = await web3Modal.connect();
@@ -161,7 +154,7 @@ class App extends Component {
 				Web3Alc.eth.getBlock('pending').then((block) => {
 					var baseFee = Number(block.baseFeePerGas);
 					var maxPriority = Number(tip);
-					var maxFee = baseFee + maxPriority
+					var maxFee = baseFee + maxPriority;
 					contract.methods.mint(account, _mintAmount)
 						.send({
 							from: account,
@@ -170,7 +163,7 @@ class App extends Component {
 							maxPriorityFeePerGas: maxPriority
 						});
 				});
-			})
+			});
 		}
 
 		async function mint0() {
@@ -196,11 +189,11 @@ class App extends Component {
 								maxPriorityFeePerGas: maxPriority
 							},
 								async function (error, transactionHash) {
-									console.log("Transfer Submitted, Hash: ", transactionHash)
-									let transactionReceipt = null
+									console.log("Transfer Submitted, Hash: ", transactionHash);
+									let transactionReceipt = null;
 									while (transactionReceipt == null) {
 										transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
-										await sleep(expectedBlockTime)
+										await sleep(expectedBlockTime);
 									}
 									window.console = {
 										log: function (str) {
@@ -208,7 +201,7 @@ class App extends Component {
 											out.appendChild(document.createTextNode(str));
 											document.getElementById("txout").appendChild(out);
 										}
-									}
+									};
 									console.log("Transfer Complete", transactionReceipt);
 									contract.methods.mintpid(account, _mintAmount, _pid)
 										.send({
@@ -224,7 +217,7 @@ class App extends Component {
 			<div className="App nftapp">
 				<nav className="navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-4">
 					<div className="container-fluid">
-						<a className="navbar-brand px-5" style={{ fontWeight: "800", fontSize: '22px' }} href="#"></a><img src="FNFT.png" width="8%" />
+						<a className="navbar-brand px-5" style={{ fontWeight: "800", fontSize: '22px' }} href="#"></a><img src="FNFT.png" width="7%" />
 						<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 							<span className="navbar-toggler-icon"></span>
 						</button>
@@ -246,11 +239,11 @@ class App extends Component {
 						<input id="connectbtn" type="button" className="connectbutton" onClick={connectwallet} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", fontFamily: 'Rambla' }} value="Connect Your Wallet" />
 					</div>
 				</nav>
-				<div className='row container container-style'>
+				<div className='container container-style'>
 					<div className='col'>
 						<body className='nftminter'>
 							<form>
-								<div className="row pt-8">
+								<div className="row pt-3">
 									<div>
 										<h1 className="pt-2" style={{ fontWeight: "20", fontFamily: 'Blaka' }}>NFT Minted</h1>
 									</div>
@@ -306,16 +299,16 @@ class App extends Component {
 					</div>
 					<div className='col'>
 						<body className='nftstaker border-0'>
-							<form style={{ fontFamily: 'Rambla' }} >
+							<form style={{ fontFamily: 'Rambla' }}>
 								<h2 style={{ borderRadius: '14px', fontWeight: "300", fontSize: "25px", fontFamily: 'Blaka' }}>Fantasy NFT Staking Vault </h2>
 								<h6 style={{ fontWeight: "300" }}>First time staking?</h6>
-								<Button className="btn" style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Authorize Your Wallet</Button>
+								<Button className="btn" style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }}>Authorize Your Wallet</Button>
 								<div className="row px-3">
 									<div className="col">
 										<form class="stakingrewards" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff" }}>
 											<h5 style={{ color: "#FFFFFF", fontWeight: '300' }}>Your Vault Activity</h5>
 											<h6 style={{ color: "#FFFFFF" }}>Verify Staked Amount</h6>
-											<Button style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Verify</Button>
+											<Button style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }}>Verify</Button>
 											<table className='table mt-3 mb-5 px-3 table-dark'>
 												<tr>
 													<td style={{ fontSize: "16px" }}>Your Staked NFTs:
@@ -337,7 +330,7 @@ class App extends Component {
 									<div className="col">
 										<form className='stakingrewards' style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: 'Rambla' }}>
 											<h5 style={{ color: "#FFFFFF", fontWeight: '300' }}> Staking Rewards</h5>
-											<Button style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Earned FOT Rewards</Button>
+											<Button style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }}>Earned FOT Rewards</Button>
 											<div id='earned' style={{ color: "#39FF14", marginTop: "5px", fontSize: '25px', fontWeight: '500', textShadow: "1px 1px 2px #000000" }}><p style={{ fontSize: "20px" }}>Earned Tokens</p></div>
 											<div className='col-12 mt-2'>
 												<div style={{ color: 'white' }}>Claim Rewards</div>
@@ -388,7 +381,7 @@ class App extends Component {
 										</table>
 										<div className="header">
 											<div style={{ fontSize: '25px', borderRadius: '14px', fontWeight: '300', fontFamily: 'Black Ops One' }}>FOT Token Stake Farms</div>
-											<table className='table table-bordered table-dark' style={{ borderRadius: '14px' }} >
+											<table className='table table-bordered table-dark' style={{ borderRadius: '14px' }}>
 												<thead className='thead-light'>
 													<tr>
 														<th scope="col">Farm Pools</th>
@@ -428,14 +421,14 @@ class App extends Component {
 									vaultcontract.methods.unstake([result.token_id]).send({ from: account });
 								}
 								return (
-									<div className="card nft-card mt-3" key={i} >
+									<div className="card nft-card mt-3" key={i}>
 										<div className="image-over">
-											<img className="card-img-top" src={nftpng + result.token_id} alt="" />
+											<img className="card-img-top" src={nftpng + result.token_id + '.png'} alt="" />
 										</div>
 										<div className="card-caption col-12 p-0">
 											<div className="card-body">
-												<h5 className="mb-0">Fantasy NFT #{result.token_id}</h5>
-												<h5 className="mb-0 mt-2">Owner<p style={{ color: "#39FF14", textShadow: "1px 1px 2px #000000" }}>{result.owner_of}</p></h5>
+												<h5 className="mb-0">Fantasy Collection NFT #{result.token_id}</h5>
+												<h5 className="mb-0 mt-2">Location Status<p style={{ color: "#39FF14", fontWeight: "bold", textShadow: "1px 1px 2px #000000" }}>{result.owner_of}</p></h5>
 												<div className="card-bottom d-flex justify-content-between">
 													<input key={i} type="hidden" id='stakeid' value={result.token_id} />
 													<Button style={{ marginLeft: '2px', backgroundColor: "#ffffff10" }} onClick={stakeit}>Stake</Button>
@@ -450,7 +443,7 @@ class App extends Component {
 					</div>
 				</div>
 			</div>
-		)
+		);
 	}
 }
 export default App;
