@@ -3,12 +3,13 @@ import { Button, ButtonGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import 'sf-font';
-import { polygonscanapikey, moralisapikey, NFTCONTRACT, STAKINGCONTRACT, polygonscanapi, moralisapi, nftpng } from "./config";
+import config from "./config";
 import axios from 'axios';
 import ABI from './ABI.json';
 import VAULTABI from './VAULTABI.json';
 import TOKENABI from './TOKENABI.json';
 import Web3Modal from "web3modal";
+import { ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";
 import Web3 from 'web3';
@@ -20,6 +21,14 @@ var vaultcontract = null;
 var web3 = null;
 
 const Web3Alc = createAlchemyWeb3("https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk");
+const polygonscanapikey = "QW34TJU2T87NCU4HWKR7TGUEC1I8TYVDHW";
+const moralisapikey = "1ByvMyujsaXkDVTlnUjQIje5e09J2zLHGaS2P6JytHVA1LxfAPPYE8UdOpEjc6ca";
+const NFTCONTRACT = "0x3AdEaEe8926485108c6e13983f51A4f6f8D1fA77";
+const STAKINGCONTRACT = "0xdBa11414449e7cFC29eb1341fc36C992f01eBbd5";
+const polygonscanapi = "https://api.polygonscan.com/api";
+const moralisapi = "https://deep-index.moralis.io/api/v2";
+const nftpng = "https://bafybeidw6ei2srqovsoeoy5kck4iwzp2tskonq42ztoxy4rvtblob7k7pe.ipfs.nftstorage.link/Fantasy%20%23";
+
 
 const providerOptions = {
 	binancechainwallet: {
@@ -434,7 +443,7 @@ class App extends Component {
 										<div className="card-caption col-12 p-0">
 											<div className="card-body">
 												<h5 className="mb-0">Fantasy NFT #{result.token_id}</h5>
-												<div className="mb-0 mt-0">Owner<p style={{ color: "#39FF14", textShadow: "1px 1px 2px #000000", fontSize: '12px', marginTop:'5px' }}>{result.owner_of}</p></div>
+												<h6 className="mb-0 mt-2">Owner<p style={{ color: "#39FF14", textShadow: "1px 1px 2px #000000", fontWeight: '100', fontSize: '12' }}>{result.owner_of}</p></h6>
 												<div className="card-bottom d-flex justify-content-between">
 													<input key={i} type="hidden" id='stakeid' value={result.token_id} />
 													<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={stakeit}>Stake</Button>

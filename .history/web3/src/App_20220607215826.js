@@ -9,6 +9,7 @@ import ABI from './ABI.json';
 import VAULTABI from './VAULTABI.json';
 import TOKENABI from './TOKENABI.json';
 import Web3Modal from "web3modal";
+import { ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";
 import Web3 from 'web3';
@@ -434,7 +435,7 @@ class App extends Component {
 										<div className="card-caption col-12 p-0">
 											<div className="card-body">
 												<h5 className="mb-0">Fantasy NFT #{result.token_id}</h5>
-												<div className="mb-0 mt-0">Owner<p style={{ color: "#39FF14", textShadow: "1px 1px 2px #000000", fontSize: '12px', marginTop:'5px' }}>{result.owner_of}</p></div>
+												<h6 className="mb-0 mt-2">Owner<p style={{ color: "#39FF14", textShadow: "1px 1px 2px #000000", fontWeight: '100', fontSize: '12' }}>{result.owner_of}</p></h6>
 												<div className="card-bottom d-flex justify-content-between">
 													<input key={i} type="hidden" id='stakeid' value={result.token_id} />
 													<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={stakeit}>Stake</Button>
