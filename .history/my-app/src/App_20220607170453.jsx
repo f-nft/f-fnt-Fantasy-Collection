@@ -8,7 +8,6 @@ import ABI from './ABI.json';
 import VAULTABI from './VAULTABI.json';
 import TOKENABI from './TOKENABI.json';
 import Web3Modal from "web3modal";
-import { ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";
 import Web3 from 'web3';
@@ -27,7 +26,6 @@ const STAKINGCONTRACT = "0xdBa11414449e7cFC29eb1341fc36C992f01eBbd5";
 const polygonscanapi = "https://api.polygonscan.com/api";
 const moralisapi = "https://deep-index.moralis.io/api/v2";
 const nftpng = "https://bafybeidw6ei2srqovsoeoy5kck4iwzp2tskonq42ztoxy4rvtblob7k7pe.ipfs.nftstorage.link/Fantasy%20%23";
-
 
 const providerOptions = {
 	binancechainwallet: {
@@ -73,10 +71,6 @@ class App extends Component {
 		this.setState({ show: !this.state.show })
 	}
 
-	handleStake() {
-		this.setState({ show: !this.state.show })
-	}
-
 	handleNFT(nftamount) {
 		this.setState({ outvalue: nftamount.target.value });
 	}
@@ -111,7 +105,6 @@ class App extends Component {
 			return new Promise(resolve => setTimeout(resolve, milliseconds))
 		}
 
-		web3Modal.clearCachedProvider();
 		const expectedBlockTime = 10000;
 
 		async function connectwallet() {
@@ -426,7 +419,7 @@ class App extends Component {
 				</div>
 				<div className="container col-lg-11">
 					<div className="row items px-3 pt-3">
-						<div id='wallet-address' className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
+						<div className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
 							{nftdata.map((result, i) => {
 								async function stakeit() {
 									vaultcontract.methods.stake([result.token_id]).send({ from: account });

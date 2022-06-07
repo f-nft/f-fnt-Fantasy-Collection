@@ -8,7 +8,6 @@ import ABI from './ABI.json';
 import VAULTABI from './VAULTABI.json';
 import TOKENABI from './TOKENABI.json';
 import Web3Modal from "web3modal";
-import { ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";
 import Web3 from 'web3';
@@ -27,7 +26,6 @@ const STAKINGCONTRACT = "0xdBa11414449e7cFC29eb1341fc36C992f01eBbd5";
 const polygonscanapi = "https://api.polygonscan.com/api";
 const moralisapi = "https://deep-index.moralis.io/api/v2";
 const nftpng = "https://bafybeidw6ei2srqovsoeoy5kck4iwzp2tskonq42ztoxy4rvtblob7k7pe.ipfs.nftstorage.link/Fantasy%20%23";
-
 
 const providerOptions = {
 	binancechainwallet: {
@@ -73,10 +71,6 @@ class App extends Component {
 		this.setState({ show: !this.state.show })
 	}
 
-	handleStake() {
-		this.setState({ show: !this.state.show })
-	}
-
 	handleNFT(nftamount) {
 		this.setState({ outvalue: nftamount.target.value });
 	}
@@ -111,7 +105,6 @@ class App extends Component {
 			return new Promise(resolve => setTimeout(resolve, milliseconds))
 		}
 
-		web3Modal.clearCachedProvider();
 		const expectedBlockTime = 10000;
 
 		async function connectwallet() {
@@ -278,7 +271,7 @@ class App extends Component {
 								<ButtonGroup size="lg"
 									aria-label="First group"
 									name="amount"
-									style={{ boxShadow: "1px 3px 8px #000000", fontFamily: 'Black Ops One', fontSize: '25px', marginTop: '5px', marginBottom: '5px', marginInline: '5px' }}
+									style={{ boxShadow: "1px 3px 8px #000000", fontFamily: 'Black Ops One', fontSize:'25px', marginTop:'5px', marginBottom:'5px', marginInline:'5px' }}
 									onClick={nftamount => this.handleNFT(nftamount, "value")}>
 									<Button value="1" >1</Button>
 									<Button value="5">5</Button>
@@ -286,8 +279,8 @@ class App extends Component {
 									<Button value="50">50</Button>
 									<Button value="100">100</Button>
 								</ButtonGroup>
-								<h6 className="pt-2" style={{ fontFamily: 'Rambla', fontWeight: "300", fontSize: "18px", marginBottom: '1px' }}>Buy with your preferred crypto!</h6>
-								<div className="row px-2 pb-2 row-style" style={{ marginTop: '1px', fontFamily: 'Rambla', fontWeight: "300", fontSize: "12px" }}>
+								<h6 className="pt-2" style={{ fontFamily: 'Rambla', fontWeight: "300", fontSize: "18px", marginBottom:'1px' }}>Buy with your preferred crypto!</h6>
+								<div className="row px-2 pb-2 row-style" style={{ marginTop:'1px', fontFamily: 'Rambla', fontWeight: "300", fontSize: "12px" }}>
 									<div className="col">
 										<Button className="button-style" onClick={mint0} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000" }}>
 											<img src={"FNFT.png"} width="50%" />
@@ -313,15 +306,15 @@ class App extends Component {
 						</body>
 					</div>
 					<div className='col'>
-						<body className='nftstaker container border-1' style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", maxWidth: '100%', minHeight: '700px', maxHeight: "700px" }}>
+						<body className='nftstaker container border-1'style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", maxWidth: '100%', minHeight: '700px' , maxHeight: "700px" }}>
 							<form style={{ fontFamily: 'Rambla' }} >
-								<h1 style={{ fontWeight: "500", fontFamily: 'Blaka', marginTop: '25px' }}>Fantasy NFT Staking Vault </h1>
+								<h1 style={{ fontWeight: "500", fontFamily: 'Blaka', marginTop:'25px' }}>Fantasy NFT Staking Vault </h1>
 								<h6 style={{ fontWeight: "300" }}>First time staking?</h6>
 								<Button className="btn" style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Authorize Your Wallet</Button>
 								<div className="row px-3" >
-									<div className="col container" style={{ minWidth: '400px', maxWidth: '100%', maxHeight: "300px", minHeight: '300px' }}>
+									<div className="col container" style={{ minWidth: '400px', maxWidth: '100%', maxHeight: "400px", minHeight: '400px' }}>
 										<form class="stakingrewards" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff" }}>
-											<h4 style={{ color: "#FFFFFF", fontWeight: '300' }}>Your Vault Activity</h4>
+											<h4 style={{ color: "#FFFFFF", fontWeight: '300'}}>Your Vault Activity</h4>
 											<h6 style={{ color: "#FFFFFF" }}>Verify Staked Amount</h6>
 											<Button style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Verify</Button>
 											<table className='table mt-3 mb-5 px-3 table-dark'>
@@ -341,7 +334,7 @@ class App extends Component {
 											</table>
 										</form>
 									</div>
-									<div className="col container" style={{ minWidth: '400px', maxWidth: '100%', maxHeight: "300px", minHeight: '300px' }}>
+									<div className="col container" style={{ minWidth: '400px', maxWidth: '100%', maxHeight: "400px", minHeight: '400px'  }}>
 										<form className='stakingrewards' style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: 'Rambla' }}>
 											<h4 style={{ color: "#FFFFFF", fontWeight: '300' }}> Staking Rewards</h4>
 											<Button style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Earned FOT Rewards</Button>
@@ -357,76 +350,76 @@ class App extends Component {
 						</body>
 					</div>
 					<div className="row px-4 pt-2">
-						<div className="header">
-							<div style={{ fontSize: '25px', borderRadius: '14px', color: "#ffffff", fontWeight: "300", fontFamily: 'Black Ops One' }}>Fantasy NFT Staking Pool Active Rewards</div>
-							<table className='table px-3 table-bordered table-dark' style={{ fontSize: '20px' }}>
-								<thead className='thead-light'>
-									<tr>
-										<th scope="col">Collection</th>
-										<th scope="col">Rewards Per Day</th>
-										<th scope="col">Exchangeable Items</th>
-									</tr>
-								</thead>
-								<tbody style={{ fontSize: '18px' }}>
-									<tr>
-										<td>Discovery</td>
-										<td className="amount" data-test-id="rewards-summary-ads">
-											<span className="amount">0.50</span>&nbsp;<span class="currency">FOT</span>
-										</td>
-										<td className="exchange">
-											<span className="amount">2</span>&nbsp;<span class="currency">NFTs/M</span>
-										</td>
-									</tr>
-									<tr>
-										<td>Angel & Devil</td>
-										<td className="amount" data-test-id="rewards-summary-ac">
-											<span className="amount">2.50</span>&nbsp;<span class="currency">FOT</span>
-										</td>
-										<td className="exchange"><span class="amount">10</span>&nbsp;<span class="currency">NFTs/M</span>
-										</td>
-									</tr>
-									<tr className='stakegoldeffect'>
-										<td>Chaos</td>
-										<td className="amount" data-test-id="rewards-summary-one-time"><span class="amount">1</span>&nbsp;<span class="currency">FOT™</span>
-										</td>
-										<td className="exchange">
-											<span className="amount">25 NFTs/M or </span>
-											<span className="currency">100 FOT/M</span>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<div className="header">
-								<div style={{ fontSize: '25px', borderRadius: '14px', fontWeight: '300', fontFamily: 'Black Ops One', color: 'white' }}>FOT Token Stake Farms</div>
-								<table className='table table-bordered table-dark' style={{ borderRadius: '14px' }} >
-									<thead className='thead-light' style={{ fontSize: '20px' }}>
-										<tr>
-											<th scope="col">Farm Pools</th>
-											<th scope="col">Harvest Daily Earnings</th>
-										</tr>
-									</thead>
-									<tbody style={{ fontSize: '18px' }}>
-										<tr>
-											<td>Stake FOT to Earn FOT</td>
-											<td className="amount" data-test-id="rewards-summary-ads">
-												<span className="amount">0.01</span>&nbsp;<span class="currency">Per FOT</span>
-											</td>
-										</tr>
-										<tr>
-											<td>Stake FOT to Earn FOT™</td>
-											<td className="amount" data-test-id="rewards-summary-ac">
-												<span className="amount">0.005</span>&nbsp;<span class="currency">Per FOT™</span>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
+									<div className="header">
+										<div style={{ fontSize: '25px', borderRadius: '14px', color: "#ffffff", fontWeight: "300", fontFamily: 'Black Ops One' }}>Fantasy NFT Staking Pool Active Rewards</div>
+										<table className='table px-3 table-bordered table-dark' style={{ fontSize:'20px'}}>
+											<thead className='thead-light'>
+												<tr>
+													<th scope="col">Collection</th>
+													<th scope="col">Rewards Per Day</th>
+													<th scope="col">Exchangeable Items</th>
+												</tr>
+											</thead>
+											<tbody style={{ fontSize:'18px'}}>
+												<tr>
+													<td>Discovery</td>
+													<td className="amount" data-test-id="rewards-summary-ads">
+														<span className="amount">0.50</span>&nbsp;<span class="currency">FOT</span>
+													</td>
+													<td className="exchange">
+														<span className="amount">2</span>&nbsp;<span class="currency">NFTs/M</span>
+													</td>
+												</tr>
+												<tr>
+													<td>Angel & Devil</td>
+													<td className="amount" data-test-id="rewards-summary-ac">
+														<span className="amount">2.50</span>&nbsp;<span class="currency">FOT</span>
+													</td>
+													<td className="exchange"><span class="amount">10</span>&nbsp;<span class="currency">NFTs/M</span>
+													</td>
+												</tr>
+												<tr className='stakegoldeffect'>
+													<td>Chaos</td>
+													<td className="amount" data-test-id="rewards-summary-one-time"><span class="amount">1</span>&nbsp;<span class="currency">FOT™</span>
+													</td>
+													<td className="exchange">
+														<span className="amount">25 NFTs/M or </span>
+														<span className="currency">100 FOT/M</span>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<div className="header">
+											<div style={{ fontSize: '25px', borderRadius: '14px', fontWeight: '300', fontFamily: 'Black Ops One', color:'white' }}>FOT Token Stake Farms</div>
+											<table className='table table-bordered table-dark' style={{ borderRadius: '14px' }} >
+												<thead className='thead-light'style={{ fontSize:'20px'}}>
+													<tr>
+														<th scope="col">Farm Pools</th>
+														<th scope="col">Harvest Daily Earnings</th>
+													</tr>
+												</thead>
+												<tbody style={{ fontSize:'18px'}}>
+													<tr>
+														<td>Stake FOT to Earn FOT</td>
+														<td className="amount" data-test-id="rewards-summary-ads">
+															<span className="amount">0.01</span>&nbsp;<span class="currency">Per FOT</span>
+														</td>
+													</tr>
+													<tr>
+														<td>Stake FOT to Earn FOT™</td>
+														<td className="amount" data-test-id="rewards-summary-ac">
+															<span className="amount">0.005</span>&nbsp;<span class="currency">Per FOT™</span>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
 				</div>
 				<div className="container col-lg-11">
 					<div className="row items px-3 pt-3">
-						<div id='wallet-address' className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
+						<div className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
 							{nftdata.map((result, i) => {
 								async function stakeit() {
 									vaultcontract.methods.stake([result.token_id]).send({ from: account });

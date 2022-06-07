@@ -74,7 +74,7 @@ class App extends Component {
 	}
 
 	handleStake() {
-		this.setState({ show: !this.state.show })
+		this.setState({ show: !this.state.show})
 	}
 
 	handleNFT(nftamount) {
@@ -426,7 +426,7 @@ class App extends Component {
 				</div>
 				<div className="container col-lg-11">
 					<div className="row items px-3 pt-3">
-						<div id='wallet-address' className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
+						<div className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
 							{nftdata.map((result, i) => {
 								async function stakeit() {
 									vaultcontract.methods.stake([result.token_id]).send({ from: account });
@@ -443,8 +443,8 @@ class App extends Component {
 											<div className="card-body">
 												<h5 className="mb-0">Fantasy NFT #{result.token_id}</h5>
 												<h6 className="mb-0 mt-2">Owner<p style={{ color: "#39FF14", textShadow: "1px 1px 2px #000000", fontWeight: '100', fontSize: '12' }}>{result.owner_of}</p></h6>
-												<div className="card-bottom d-flex justify-content-between">
-													<input key={i} type="hidden" id='stakeid' value={result.token_id} />
+												<div className="card-bottom d-flex justify-content-between" >
+													<input key={i} type='hidden' id='stakeid' value={result.token_id} />
 													<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={stakeit}>Stake</Button>
 													<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={unstakeit}>Unstake</Button>
 												</div>

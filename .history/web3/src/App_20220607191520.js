@@ -74,7 +74,7 @@ class App extends Component {
 	}
 
 	handleStake() {
-		this.setState({ show: !this.state.show })
+		this.setState({ show: !this.state.show})
 	}
 
 	handleNFT(nftamount) {

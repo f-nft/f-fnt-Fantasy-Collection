@@ -28,6 +28,7 @@ const polygonscanapi = "https://api.polygonscan.com/api";
 const moralisapi = "https://deep-index.moralis.io/api/v2";
 const nftpng = "https://bafybeidw6ei2srqovsoeoy5kck4iwzp2tskonq42ztoxy4rvtblob7k7pe.ipfs.nftstorage.link/Fantasy%20%23";
 
+web3Modal.clearCachedProvider();
 
 const providerOptions = {
 	binancechainwallet: {
@@ -74,7 +75,7 @@ class App extends Component {
 	}
 
 	handleStake() {
-		this.setState({ show: !this.state.show })
+		this.setState({ show: !this.state.show})
 	}
 
 	handleNFT(nftamount) {
@@ -111,7 +112,6 @@ class App extends Component {
 			return new Promise(resolve => setTimeout(resolve, milliseconds))
 		}
 
-		web3Modal.clearCachedProvider();
 		const expectedBlockTime = 10000;
 
 		async function connectwallet() {
@@ -426,7 +426,7 @@ class App extends Component {
 				</div>
 				<div className="container col-lg-11">
 					<div className="row items px-3 pt-3">
-						<div id='wallet-address' className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
+						<div onClick={nftamount => this.handleNFT(nftamount, "value")}> className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
 							{nftdata.map((result, i) => {
 								async function stakeit() {
 									vaultcontract.methods.stake([result.token_id]).send({ from: account });

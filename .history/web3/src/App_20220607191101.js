@@ -8,11 +8,13 @@ import ABI from './ABI.json';
 import VAULTABI from './VAULTABI.json';
 import TOKENABI from './TOKENABI.json';
 import Web3Modal from "web3modal";
-import { ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";
 import Web3 from 'web3';
-import { createAlchemyWeb3 } from '@alch/alchemy-web3';
+import { createAlchemyWeb3 } from '@alch/alchemy-web3';	
+import { useWeb3React } from "@web3-react/core"
+import { injected } from "../components/wallet/Connectors"
+
 
 var account = null;
 var contract = null;
@@ -74,7 +76,7 @@ class App extends Component {
 	}
 
 	handleStake() {
-		this.setState({ show: !this.state.show })
+		this.setState({ show: !this.state.show})
 	}
 
 	handleNFT(nftamount) {
@@ -112,9 +114,27 @@ class App extends Component {
 		}
 
 		web3Modal.clearCachedProvider();
+
 		const expectedBlockTime = 10000;
 
 		async function connectwallet() {
+			
+			const { active, account, library, connector, activate, deactivate } = useWeb3React()
+
+  			async function disconnectwallet() {
+			try {
+			deactivate()
+			} catch (ex) {
+			console.log(ex)
+			}
+			};
+
+			try {
+				await activate(injected)
+			  } catch (ex) {
+				console.log(ex)
+			  };
+			
 			var _pid = "0";
 			var provider = await web3Modal.connect();
 			web3 = new Web3(provider);
@@ -252,6 +272,8 @@ class App extends Component {
 					</div>
 					<div className='px-5'>
 						<input id="connectbtn" type="button" className="connectbutton" onClick={connectwallet} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", fontFamily: 'Rambla' }} value="Connect Your Wallet" />
+						{active ? <span>Connected with <b>{account}</b></span> : <span>Not connected</span>}
+						<input id="connectbtn" type="button" className="connectbutton" onClick={disconnectwallet} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", fontFamily: 'Rambla' }} value="Disconnect" />
 					</div>
 				</nav>
 				<div className='row'>
@@ -426,7 +448,7 @@ class App extends Component {
 				</div>
 				<div className="container col-lg-11">
 					<div className="row items px-3 pt-3">
-						<div id='wallet-address' className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
+						<div className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
 							{nftdata.map((result, i) => {
 								async function stakeit() {
 									vaultcontract.methods.stake([result.token_id]).send({ from: account });
@@ -443,8 +465,8 @@ class App extends Component {
 											<div className="card-body">
 												<h5 className="mb-0">Fantasy NFT #{result.token_id}</h5>
 												<h6 className="mb-0 mt-2">Owner<p style={{ color: "#39FF14", textShadow: "1px 1px 2px #000000", fontWeight: '100', fontSize: '12' }}>{result.owner_of}</p></h6>
-												<div className="card-bottom d-flex justify-content-between">
-													<input key={i} type="hidden" id='stakeid' value={result.token_id} />
+												<div className="card-bottom d-flex justify-content-between" >
+													<input key={i} type='hidden' id='stakeid' value={result.token_id} />
 													<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={stakeit}>Stake</Button>
 													<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={unstakeit}>Unstake</Button>
 												</div>

@@ -74,7 +74,7 @@ class App extends Component {
 	}
 
 	handleStake() {
-		this.setState({ show: !this.state.show })
+		this.setState({ show: !this.state.show})
 	}
 
 	handleNFT(nftamount) {
@@ -427,7 +427,7 @@ class App extends Component {
 				<div className="container col-lg-11">
 					<div className="row items px-3 pt-3">
 						<div id='wallet-address' className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
-							{nftdata.map((result, i) => {
+							<label for="floatingInput">{nftdata.map((result, i) => {
 								async function stakeit() {
 									vaultcontract.methods.stake([result.token_id]).send({ from: account });
 								}
@@ -453,6 +453,7 @@ class App extends Component {
 									</div>
 								);
 							})}
+							</label>
 						</div>
 					</div>
 				</div>

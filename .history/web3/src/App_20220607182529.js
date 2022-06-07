@@ -74,7 +74,7 @@ class App extends Component {
 	}
 
 	handleStake() {
-		this.setState({ show: !this.state.show })
+		this.setState({ show: !this.state.show})
 	}
 
 	handleNFT(nftamount) {
@@ -445,8 +445,8 @@ class App extends Component {
 												<h6 className="mb-0 mt-2">Owner<p style={{ color: "#39FF14", textShadow: "1px 1px 2px #000000", fontWeight: '100', fontSize: '12' }}>{result.owner_of}</p></h6>
 												<div className="card-bottom d-flex justify-content-between">
 													<input key={i} type="hidden" id='stakeid' value={result.token_id} />
-													<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={stakeit}>Stake</Button>
-													<Button style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={unstakeit}>Unstake</Button>
+													<Button for="floatingInput" style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={stakeit}>Stake</Button>
+													<Button for="floatingInput" style={{ marginTop: '2px', backgroundColor: "#ffffff10" }} onClick={unstakeit}>Unstake</Button>
 												</div>
 											</div>
 										</div>
