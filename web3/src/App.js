@@ -103,8 +103,8 @@ class App extends Component {
 			return new Promise(resolve => setTimeout(resolve, milliseconds))
 		}
 
-		web3Modal.clearCachedProvider();
 		const expectedBlockTime = 10000;
+
 		async function connectwallet() {
 			var provider = await web3Modal.connect();
 			web3 = new Web3(provider);
