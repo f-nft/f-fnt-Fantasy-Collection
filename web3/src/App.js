@@ -249,7 +249,7 @@ class App extends Component {
 				</nav>
 				<div className='row bt-2 center'>
 					<div className='col'>
-						<body className='nftstaker container border-1' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', minWidth: '385px', maxWidth: '385px', minHeight: '700px', maxHeight: '700px' }}>
+						<body className='nftstaker container border-1' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', minWidth: '385px', maxWidth: '485px', minHeight: '700px', maxHeight: '700px' }}>
 							<form>
 								<div className='row pt-4'>
 									<div>
@@ -259,7 +259,7 @@ class App extends Component {
 									<h4>Your Wallet Address</h4>
 									<div className='pb-1' id='wallet-address' style={{
 										color: '#39FF14',
-										fontWeight: '300',
+										fontWeight: '200',
 										textShadow: '1px 1px 1px black',
 									}}>
 										<label for='floatingInput'>Please Connect Wallet</label>
@@ -306,7 +306,7 @@ class App extends Component {
 						</body>
 					</div>
 					<div className='col'>
-						<body className='nftstaker container border-1' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', maxWidth: '100%', minHeight: '700px', maxHeight: '700px' }}>
+						<body className='nftstaker container border-1' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', minWidth: '385px', maxWidth: '100%', minHeight: '700px', maxHeight: '700px' }}>
 							<form style={{ fontFamily: 'Rambla' }} >
 								<h1 style={{ fontWeight: '500', fontFamily: 'Blaka', marginTop: '25px' }}>Fantasy NFT Staking Vault </h1>
 								<h6 style={{ fontWeight: '300' }}>First time staking?</h6>
