@@ -64,6 +64,7 @@
 
 .nftapp {
   background: radial-gradient(circle at 50% 50%, #000000, #060406, #0c080c, #130b13, #190f19, #1e131f, #251724, #2a1b2b, #321e32, #372238, #3e263d);
+  max-height: 100%;
 }
 
 @-webkit-keyframes AnimationName {
@@ -83,7 +84,7 @@
 }
 
 .connectbutton {
-  background: #ff00ddd5;
+  background: #ff7300d5;
   box-shadow: 0px 1px 10px #011824;
   color: #4d2b2b;
   border-radius: 14px;
@@ -162,7 +163,7 @@
 }
 .column {
   float: left;
-  margin: 20px;
+  margin: 10px;
   background-color: grey;
   padding-bottom: 100%;
   margin-bottom: -100%;
@@ -188,6 +189,15 @@
     )
 }
 
+.stakegoldeffect2 {
+    animation: glow2 1s infinite alternate;
+    background: linear-gradient(
+      to top,
+      rgb(156, 0, 143),
+      rgba(255, 0, 0, 0)
+    )
+}
+
 .errorsearch {
   background: black;
 }
@@ -204,7 +214,7 @@
 }
 
 .center {
-  height: 300px;
+  height: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
