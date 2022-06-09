@@ -6,4 +6,4 @@ export const STAKINGCONTRACT = "0x7E497d77C4F619308E7D4463C7e358c2AC0315C1";
 export const polygonscanapi = "https://api.polygonscan.com/api";
 export const moralisapi = "https://deep-index.moralis.io/api/v2";
 export const Web3Alc = createAlchemyWeb3("https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk");
-export const nftpng = "https://bafybeicxsz5hauzpifsh4g76n3d2r5n55f7odzhkiwgns63fqumk2aubdy.ipfs.nftstorage.link/Fantasy%20%23";
+export const nftpng = "https://ipfs://bafybeicxsz5hauzpifsh4g76n3d2r5n55f7odzhkiwgns63fqumk2aubdy.ipfs.nftstorage.link/Fantasy%20%23";
