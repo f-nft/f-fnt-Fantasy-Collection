@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Blaka&family=Kdam+Thmor+Pro&family=Rambla&display=swap');
+
+.App {
+  text-align: center;
+  color: #75006f;
+  max-width: '1080px';
+  min-width: '400px';
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+{
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+}
+
+.overlay {
+  opacity: 0.95;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  position: fixed;
+}
+
+.moving-background {
+  z-index: -1;
+  position: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("D:\f-nft\Code\f-fnt-Fantasy-Collection\web3\public\icegif-3384.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 40% 40%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.h4 {
+  margin-top: 1em;
+
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #dc61fb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+.nftapp {
+  background: radial-gradient(circle at 50% 50%, #000000, #060406, #0c080c, #130b13, #190f19, #1e131f, #251724, #2a1b2b, #321e32, #372238, #3e263d);
+  max-height: 100%;
+}
+
+@-webkit-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+.connectbutton {
+  background: #ff7300d5;
+  box-shadow: 0px 1px 10px #011824;
+  color: #4d2b2b;
+  border-radius: 14px;
+  padding: 5px 12px;
+  font-size: large;
+  font-weight: 500;
+}
+
+.navbarfont {
+  font-family: 'Blaka', cursive;
+  font-weight: 300;
+}
+
+.nftminter {
+    background: radial-gradient(circle at 50% 50%, #090f11, #0c1519, #101e2b, #0f223c, #0e2144);
+    font-family: 'Kdam Thmor Pro', sans-serif;
+    font-weight: 300;
+    color: white;
+    box-shadow: 0 0 1px 1px #1774ff;
+    -webkit-border-radius: 20px !important;
+    -moz-border-radius: 20px !important;
+    border-radius: 20px !important;
+    -webkit-border: 20px !important;
+    -moz-border: 20px !important;
+    border: 20px !important;
+}
+
+.nftstaker {
+  background: radial-gradient(circle at 50% 50%, #090f11, #0c1519, #101e2b, #0f223c, #0e2144);
+  font-family: 'Kdam Thmor Pro', sans-serif;
+  font-weight: 300;
+  color: white;
+  box-shadow: 0 0 1px 1px #1797ff;
+  -webkit-border-radius: 20px !important;
+  -moz-border-radius: 20px !important;
+  border-radius: 20px !important;
+  -webkit-border: 20px !important;
+  -moz-border: 20px !important;
+  border: 20px !important;
+}
+
+.stakingrewards {
+    font-family: 'Rambla', sans-serif;
+    margin-top: '5px';
+    width: auto;
+    font-weight: 300;
+    box-shadow: 1px 1px 15px #ffffff;
+    background: radial-gradient(circle at 50% 50%, #000000, #060406, #0c080c, #130b13, #190f19, #1e131f, #251724, #2a1b2b, #321e32, #372238, #3e263d);
+}
+
+.modal-style1 {
+  background: radial-gradient(circle at 50% 50%, #090f11, #0c1519, #101e2b, #0f223c, #0e2144);
+  font-family: 'Rambla', sans-serif;
+  font-weight: 300;
+  color: white;
+  box-shadow: 0 0 1px 1px #17b2ff;
+  -webkit-border-radius: 20px !important;
+  -moz-border-radius: 20px !important;
+  border-radius: 20px !important;
+  -webkit-border: 20px !important;
+  -moz-border: 20px !important;
+  border: 20px !important;
+}
+
+.container-style {
+  display: grid;
+  grid-template-columns: 600px 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  justify-items: stretch;
+  align-items: stretch
+}
+
+.container {
+  overflow: hidden;
+}
+.column {
+  float: left;
+  margin: 10px;
+  background-color: grey;
+  padding-bottom: 100%;
+  margin-bottom: -100%;
+}
+
+@keyframes glow2 {
+  from {
+    box-shadow: 0 0 4px -1px #f4dc76;
+  }
+  to {
+    box-shadow: 0 0 10px 7px #ffb300;
+  }
+}
+
+.stakegoldeffect {
+    font-family: 'Black Ops One', cursive;
+    font-weight: 300;
+    animation: glow2 3s infinite alternate;
+    background: linear-gradient(
+      to bottom,
+      rgb(1, 53, 130),
+      rgba(255, 0, 0, 0)
+    )
+}
+
+.stakegoldeffect2 {
+    animation: glow2 1s infinite alternate;
+    background: linear-gradient(
+      to top,
+      rgb(156, 0, 143),
+      rgba(255, 0, 0, 0)
+    )
+}
+
+.errorsearch {
+  background: black;
+}
+
+.nft-card {
+  background-image: linear-gradient(125.83deg, rgb(30, 42, 34) 0%, rgb(17, 3, 141) 80.09%);
+  font-family: 'Black Ops One', cursive;
+  color: white;
+  box-shadow: 1px 1px 15px #000000;
+}
+
+.navbarglow {
+  box-shadow: 0px 8px 10px #17b2ff;
+}
+
+.center {
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.row {
+  display: flex; /* equal height of the children */
+  padding: 1em;
+}
+
+.col {
+  font-size: 14;
+  flex: 1; /* additionally, equal width */
+  padding: 1em;
+}
