@@ -61,10 +61,6 @@ class App extends Component {
 		this.setState({ show: !this.state.show })
 	}
 
-	// handleStake() {
-	// 	this.setState({ show: !this.state.show })
-	// }
-
 	handleNFT(nftamount) {
 		this.setState({ outvalue: nftamount.target.value });
 	}
@@ -100,17 +96,17 @@ class App extends Component {
 
 		const expectedBlockTime = 10000;
 
-		async function connectwallet() {
+		async function connectWallet() {
 			var provider = await web3Modal.connect();
 			web3 = new Web3(provider);
 			await provider.send('eth_requestAccounts');
 			var accounts = await web3.eth.getAccounts();
-			var _pid = await web3.eth.getChainId('wallet-address');
+
 			account = accounts[0];
 			document.getElementById('wallet-address').textContent = account;
 			contract = new web3.eth.Contract(ABI, NFTCONTRACT);
 			vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
-			var getstakednfts = await vaultcontract.methods.tokensOfOwner(account, _pid).call();
+			var getstakednfts = await vaultcontract.methods.tokensOfOwner(account).call();
 			document.getElementById('yournfts').textContent = getstakednfts;
 			var getbalance = Number(await vaultcontract.methods.balanceOf(account).call());
 			document.getElementById('stakedbalance').textContent = getbalance;
@@ -155,7 +151,8 @@ class App extends Component {
 		}
 
 		async function enable() {
-			contract.methods.setApprovalForAll(STAKINGCONTRACT, true).send({ from:account });
+			if (contract.methods.setApprovalForAll(STAKINGCONTRACT, true).send({ from:account }));
+			return connectWallet
 		}
 		async function rewardinfo() {
 			var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
@@ -275,6 +272,7 @@ class App extends Component {
 							},
 								async function (error, transactionHash) {
 									console.log("Transfer Submitted, Hash: ", transactionHash)
+									console.log("Fail To Mint", error)
 									let transactionReceipt = null
 									while (transactionReceipt == null) {
 										transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
@@ -299,7 +297,65 @@ class App extends Component {
 			});
 		}
 
-		const refreshPage = () => {
+		async function mint1() {
+			var _pid = "1";
+			var erc20address = await contract.methods.getCryptotoken(_pid).call();
+			var currency = new web3.eth.Contract(TOKENABI, erc20address);
+			var mintRate = await contract.methods.getNFTCost(_pid).call();
+			var _mintAmount = Number(outvalue);
+			var totalAmount = mintRate * _mintAmount;
+			await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+				Web3Alc.eth.getBlock('pending').then((block) => {
+					var baseFee = Number(block.baseFeePerGas);
+					var maxPriority = Number(tip);
+					var maxFee = maxPriority + baseFee;
+					currency.methods.approve(NFTCONTRACT, String(totalAmount))
+						.send({
+							from: account
+						})
+						.then(currency.methods.transfer(NFTCONTRACT, String(totalAmount))
+							.send({
+								from: account,
+								maxFeePerGas: maxFee,
+								maxPriorityFeePerGas: maxPriority
+							},
+								async function (error, transactionHash) {
+									console.log("Transfer Submitted, Hash: ", transactionHash)
+									console.log("Fail To Mint", error)
+									let transactionReceipt = null
+									while (transactionReceipt == null) {
+										transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+										await sleep(expectedBlockTime)
+									}
+									window.console = {
+										log: function (str) {
+											var out = document.createElement("div");
+											out.appendChild(document.createTextNode(str));
+											document.getElementById("txout").appendChild(out);
+										}
+									} 
+
+									window.console = {
+										log: function (str) {
+											var out = document.createElement("div");
+											out.appendChild(document.createTextNode(str));
+											document.getElementById("error").appendChild(out);
+										}
+									}
+
+									console.log("Transfer Complete", transactionReceipt);
+									contract.methods.mintpid(account, _mintAmount, _pid)
+										.send({
+											from: account,
+											maxFeePerGas: maxFee,
+											maxPriorityFeePerGas: maxPriority
+										});
+								}));
+				});
+			});
+		}
+
+		const refreshPage = (error) => {
 			window.location.reload();
 		}
 
@@ -308,9 +364,9 @@ class App extends Component {
 				<nav className='navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-4'>
 					<div className='container-fluid'>
 						<a className='navbar-brand px-5' style={{ fontWeight: '800', fontSize: '22px' }} href='#'></a><img src='FNFT.png' width='8%' />
-						<button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'>
+						<Button className='navbar-toggler' type='Button' data-bs-toggle='collapse' data-bs-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'>
 							<span className='navbar-toggler-icon'></span>
-						</button>
+						</Button>
 						<div className='collapse navbar-collapse' id='navbarCollapse'>
 							<ul className='navbar-nav me-auto mb-2 px-3 mb-md-0' style={{ fontSize: '22px' }}>
 								<li className='nav-item'>
@@ -326,22 +382,22 @@ class App extends Component {
 						</div>
 					</div>
 					<div className='px-5'>
-						<input id='connectbtn' type='button' className='connectbutton' onClick={connectwallet} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000', fontFamily: 'Rambla' }} value='Connect Your Wallet' />
+						<input id='connectbtn' type='Button' className='connectbutton' onClick={connectWallet} style={{ fontSize:'15px', border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000', fontFamily: 'Rambla' }} value='Connect Your Wallet' />
 					</div>
 				</nav>
 				<div className='row bt-1 pt-2 pb-1 center'>
 					<div className='col bt-1 pt-3 pb-3 center'>
-						<body className='nftstaker' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', minWidth: '385px', maxWidth: '485px', minHeight: '700px', maxHeight: '700px' }}>
+						<body className='nftminter' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', minWidth: '385px', maxWidth: '385px', minHeight: '400px', maxHeight: '400px' }}>
 							<form>
 								<div className='row pt-4'>
 									<div>
 										<h1 className='pt-2' style={{ fontWeight: '500', fontFamily: 'Blaka' }}>NFT Minted</h1>
 									</div>
 									<h2 style={{ fontFamily: 'Blaka' }}>{balance.result}/10,000</h2>
-									<h4>Your Wallet Address</h4>
-									<div className='pb-1' id='wallet-address' style={{
+									<h5>Your Wallet Address</h5>
+									<div className='b' id='wallet-address' style={{
+										fontSize: '15px',
 										color: '#39FF14',
-										fontWeight: '200',
 										textShadow: '1px 1px 1px black',
 									}}>
 										<label for='floatingInput'>Please Connect Wallet</label>
@@ -353,7 +409,7 @@ class App extends Component {
 								<ButtonGroup size='lg'
 									aria-label='First group'
 									name='amount'
-									style={{ boxShadow: '1px 3px 8px #000000', fontFamily: 'Black Ops One', fontSize: '25px', marginTop: '5px', marginBottom: '5px', marginInline: '15px' }}
+									style={{ boxShadow: '1px 3px 8px #000000', fontFamily: 'Black Ops One', fontSize: '25px', marginTop: '5px', marginBottom: '5px', marginInline: '10px' }}
 									onClick={nftamount => this.handleNFT(nftamount, 'value')}>
 									<Button value='1' >1</Button>
 									<Button value='5'>5</Button>
@@ -364,23 +420,23 @@ class App extends Component {
 								<h6 className='pt-2' style={{ fontFamily: 'Rambla', fontWeight: '300', fontSize: '18px', marginBottom: '1px' }}>Buy with your preferred crypto!</h6>
 								<div className='row px-2 pb-2 row-style' style={{ marginTop: '1px', fontFamily: 'Rambla', fontWeight: '300', fontSize: '12px' }}>
 									<div className='col'>
-										<Button className='button-style' onClick={mint0} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
+										<Button className='Button-style' onClick={mint1} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
 											<img src={'FNFT.png'} width='30%' />
 										</Button>
 									</div>
 									<div className='col'>
-										<Button className='button-style' style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
+										<Button className='Button-style' onClick={mint0} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
 											<img src='usdt.png' width='30%' />
 										</Button>
 									</div>
 									<div className='col'>
-										<Button className='button-style' onClick={mintnative} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
+										<Button className='Button-style' onClick={mintnative} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
 											<img src='matic.png' width='30%' />
 										</Button>
 									</div>
 									<div>
 										<label id='txout' style={{ color: '#39FF14', marginTop: '5px', fontWeight: '500', textShadow: '1px 1px 2px #000000' }}>
-											<p style={{ fontSize: '20px' }}>Transfer Status</p>
+											<p style={{ fontSize: '15px' }}>Transfer Status</p>
 										</label>
 									</div>
 								</div>
@@ -495,20 +551,21 @@ class App extends Component {
 										</td>
 									</tr>
 								</tbody>
+								<tr style={{ fontSize: '12px', fontStyle: 'italic' }}>* FOT™ can be access Special Mint =&gt; High Class Fantasy NFT</tr>
 							</table>
 						</div>
 					</div>
 				</div>
-				<div className='row mt-3'>
-					<div className='col mt-4 ml-3'>
+				<div className='row mt-1'>
+					<div className='col mt-1 ml-3'>
 						<img src="FNFT.png" width={'30%'}></img>
 					</div>
 					<div className='col'>
-						<h1 className='mt-3 nftportal'>Your NFT Portal</h1>
-						<Button onClick={refreshPage} style={{ backgroundColor: "#000000", boxShadow: "1px 1px 5px #000000" }}>Refresh NFT Portal</Button>
+						<h3 className='mt-1'>NFTs VAULT</h3>
+						<Button onClick={refreshPage} style={{ backgroundColor: "#000000", boxShadow: "1px 1px 5px #000000" }}>Refresh NFT Vault</Button>
 					</div>
-					<div className='col mt-3 mr-5'>
-						<img src="matic.png" width={'20%'}></img>
+					<div className='col mt-1 mr-3'>
+						<img src="matic.png" width={'15%'}></img>
 					</div>
 				</div>
 			</div>

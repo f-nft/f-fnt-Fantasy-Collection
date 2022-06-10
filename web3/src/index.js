@@ -12,9 +12,8 @@ import NFT from './nfts';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  
   <React.StrictMode>
     <App />
     <NFT />
   </React.StrictMode>
-);
+)

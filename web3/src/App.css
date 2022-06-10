@@ -12,10 +12,6 @@
   pointer-events: none;
 }
 
-body {
-  overflow: auto;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -209,10 +205,27 @@ body {
 }
 
 .nft-card {
-  background-image: linear-gradient(125.83deg, rgb(30, 42, 34) 0%, rgb(17, 3, 141) 80.09%);
+  background-image: linear-gradient(175.83deg, rgb(30, 42, 34) 0%, rgb(17, 3, 141) 80.09%);
   font-family: 'Black Ops One', cursive;
-  color: white;
-  box-shadow: 1px 1px 15px #000000;
+  font-size: '12px';
+  background-size: 100% 100%;
+    -webkit-animation: AnimationStake 5s ease infinite;
+    -moz-animation: AnimationStake 5s ease infinite;
+    animation: AnimationStake 5s ease infinite;
+  color: rgb(180, 2, 171);
+  box-shadow: 1px 1px 11px #000000;
+}
+
+.stakedcard {
+  background: linear-gradient(270deg, #0c0c0c, #f21dcf);
+  font-family: 'Black Ops One', cursive;
+  font-size: '12px';
+  background-size: 100% 100%;
+    -webkit-animation: AnimationStake 10s ease infinite;
+    -moz-animation: AnimationStake 10s ease infinite;
+    animation: AnimationStake 10 ease infinite;
+  color: rgb(255, 255, 255);
+  box-shadow: 1px 1px 11px #FFD700;
 }
 
 .navbarglow {
@@ -245,7 +258,7 @@ body {
   background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(90,92,106,1) 0%, rgba(32,45,58,1) 81.3% );
   font-family: "Blaka";
   font-weight: 300;
-  color: rgb(255, 255, 255);
+  color: rgb(146, 0, 146);
   box-shadow: 0 0 1px 1px #ffffff;
     -webkit-border-radius: 20px !important;
     -moz-border-radius: 20px !important;
@@ -255,7 +268,7 @@ body {
     border: 20px !important;
 }
 .farmcard {
-color: rgb(255, 255, 255);
+color: rgb(119, 3, 113);
 font-family: "Blaka";
 font-weight: 300;
 background-image: linear-gradient( 90deg,  rgba(32,38,57,1) 11.4%, rgba(63,76,119,1) 70.2% );
@@ -263,11 +276,10 @@ background-image: linear-gradient( 90deg,  rgba(32,38,57,1) 11.4%, rgba(63,76,11
 
 
 .nftportal {
-  font-family: "Blaka";  
-  font-size: 14;
-  padding: 1em;
-  color: rgb(255, 255, 255);
-  font-weight: 300;
+  font-family: "Blaka";
+  font-size: 12;
+  background: radial-gradient(circle at 50% 50%, #000000, #060406, #0c080c, #130b13, #190f19, #1e131f, #251724, #2a1b2b, #321e32, #372238, #3e263d);
+  font-weight: 100;
 
 }
 
