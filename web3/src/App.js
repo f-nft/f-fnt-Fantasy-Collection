@@ -396,7 +396,7 @@ class App extends Component {
 									<h2 style={{ fontFamily: 'Blaka' }}>{balance.result}/10,000</h2>
 									<h5>Your Wallet Address</h5>
 									<div className='b' id='wallet-address' style={{
-										fontSize: '15px',
+										fontSize: '12px',
 										color: '#39FF14',
 										textShadow: '1px 1px 1px black',
 									}}>
