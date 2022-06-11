@@ -11,6 +11,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@maticnetwork/maticjs-web3": "^1.0.1",
+    "@mui/material": "^5.8.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -24,6 +25,8 @@
     "react": "^18.1.0",
     "react-bootstrap": "^2.4.0",
     "react-dom": "^18.1.0",
+    "react-flexbox-grid": "^2.1.2",
+    "react-layout-library": "^1.5.7",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^4.0.3",
     "sf-font": "^1.0.0",
@@ -62,6 +65,9 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^6.1.1"
+    "@fortawesome/fontawesome-free": "^6.1.1",
+    "css-loader": "^6.7.1",
+    "style-loader": "^3.3.1",
+    "styled-components": "^5.3.5"
   }
 }
