@@ -1,11 +1,11 @@
-import './App.css';
+import '../App.css';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import 'sf-font';
-import { moralisapikey, NFTCONTRACT, STAKINGCONTRACT, moralisapi, nftpng } from './config';
+import { moralisapikey, NFTCONTRACT, STAKINGCONTRACT, moralisapi, nftpng } from '../config';
 import axios from 'axios';
-import VAULTABI from './VAULTABI.json';
+import VAULTABI from '../VAULTABI.json';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import WalletLink from 'walletlink';
@@ -45,7 +45,7 @@ const web3Modal = new Web3Modal({
     providerOptions
 });
 
-export default function NFT() {
+export default function Nfts() {
     const [apicall, getNfts] = useState([])
     const [nftstk, getStk] = useState([])
     const [loadingState, setLoadingState] = useState('not-loaded')
