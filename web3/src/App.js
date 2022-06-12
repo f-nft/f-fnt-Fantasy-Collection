@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from './Components/Navbar';
-import Nfts	from './Components/Nfts';
+import List	from './Components/List';
 import Stake from './Components/Stake';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -88,7 +88,6 @@ class App extends Component {
 				console.log(outputb.data)
 			})
 	}
-
 
 	render() {
 		const { balance } = this.state;
@@ -490,7 +489,7 @@ class App extends Component {
 					<div className='col mt-1 mr-3'>
 						<img src="matic.png" width={'15%'}></img>
 					</div>
-				<Nfts />
+				<List />
 				</div>
 			</div>
 		)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
 import { Component } from 'react';
-import { polygonscanapikey, moralisapikey, NFTCONTRACT, STAKINGCONTRACT, polygonscanapi, moralisapi } from '../config';
+import { NFTCONTRACT, STAKINGCONTRACT } from '../config';
 import '../App.css';
 import ABI from '../ABI.json';
 import VAULTABI from '../VAULTABI.json';

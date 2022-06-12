@@ -19,13 +19,13 @@ const providerOptions = {
     binancechainwallet: {
         package: true
     },
-    walletconnect: {
+    Walletconnect: {
         package: WalletConnectProvider,
         options: {
             infuraId: '50f6635fbcc742f18ce7a2a5cbe73ffa'
         }
     },
-    walletlink: {
+    Walletlink: {
         package: WalletLink,
         options: {
             appName: 'f-nft Polygon',
@@ -45,9 +45,9 @@ const web3Modal = new Web3Modal({
     providerOptions
 });
 
-export default function Nfts() {
+export default function List() {
     const [apicall, getNfts] = useState([])
-    const [nftstk, getStk] = useState([])
+    const [listtk, getStk] = useState([])
     const [loadingState, setLoadingState] = useState('not-loaded')
 
     useEffect(() => {
@@ -63,12 +63,12 @@ export default function Nfts() {
         account = accounts[0];
         vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
         let config = { 'X-API-Key': moralisapikey, 'accept': 'application/json' };
-        const nfts = await axios.get((moralisapi + `/nft/${NFTCONTRACT}/owners?chain=polygon&format=decimal`), { headers: config })
+        const list = await axios.get((moralisapi + `/nft/${NFTCONTRACT}/owners?chain=polygon&format=decimal`), { headers: config })
             .then(output => {
                 const { result } = output.data
                 return result;
             })
-        const apicall = await Promise.all(nfts.map(async i => {
+        const apicall = await Promise.all(list.map(async i => {
             let item = {
                 tokenId: i.token_id,
                 holder: i.owner_of,
@@ -77,18 +77,18 @@ export default function Nfts() {
             }
             return item
         }))
-        const stakednfts = await vaultcontract.methods.tokensOfOwner(account).call()
+        const stakedlist = await vaultcontract.methods.tokensOfOwner(account).call()
             .then(id => {
                 return id;
             })
-        const nftstk = await Promise.all(stakednfts.map(async i => {
+        const listtk = await Promise.all(stakedlist.map(async i => {
             let stkid = {
                 tokenId: i,
             }
             return stkid
         }))
         getNfts(apicall)
-        getStk(nftstk)
+        getStk(listtk)
         console.log(apicall)
         setLoadingState('loaded')
     }
@@ -107,7 +107,7 @@ export default function Nfts() {
                                     vaultcontract.methods.stake([nft.tokenId]).send({ from:account });
                                 }
                                 return (
-                                    <div className="card nft-card mt-3 mb-3" key={i} >
+                                    <div className="nft-card mt-3 mb-3" key={i} >
                                         <div className="image-over">
                                             <img className="card-img-top" src={nftpng + nft.tokenId} alt="" />
                                         </div>
@@ -125,7 +125,7 @@ export default function Nfts() {
                                 )
                             }
                         })}
-                        {nftstk.map((nft, i) => {
+                        {listtk.map((nft, i) => {
                             async function unstakeit() {
                                 vaultcontract.methods.unstake([nft.tokenId]).send({ from: account });
                             }

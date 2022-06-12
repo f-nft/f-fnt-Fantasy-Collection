@@ -1,8 +1,8 @@
-import { Box, Container, keyframes } from '@chakra-ui/react';
+import React, { Box, Container } from 'react';
 import { motion } from 'framer-motion';
-import './style.css';
+import { keyframes } from 'styled-components';
+import '../style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
 
 const animationKeyframes = keyframes`
   0% { transform: scale(1) rotate(0); border-radius: 20%; }
@@ -14,7 +14,7 @@ const animationKeyframes = keyframes`
 
 const animation = `${animationKeyframes} 2s ease-in-out infinite`;
 
-export default function UPGRADE() {
+export default function Upgrade() {
   return (
     <Container h="100vh" display="flex" alignItems="center" justifyContent="center">
       <Box
