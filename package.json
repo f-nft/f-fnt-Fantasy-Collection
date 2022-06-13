@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@openzeppelin/contracts": "^4.6.0",
-    "@web3-react/injected-connector": "^6.0.7"
-  }
-}
