@@ -1,7 +1,4 @@
 import './App.css';
-import Navbar from './Components/Navbar';
-import List	from './Components/List';
-import Stake from './Components/Stake';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
@@ -15,7 +12,6 @@ import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import WalletLink from 'walletlink';
 import Web3 from 'web3';
-// import { createClient } from 'redis';
 
 var account = null;
 var contract = null;
@@ -44,7 +40,7 @@ const providerOptions = {
 		}
 	},
 };
-		
+
 const web3Modal = new Web3Modal({
 	network: 'mainnet',
 	theme: 'dark',
@@ -88,6 +84,7 @@ class App extends Component {
 				console.log(outputb.data)
 			})
 	}
+
 
 	render() {
 		const { balance } = this.state;
@@ -362,18 +359,32 @@ class App extends Component {
 			window.location.reload();
 		}
 
-		// const client = createClient();
-
-		// client.on('error', (err) => console.log('Redis Client Error', err));
-
-		// await client.connect();
-
-		// await client.set('key', 'value');
-		// const value = await client.get('key');
-
 		return (
 			<div className='App nftapp'>
-				<Navbar />
+				<nav className='navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-4'>
+					<div className='container-fluid'>
+						<a className='navbar-brand px-5' style={{ fontWeight: '800', fontSize: '22px' }} href='#'></a><img src='FNFT.png' width='8%' />
+						<Button className='navbar-toggler' type='Button' data-bs-toggle='collapse' data-bs-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'>
+							<span className='navbar-toggler-icon'></span>
+						</Button>
+						<div className='collapse navbar-collapse' id='navbarCollapse'>
+							<ul className='navbar-nav me-auto mb-2 px-3 mb-md-0' style={{ fontSize: '22px' }}>
+								<li className='nav-item'>
+									<a className='nav-link active' aria-current='page' href='#'>Dashboard</a>
+								</li>
+								<li className='nav-item'>
+									<a className='nav-link' href='#'>List NFTs</a>
+								</li>
+								<li className='nav-item'>
+									<a className='nav-link' href='#'>Upgrade NFTs</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div className='px-5'>
+						<input id='connectbtn' type='Button' className='connectbutton' onClick={connectWallet} style={{ fontSize:'15px', border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000', fontFamily: 'Rambla' }} value='Connect Your Wallet' />
+					</div>
+				</nav>
 				<div className='row bt-1 pt-2 pb-1 center'>
 					<div className='col bt-1 pt-3 pb-3 center'>
 						<body className='nftminter' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', minWidth: '385px', maxWidth: '385px', minHeight: '400px', maxHeight: '400px' }}>
@@ -385,7 +396,7 @@ class App extends Component {
 									<h2 style={{ fontFamily: 'Blaka' }}>{balance.result}/10,000</h2>
 									<h5>Your Wallet Address</h5>
 									<div className='b' id='wallet-address' style={{
-										fontSize: '12px',
+										fontSize: '13px',
 										color: '#39FF14',
 										textShadow: '1px 1px 1px black',
 									}}>
@@ -477,7 +488,74 @@ class App extends Component {
 						</body>
 					</div>
 				</div>
-				<Stake />
+				<div className='row px-4 pt-2'>
+					<div className='header container' >
+						<div style={{ fontSize: '25px', borderRadius: '14px', color: '#ffffff', fontWeight: '300', fontFamily: 'Black Ops One' }}>Fantasy NFT Staking Pool Active Rewards</div>
+						<table className='table px-3 table-bordered table-dark' style={{ fontSize: '20px' }}>
+							<thead className='thead-light'>
+								<tr>
+									<th scope='col'>Collection</th>
+									<th scope='col'>Rewards Per Day</th>
+									<th scope='col'>Exchangeable Items</th>
+								</tr>
+							</thead>
+							<tbody style={{ fontSize: '18px' }}>
+								<tr>
+									<td>Discovery</td>
+									<td className='amount' data-test-id='rewards-summary-ads'>
+										<span className='amount'>0.50</span>&nbsp;<span class='currency'>FOT</span>
+									</td>
+									<td className='exchange'>
+										<span className='amount'>2</span>&nbsp;<span class='currency'>NFTs/M</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Angel & Devil</td>
+									<td className='amount' data-test-id='rewards-summary-ac'>
+										<span className='amount'>2.50</span>&nbsp;<span class='currency'>FOT</span>
+									</td>
+									<td className='exchange'><span class='amount'>10</span>&nbsp;<span class='currency'>NFTs/M</span>
+									</td>
+								</tr>
+								<tr className='stakegoldeffect'>
+									<td>Chaos</td>
+									<td className='amount' data-test-id='rewards-summary-one-time'><span class='amount'>1</span>&nbsp;<span class='currency'>FOT™</span>
+									</td>
+									<td className='exchange'>
+										<span className='amount'>25 NFTs/M or </span>
+										<span className='currency'>100 FOT/M</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div className='header'>
+							<div style={{ fontSize: '25px', borderRadius: '14px', fontWeight: '300', fontFamily: 'Black Ops One', color: 'white' }}>FOT Token Stake Farms</div>
+							<table className='table table-bordered table-dark' style={{ borderRadius: '14px' }} >
+								<thead className='thead-light' style={{ fontSize: '20px' }}>
+									<tr>
+										<th scope='col'>Farm Pools</th>
+										<th scope='col'>Harvest Daily Earnings</th>
+									</tr>
+								</thead>
+								<tbody style={{ fontSize: '18px' }}>
+									<tr>
+										<td>Stake FOT to Earn FOT</td>
+										<td className='amount' data-test-id='rewards-summary-ads'>
+											<span className='amount'>0.01</span>&nbsp;<span class='currency'>Per FOT</span>
+										</td>
+									</tr>
+									<tr>
+										<td>Stake FOT to Earn FOT™</td>
+										<td className='amount' data-test-id='rewards-summary-ac'>
+											<span className='amount'>0.005</span>&nbsp;<span class='currency'>Per FOT™</span>
+										</td>
+									</tr>
+								</tbody>
+								<tr style={{ fontSize: '12px', fontStyle: 'italic' }}>* FOT™ can be access Special Mint =&gt; High Class Fantasy NFT</tr>
+							</table>
+						</div>
+					</div>
+				</div>
 				<div className='row mt-1'>
 					<div className='col mt-1 ml-3'>
 						<img src="FNFT.png" width={'30%'}></img>
@@ -489,7 +567,6 @@ class App extends Component {
 					<div className='col mt-1 mr-3'>
 						<img src="matic.png" width={'15%'}></img>
 					</div>
-				<List />
 				</div>
 			</div>
 		)
