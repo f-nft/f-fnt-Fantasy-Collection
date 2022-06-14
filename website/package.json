@@ -26,7 +26,6 @@
     "ethers": "^5.6.8",
     "font-awesome": "^4.7.0",
     "framer-motion": "^6.3.11",
-    "http-proxy-middleware": "^2.0.6",
     "moralis": "^1.8.0",
     "react": "^18.1.0",
     "react-animation-components": "^3.0.0",
@@ -91,5 +90,6 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "proxy": "http://66.42.40.33:3003/"
 }
