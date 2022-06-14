@@ -1,12 +1,9 @@
-import React, { StrictMode } from 'react';
-import * as ReactDOM from 'react-dom/client';
-import App from './App';
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 
-const container = document.getElementById('root');
-const root = ReactDOM.createRoot(container);
-
-root.render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+// it('renders without crashing', () => {
+//   const div = document.getElementById('root');
+//   ReactDOM.render(<App />, div);
+// });
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);

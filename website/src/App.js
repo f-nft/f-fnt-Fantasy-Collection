@@ -1,7 +1,9 @@
+// eslint-disable-next-lineimport './App.css';
+// App.js;
 import './App.css';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import 'sf-font';
 import { polygonscanapikey, moralisapikey, NFTCONTRACT, STAKINGCONTRACT, polygonscanapi, moralisapi, Web3Alc } from './config';
 import axios from 'axios';
@@ -12,6 +14,9 @@ import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import WalletLink from 'walletlink';
 import Web3 from 'web3';
+import List from './List';
+
+// import Nfts from './Nfts';
 
 var account = null;
 var contract = null;
@@ -48,14 +53,15 @@ const web3Modal = new Web3Modal({
 	providerOptions
 });
 
-class App extends Component {
-	constructor() {
-		super();
-		this.state = {
+class App extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = ({
 			balance: [],
 			rawearn: [],
-		};
-	}
+			account: [],
+
+		})}
 
 	handleModal() {
 		this.setState({ show: !this.state.show })
@@ -84,9 +90,8 @@ class App extends Component {
 				console.log(outputb.data)
 			})
 	}
-
-
-	render() {
+	
+	render () {
 		const { balance } = this.state;
 		const { outvalue } = this.state;
 
@@ -103,7 +108,8 @@ class App extends Component {
 			var accounts = await web3.eth.getAccounts();
 
 			account = accounts[0];
-			document.getElementById('wallet-address').textContent = account;
+			document.getElementById('wallet-address').textContent = accounts;
+			console.log('wallet-address').show = account;
 			contract = new web3.eth.Contract(ABI, NFTCONTRACT);
 			vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
 			var getstakednfts = await vaultcontract.methods.tokensOfOwner(account).call();
@@ -126,6 +132,7 @@ class App extends Component {
 					rwdArray.push(numrwd);
 				});
 			});
+
 			function delay() {
 				return new Promise(resolve => setTimeout(resolve, 300));
 			}
@@ -148,10 +155,11 @@ class App extends Component {
 			document.getElementById('yournfts').textContent = getstakednfts;
 			var getbalance = Number(await vaultcontract.methods.balanceOf(account).call());
 			document.getElementById('stakedbalance').textContent = getbalance;
+			return connectWallet
 		}
 
 		async function enable() {
-			if (contract.methods.setApprovalForAll(STAKINGCONTRACT, true).send({ from:account }));
+			if (contract.methods.setApprovalForAll(STAKINGCONTRACT, true).send({ from: account }));
 			return connectWallet
 		}
 		async function rewardinfo() {
@@ -186,6 +194,7 @@ class App extends Component {
 			}
 			return processArray([rwdArray]);
 		}
+
 		async function claimit() {
 			var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
 			const arraynft = Array.from(rawnfts.map(Number));
@@ -205,6 +214,7 @@ class App extends Component {
 					})
 				});
 			})
+			return connectWallet
 		}
 
 		async function unstakeall() {
@@ -226,6 +236,7 @@ class App extends Component {
 					})
 				});
 			})
+			return connectWallet
 		}
 
 		async function mintnative() {
@@ -246,6 +257,7 @@ class App extends Component {
 						});
 				});
 			})
+			return connectWallet
 		}
 
 		async function mint0() {
@@ -333,7 +345,7 @@ class App extends Component {
 											out.appendChild(document.createTextNode(str));
 											document.getElementById("txout").appendChild(out);
 										}
-									} 
+									}
 
 									window.console = {
 										log: function (str) {
@@ -355,142 +367,105 @@ class App extends Component {
 			});
 		}
 
-		const refreshPage = (error) => {
-			window.location.reload();
+		const refreshPage = () => {
+			window.location.reload()
 		}
 
+		if (this.state.hasError) {
+			// refresh
+			return refreshPage;
+		}
+		
 		return (
 			<div className='App nftapp'>
 				<nav className='navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-4'>
 					<div className='container-fluid'>
-						<a className='navbar-brand px-5' style={{ fontWeight: '800', fontSize: '22px' }} href='#'></a><img src='FNFT.png' width='8%' />
-						<Button className='navbar-toggler' type='Button' data-bs-toggle='collapse' data-bs-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'>
+						<a className='navbar-brand px-5' id='home' style={{ fontWeight: '800', fontSize: '22px' }} href='home'></a><img className='react-logo' src='FNFT.png' width='8%' alt='logo' />
+						<Button className='navbar-toggler' type='Button' data-bs-toggle='collapse' data-bs-target='navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'>
 							<span className='navbar-toggler-icon'></span>
 						</Button>
 						<div className='collapse navbar-collapse' id='navbarCollapse'>
 							<ul className='navbar-nav me-auto mb-2 px-3 mb-md-0' style={{ fontSize: '22px' }}>
 								<li className='nav-item'>
-									<a className='nav-link active' aria-current='page' href='#'>Dashboard</a>
+									<a className='nav-link active' id='dashboard' aria-current='page' href='dashboard'>Dashboard</a>
 								</li>
 								<li className='nav-item'>
-									<a className='nav-link' href='#'>List NFTs</a>
+									<a className='nav-link' id='list-nft' href='list-nft'>List NFTs</a>
 								</li>
 								<li className='nav-item'>
-									<a className='nav-link' href='#'>Upgrade NFTs</a>
+									<a className='nav-link' id='upgrade' href='upgrade'>Upgrade NFTs</a>
 								</li>
 							</ul>
 						</div>
 					</div>
-					<div className='px-5'>
-						<input id='connectbtn' type='Button' className='connectbutton' onClick={connectWallet} style={{ fontSize:'15px', border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000', fontFamily: 'Rambla' }} value='Connect Your Wallet' />
+					<div className='px-5 ml-150px'>
+						<input id='connectbtn' type='Button' className='connectbutton' onClick={connectWallet} style={{ padding: '5px', fontSize: '15px', border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000', fontFamily: 'Rambla' }} value='Connect Your Wallet' />
 					</div>
 				</nav>
-				<div className='row bt-1 pt-2 pb-1 center'>
-					<div className='col bt-1 pt-3 pb-3 center'>
-						<body className='nftminter' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', minWidth: '385px', maxWidth: '385px', minHeight: '400px', maxHeight: '400px' }}>
-							<form>
-								<div className='row pt-4'>
-									<div>
-										<h1 className='pt-2' style={{ fontWeight: '500', fontFamily: 'Blaka' }}>NFT Minted</h1>
-									</div>
-									<h2 style={{ fontFamily: 'Blaka' }}>{balance.result}/10,000</h2>
-									<h5>Your Wallet Address</h5>
-									<div className='b' id='wallet-address' style={{
-										fontSize: '13px',
-										color: '#39FF14',
-										textShadow: '1px 1px 1px black',
-									}}>
-										<label for='floatingInput'>Please Connect Wallet</label>
-									</div>
+				<div className='container pt-1' style={{ color: 'white', border: '15px', borderRadius: '25px', boxShadow: '1px 1px 5px #000000' }}>
+					<body className='nftminter row px-2 pb-2 center'>
+						<form className='col-sm bt-1 pt-1 pb-1 mb-3' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #000000', minWidth: '385px', maxWidth: '385px' }}>
+							<div className='row'>
+								<div>
+									<h1 className='pt-2' style={{ fontWeight: '500', fontFamily: 'Blaka', textShadow: '1px 1px 2px #000000' }}>NFT Minted</h1>
+								</div>
+								<h4 style={{ fontFamily: 'Black Ops One', textShadow: '1px 1px 2px #000000' }}>{balance.result}/10,000</h4>
+								<h5>Your Wallet Address</h5>
+								<div id='-' style={{
+									fontSize: '15px',
+									color: '#39FF14',
+									fontFamily: 'Ubuntu',
+									textShadow: '1px 1px 1px black',
+								}}>
+									<label for='floatingInput'>Please Connect Wallet</label>
+								</div>
+							</div>
+							<div>
+								<label style={{ fontWeight: '200', fontSize: '20px', textShadow: '1px 1px 2px #000000' }}>Select NFT Quantity</label>
+							</div>
+							<ButtonGroup className='title' size='3g'
+								aria-label='First group'
+								name='amount'
+								style={{ boxShadow: '1px 3px 8px #000000', fontFamily: 'Black Ops One', fontSize: '25px', marginTop: '5px', marginBottom: '5px', marginInline: '10px', textShadow: '1px 1px 2px #000000' }}
+								onClick={nftamount => this.handleNFT(nftamount, 'value')}>
+								<Button value='1' >1</Button>
+								<Button value='5'>5</Button>
+								<Button value='10'>10</Button>
+								<Button value='50'>50</Button>
+								<Button value='100'>100</Button>
+							</ButtonGroup>
+							<h6 className='pt-2' style={{ fontFamily: 'Rambla', fontWeight: '300', fontSize: '18px', marginBottom: '1px', textShadow: '1px 1px 2px #000000' }}>Buy with your preferred crypto!</h6>
+							<div className='row px-3 pb-1 pt-1 row-style' style={{ marginTop: '1px', fontFamily: 'Rambla', fontWeight: '300', fontSize: '12px' }}>
+								<div className='col'>
+									<Button className='Button-style' onClick={mint1} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
+										<img src={'FNFT.png'} width='30%' alt='fnft' />
+									</Button>
+								</div>
+								<div className='col'>
+									<Button className='Button-style' onClick={mint0} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
+										<img src='usdt.png' width='30%' alt='usdt' />
+									</Button>
+								</div>
+								<div className='col'>
+									<Button className='Button-style' onClick={mintnative} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
+										<img src='matic.png' width='30%' alt='matic' />
+									</Button>
 								</div>
 								<div>
-									<label style={{ fontWeight: '300', fontSize: '20px' }}>Select NFT Quantity</label>
+									<label id='txout pb-2' style={{ color: '#39FF14', marginTop: '5px', fontWeight: '500', textShadow: '1px 1px 2px #000000' }}>
+										<p style={{ fontSize: '15px' }}>Transfer Status</p>
+									</label>
 								</div>
-								<ButtonGroup size='lg'
-									aria-label='First group'
-									name='amount'
-									style={{ boxShadow: '1px 3px 8px #000000', fontFamily: 'Black Ops One', fontSize: '25px', marginTop: '5px', marginBottom: '5px', marginInline: '10px' }}
-									onClick={nftamount => this.handleNFT(nftamount, 'value')}>
-									<Button value='1' >1</Button>
-									<Button value='5'>5</Button>
-									<Button value='10'>10</Button>
-									<Button value='50'>50</Button>
-									<Button value='100'>100</Button>
-								</ButtonGroup>
-								<h6 className='pt-2' style={{ fontFamily: 'Rambla', fontWeight: '300', fontSize: '18px', marginBottom: '1px' }}>Buy with your preferred crypto!</h6>
-								<div className='row px-2 pb-2 row-style' style={{ marginTop: '1px', fontFamily: 'Rambla', fontWeight: '300', fontSize: '12px' }}>
-									<div className='col'>
-										<Button className='Button-style' onClick={mint1} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
-											<img src={'FNFT.png'} width='30%' />
-										</Button>
-									</div>
-									<div className='col'>
-										<Button className='Button-style' onClick={mint0} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
-											<img src='usdt.png' width='30%' />
-										</Button>
-									</div>
-									<div className='col'>
-										<Button className='Button-style' onClick={mintnative} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
-											<img src='matic.png' width='30%' />
-										</Button>
-									</div>
-									<div>
-										<label id='txout' style={{ color: '#39FF14', marginTop: '5px', fontWeight: '500', textShadow: '1px 1px 2px #000000' }}>
-											<p style={{ fontSize: '15px' }}>Transfer Status</p>
-										</label>
-									</div>
-								</div>
-							</form>
-						</body>
-					</div>
-					<div className='col bt-1 pt-2 pb-1 center'>
-						<body className='nftstaker' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', minWidth: '385px', maxWidth: '100%', minHeight: '700px', maxHeight: '700px' }}>
-							<form style={{ fontFamily: 'Rambla' }} >
-								<h1 style={{ fontWeight: '500', fontFamily: 'Blaka', marginTop: '25px' }}>Fantasy NFT Staking Vault </h1>
-								<h6 style={{ fontWeight: '300' }}>First time staking?</h6>
-								<Button className='btn' conClick={enable} style={{ backgroundColor: '#ffffff10', boxShadow: '1px 1px 5px #000000' }} >Authorize Your Wallet</Button>
-								<div className='row px-3 center' >
-									<div className='col' style={{ minWidth: '385px', maxWidth: '100%', maxHeight: '300px', minHeight: '300px' }}>
-										<form class='stakingrewards' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff' }}>
-											<h4 style={{ color: '#FFFFFF', fontWeight: '300' }}>Your Vault Activity</h4>
-											<h6 style={{ color: '#FFFFFF' }}>Verify Staked Amount</h6>
-											<Button onClick={verify} style={{ backgroundColor: '#ffffff10', boxShadow: '1px 1px 5px #000000' }} >Verify</Button>
-											<table className='table mt-3 mb-5 px-3 table-dark'>
-												<tr>
-													<td style={{ fontSize: '16px' }}>Your Staked NFTs:
-														<span style={{ backgroundColor: '#ffffff00', fontSize: '18px', color: '#39FF14', fontWeight: '500', textShadow: '1px 1px 2px #000000' }} id='yournfts'></span>
-													</td>
-												</tr>
-												<tr>
-													<td style={{ fontSize: '16px' }}>Total Staked NFTs:
-														<span style={{ backgroundColor: '#ffffff00', fontSize: '18px', color: '#39FF14', fontWeight: '500', textShadow: '1px 1px 2px #000000' }} id='stakedbalance'></span>
-													</td>
-												</tr>
-												<tr>
-													<Button className='mb-3' onClick={unstakeall} style={{ backgroundColor: '#ffffff10', boxShadow: '1px 1px 5px #000000' }}>Unstake All</Button>
-												</tr>
-											</table>
-										</form>
-									</div>
-									<div className='col container' style={{ minWidth: '385px', maxWidth: '100%', maxHeight: '300px', minHeight: '300px' }}>
-										<form className='stakingrewards' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', fontFamily: 'Rambla' }}>
-											<h4 style={{ color: '#FFFFFF', fontWeight: '300' }}> Staking Rewards</h4>
-											<Button onClick={rewardinfo} style={{ backgroundColor: '#ffffff10', boxShadow: '1px 1px 5px #000000' }} >Earned FOT Rewards</Button>
-											<div id='earned' style={{ color: '#39FF14', marginTop: '5px', fontSize: '25px', fontWeight: '500', textShadow: '1px 1px 2px #000000' }}><p style={{ fontSize: '20px' }}>Earned Tokens</p></div>
-											<div className='col-12 mt-2'>
-												<div style={{ color: 'white' }}>Claim Rewards</div>
-												<Button onClick={claimit} style={{ backgroundColor: '#ffffff10', boxShadow: '1px 1px 5px #000000' }} className='mb-2'>Claim</Button>
-											</div>
-										</form>
-									</div>
-								</div>
-							</form>
-						</body>
-					</div>
+							</div>
+						</form>
+						<div className='col-sm'>
+							<img src='f-nft0-100.gif' width='100%' alt='fantasy' style={{ border: '5px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }} />
+						</div>
+					</body>
 				</div>
-				<div className='row px-4 pt-2'>
+				<div className='row px-2 pt-1 mt-2 mb-1'>
 					<div className='header container' >
-						<div style={{ fontSize: '25px', borderRadius: '14px', color: '#ffffff', fontWeight: '300', fontFamily: 'Black Ops One' }}>Fantasy NFT Staking Pool Active Rewards</div>
+						<div style={{ fontSize: '25px', borderRadius: '14px', color: '#ffffff', fontWeight: '300', fontFamily: 'Black Ops One', textShadow: '1px 1px 2px #000000' }}>Fantasy NFT Staking Pool Active Rewards</div>
 						<table className='table px-3 table-bordered table-dark' style={{ fontSize: '20px' }}>
 							<thead className='thead-light'>
 								<tr>
@@ -528,7 +503,7 @@ class App extends Component {
 								</tr>
 							</tbody>
 						</table>
-						<div className='header'>
+						<div className='table'>
 							<div style={{ fontSize: '25px', borderRadius: '14px', fontWeight: '300', fontFamily: 'Black Ops One', color: 'white' }}>FOT Token Stake Farms</div>
 							<table className='table table-bordered table-dark' style={{ borderRadius: '14px' }} >
 								<thead className='thead-light' style={{ fontSize: '20px' }}>
@@ -556,20 +531,70 @@ class App extends Component {
 						</div>
 					</div>
 				</div>
-				<div className='row mt-1'>
-					<div className='col mt-1 ml-3'>
-						<img src="FNFT.png" width={'30%'}></img>
-					</div>
-					<div className='col'>
-						<h3 className='mt-1'>NFTs VAULT</h3>
-						<Button onClick={refreshPage} style={{ backgroundColor: "#000000", boxShadow: "1px 1px 5px #000000" }}>Refresh NFT Vault</Button>
-					</div>
-					<div className='col mt-1 mr-3'>
-						<img src="matic.png" width={'15%'}></img>
+				<div className='row center'>
+					<div className='col bt-1 pt-1 pb-1 mb-1 center'>
+						<body className='grid-container farm px-1 center px-1 pb-1 pt-1' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', textShadow: '1px 1px 2px #000000' }}>
+							<form className='col center' style={{ fontFamily: 'Rambla' }} >
+								<div className='grid-container px-5 pb-1 pt-1' >
+									<div className='col' style={{ gridTemplateColumns: 'auto' }}>
+										<img className='col center react-logo' src='FNFT.png' width={'100%'} alt='logo' />
+										<img className='col center react-logo' src="matic.png" width={'50%'} alt='maticn' />
+									</div>
+									<div className='col' style={{ gridTemplateColumns: 'auto' }}>
+										<h1 className='row center' style={{ fontWeight: '500', fontFamily: 'Blaka', marginTop: '15px' }}>Fantasy NFT Staking Vault </h1>
+										<h6 className='row center' style={{ color:'orange', fontWeight: '300' }}>First time staking? Please Connect To Your Wallet</h6>
+										{/* <Button className='row center btn' id='enable' onClick={enable} style={{ backgroundColor: '#ffffff10', boxShadow: '1px 1px 5px #000000' }} >Authorize Your Wallet</Button> */}
+									</div>
+									<div className='col container'>
+										<div className='row center'>
+											<h2 className='row center' style={{ color: 'white', border: '1px', paddingInline: '1px', borderRadius: '5px', boxShadow: '1px 1px 5px #000000' }} >NFTs VAULT</h2>
+											<Button onClick={refreshPage} style={{ backgroundColor: 'red', border: '1px', padding: '5px', borderRadius: '5px', boxShadow: "1px 1px 5px #000000" }}>Refresh NFT Vault</Button>
+											<List />
+										</div>
+									</div>
+								</div>
+								<div className='grid-container px-5 top pb-2 pt-2' >
+									<div className='col px-3 pb-2'>
+										<form className='stakingrewards px-3' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', fontFamily: 'Rambla', minWidth: '250px', maxWidth: '250px', maxHeight: '300px', minHeight: '300px' }}>
+											<h4 style={{ color: '#FFFFFF', fontWeight: '300' }}>Your Vault Activity</h4>
+											<h6 style={{ color: '#FFFFFF' }}>Verify Staked Amount</h6>
+											<Button onClick={verify} id='verify' style={{ backgroundColor: '#ffffff10', boxShadow: '1px 1px 5px #000000' }} >Verify</Button>
+											<table className='table mt-3 mb-5 px-3 table-dark'>
+												<tr>
+													<td style={{ fontSize: '16px' }}>Your Staked NFTs:
+														<span style={{ backgroundColor: '#ffffff00', fontSize: '18px', color: '#39FF14', fontWeight: '500', textShadow: '1px 1px 2px #000000' }} id='yournfts'></span>
+													</td>
+												</tr>
+												<tr>
+													<td style={{ fontSize: '16px' }}>Total Staked NFTs:
+														<span style={{ backgroundColor: '#ffffff00', fontSize: '18px', color: '#39FF14', fontWeight: '500', textShadow: '1px 1px 2px #000000' }} id='stakedbalance'></span>
+													</td>
+												</tr>
+												<tr>
+													<Button className='mb-3' onClick={unstakeall} style={{ backgroundColor: '#ffffff10', boxShadow: '1px 1px 5px #000000' }}>Unstake All</Button>
+												</tr>
+											</table>
+										</form>
+									</div>
+									<div className='col px-3 pb-2'>
+										<form className='stakingrewards px-3' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #ffffff', fontFamily: 'Rambla', minWidth: '250px', maxWidth: '250px', maxHeight: '300px', minHeight: '300px' }}>
+											<h4 style={{ color: '#FFFFFF', fontWeight: '300' }}> Staking Rewards</h4>
+											<Button onClick={rewardinfo} style={{ backgroundColor: '#ffffff10', boxShadow: '1px 1px 5px #000000' }} >Earned FOT Rewards</Button>
+											<div id='earned' style={{ color: '#39FF14', marginTop: '5px', fontSize: '25px', fontWeight: '500', textShadow: '1px 1px 2px #000000' }}><p style={{ fontSize: '20px' }}>Earned Tokens</p></div>
+											<div className='col-12 mt-2'>
+												<div style={{ color: 'white' }}>Claim Rewards</div>
+												<Button onClick={claimit} style={{ backgroundColor: '#ffffff10', boxShadow: '1px 1px 5px #000000' }} className='mb-2'>Claim</Button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</form>
+						</body>
 					</div>
 				</div>
 			</div>
-		)
+			)
 	}
 }
+
 export default App;
