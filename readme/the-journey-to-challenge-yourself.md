@@ -25,7 +25,7 @@ _<mark style="color:orange;">**User Guide ------>**</mark>_
 ### PHASE 2️⃣ - RECLAMATION ♻️:
 
 * Completed Collections and get REWARD. Can get daily cashback for owning F-NFT (Referral for PHASE 3.
-* Staking to receive rewards" USE F-NFT Pioneer Medal - Introduction of orientations for PHASE 3 - Introducing the benefits of enhancement Levels
+* Staking to receive rewards" use FOT - Introduction of orientations for PHASE 3 - Introducing the benefits of enhancement Levels
 
 _<mark style="color:orange;">**User Guide ------>**</mark>_
 
