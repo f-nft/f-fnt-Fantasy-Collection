@@ -1,5 +1,5 @@
 ---
-description: What is f-nft
+description: What is f-nft?
 ---
 
 # Get Started
