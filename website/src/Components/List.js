@@ -3,9 +3,9 @@ import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
 import 'sf-font';
-import { moralisapikey, NFTCONTRACT, STAKINGCONTRACT, moralisapi, nftpng } from './config';
+import { moralisapikey, NFTCONTRACT, STAKINGCONTRACT, moralisapi, nftpng } from '../config';
 import axios from 'axios';
-import VAULTABI from './VAULTABI.json';
+import VAULTABI from '../VAULTABI.json';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import WalletLink from 'walletlink';
@@ -45,7 +45,7 @@ const web3Modal = new Web3Modal({
     providerOptions
 });
 
-export default function List() {
+export default function Listnft() {
     const [apicall, getNfts] = useState([])
     const [listtk, getStk] = useState([])
     const [loadingState, setLoadingState] = useState('not-loaded')
@@ -96,19 +96,19 @@ export default function List() {
     if (loadingState === 'loaded' && !apicall.length)
         return (
             <h3>Wallet Not Connected</h3>)
-        return (
+    return (
         <div className='mb-1'>
             <div className="col-lg-12">
                 <div className="row items px-3 pt-3">
-                    <div className="ml-3 mr-3" style={{ fontFamily:'Black Ops One', display: "inline-grid", gridTemplateColumns: "repeat(3, 4fr)", columnGap: "10px", minWidth:'200px' }}>
+                    <div className="ml-3 mr-3" style={{ fontFamily: 'Black Ops One', display: "inline-grid", gridTemplateColumns: "repeat(3, 4fr)", columnGap: "10px", minWidth: '200px' }}>
                         {apicall.map((nft, i) => {
                             var owner = nft.wallet.toLowerCase();
                             if (owner.indexOf(nft.holder) !== -1) {
                                 async function stakeit() {
-                                    vaultcontract.methods.stake([nft.tokenId]).send({ from:account });
+                                    vaultcontract.methods.stake([nft.tokenId]).send({ from: account });
                                 }
                                 return (
-                                    <div className="card nft-card mt-3 mb-3" style={{ textShadow: "1px 1px 2px #000000", minWidth:'200px' }} key={i} >
+                                    <div className="card nft-card mt-3 mb-3" style={{ textShadow: "1px 1px 2px #000000", minWidth: '200px' }} key={i} >
                                         <div className="image-over">
                                             <img className="card-img-top" src={nftpng + nft.tokenId} alt="Fantasy NFT" />
                                         </div>
@@ -131,22 +131,22 @@ export default function List() {
                                 vaultcontract.methods.unstake([nft.tokenId]).send({ from: account });
                             }
                             return (
-                                    <div className="card stakedcard mt-3 mb-3" style={{ textShadow: "1px 1px 2px #000000", minWidth:'200px' }} key={i} >
-                                        <div className="image-over">
-                                            <img style={{ position: 'absolute', top: '0.05rem', width: '39px' }} src='check.png' alt='check'></img>
-                                            <img className="card-img-top" src={nftpng + nft.tokenId} alt="Fantasy NFT" />
-                                        </div>
-                                        <div className="card-caption col-12 p-0">
-                                            <div className="card-body">
-                                                <h6 className="mb-0">Fantasy Collection NFT #{nft.tokenId}</h6>
-                                                <h6 className="mb-0 mt-2">Status<p style={{ color: "#f524EE", textShadow: "1px 1px 2px #000000" }}>Currently Staked</p></h6>
-                                                <div className="card-bottom d-flex justify-content-between">
-                                                    <input key={i} type="hidden" id='stakeid' value={nft.tokenId} />
-                                                    <Button style={{ marginLeft: '15px', backgroundColor: "blue", textShadow: "1px 1px 2px #000000", padding: '5px', fontSize: '12px', border: '1px', borderRadius: '2px', boxShadow: '1px 1px 5px #000000', marginBottom: '5px' }} onClick={unstakeit}>Unstake it</Button>
-                                                </div>
+                                <div className="card stakedcard mt-3 mb-3" style={{ textShadow: "1px 1px 2px #000000", minWidth: '200px' }} key={i} >
+                                    <div className="image-over">
+                                        <img style={{ position: 'absolute', top: '0.05rem', width: '39px' }} src='check.png' alt='check'></img>
+                                        <img className="card-img-top" src={nftpng + nft.tokenId} alt="Fantasy NFT" />
+                                    </div>
+                                    <div className="card-caption col-12 p-0">
+                                        <div className="card-body">
+                                            <h6 className="mb-0">Fantasy Collection NFT #{nft.tokenId}</h6>
+                                            <h6 className="mb-0 mt-2">Status<p style={{ color: "#f524EE", textShadow: "1px 1px 2px #000000" }}>Currently Staked</p></h6>
+                                            <div className="card-bottom d-flex justify-content-between">
+                                                <input key={i} type="hidden" id='stakeid' value={nft.tokenId} />
+                                                <Button style={{ marginLeft: '15px', backgroundColor: "blue", textShadow: "1px 1px 2px #000000", padding: '5px', fontSize: '12px', border: '1px', borderRadius: '2px', boxShadow: '1px 1px 5px #000000', marginBottom: '5px' }} onClick={unstakeit}>Unstake it</Button>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             )
                         })}
                     </div>
@@ -154,4 +154,4 @@ export default function List() {
             </div>
         </div>
     )
-}
+};

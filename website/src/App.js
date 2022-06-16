@@ -14,7 +14,7 @@ import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import WalletLink from 'walletlink';
 import Web3 from 'web3';
-import List from './List';
+import Listnft from './Components/List';
 
 // import Nfts from './Nfts';
 
@@ -59,9 +59,9 @@ class App extends React.Component {
 		this.state = ({
 			balance: [],
 			rawearn: [],
-			account: [],
 
-		})}
+		})
+	}
 
 	handleModal() {
 		this.setState({ show: !this.state.show })
@@ -90,8 +90,8 @@ class App extends React.Component {
 				console.log(outputb.data)
 			})
 	}
-	
-	render () {
+
+	render() {
 		const { balance } = this.state;
 		const { outvalue } = this.state;
 
@@ -108,8 +108,7 @@ class App extends React.Component {
 			var accounts = await web3.eth.getAccounts();
 
 			account = accounts[0];
-			document.getElementById('wallet-address').textContent = accounts;
-			console.log('wallet-address').show = account;
+			document.getElementById('wallet-address').textContent = account;
 			contract = new web3.eth.Contract(ABI, NFTCONTRACT);
 			vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
 			var getstakednfts = await vaultcontract.methods.tokensOfOwner(account).call();
@@ -375,7 +374,7 @@ class App extends React.Component {
 			// refresh
 			return refreshPage;
 		}
-		
+
 		return (
 			<div className='App nftapp'>
 				<nav className='navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-4'>
@@ -542,7 +541,7 @@ class App extends React.Component {
 									</div>
 									<div className='col' style={{ gridTemplateColumns: 'auto' }}>
 										<h1 className='row center' style={{ fontWeight: '500', fontFamily: 'Blaka', marginTop: '15px' }}>Fantasy NFT Staking Vault </h1>
-										<h6 className='row center' style={{ color:'orange', fontWeight: '300' }}>First time staking? Please Connect To Your Wallet</h6>
+										<h6 className='row center' style={{ color: 'orange', fontWeight: '300' }}>First time staking? Please Connect To Your Wallet</h6>
 										{/* <Button className='row center btn' id='enable' onClick={enable} style={{ backgroundColor: '#ffffff10', boxShadow: '1px 1px 5px #000000' }} >Authorize Your Wallet</Button> */}
 									</div>
 									<div className='col container'>
@@ -592,8 +591,9 @@ class App extends React.Component {
 						</body>
 					</div>
 				</div>
+				<Listnft />
 			</div>
-			)
+		)
 	}
 }
 
