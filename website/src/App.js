@@ -3,7 +3,7 @@
 import './App.css';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'sf-font';
 import { polygonscanapikey, moralisapikey, NFTCONTRACT, STAKINGCONTRACT, polygonscanapi, moralisapi, Web3Alc } from './config';
 import axios from 'axios';
@@ -102,6 +102,7 @@ class App extends React.Component {
 		const expectedBlockTime = 10000;
 
 		async function connectWallet() {
+
 			var provider = await web3Modal.connect();
 			web3 = new Web3(provider);
 			await provider.send('eth_requestAccounts');
@@ -156,11 +157,6 @@ class App extends React.Component {
 			document.getElementById('stakedbalance').textContent = getbalance;
 			return connectWallet
 		}
-
-		// async function enable() {
-		// 	if (contract.methods.setApprovalForAll(STAKINGCONTRACT, true).send({ from: account }));
-		// 	return connectWallet
-		// }
 
 		async function rewardinfo() {
 			var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
@@ -378,10 +374,10 @@ class App extends React.Component {
 
 		return (
 			<div className='App nftapp'>
-				<nav className='navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-4'>
+				<nav className='navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-3'>
 					<div className='container-fluid'>
 						<img className='react-logo' src='FNFT.png' width='8%' />
-						<a className='navbar-brand px-5' style={{ fontWeight: '800', fontSize: '22px' }} href='#'></a><img className='react-logo' src='FNFT.png' width='8%' />
+						<a className='navbar-brand px-5' style={{ fontWeight: '800', fontSize: '22px' }} href='#'></a><img className='react-logo' src='FNFT.png' width='10%' />
 						<Button className='navbar-toggler' type='Button' data-bs-toggle='collapse' data-bs-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'>
 							<span className='navbar-toggler-icon'></span>
 						</Button>
