@@ -3,7 +3,7 @@
 import './App.css';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { Component, useState, useEffect } from 'react';
+import React from 'react';
 import 'sf-font';
 import { polygonscanapikey, moralisapikey, NFTCONTRACT, STAKINGCONTRACT, polygonscanapi, moralisapi, Web3Alc } from './config';
 import axios from 'axios';
@@ -14,7 +14,7 @@ import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import WalletLink from 'walletlink';
 import Web3 from 'web3';
-import Listnft from './Components/List';
+import Listnft from './Components/Listnft';
 
 // import Nfts from './Nfts';
 
@@ -157,10 +157,11 @@ class App extends React.Component {
 			return connectWallet
 		}
 
-		async function enable() {
-			if (contract.methods.setApprovalForAll(STAKINGCONTRACT, true).send({ from: account }));
-			return connectWallet
-		}
+		// async function enable() {
+		// 	if (contract.methods.setApprovalForAll(STAKINGCONTRACT, true).send({ from: account }));
+		// 	return connectWallet
+		// }
+
 		async function rewardinfo() {
 			var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
 			const arraynft = Array.from(rawnfts.map(Number));
@@ -379,26 +380,27 @@ class App extends React.Component {
 			<div className='App nftapp'>
 				<nav className='navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-4'>
 					<div className='container-fluid'>
-						<a className='navbar-brand px-5' id='home' style={{ fontWeight: '800', fontSize: '22px' }} href='home'></a><img className='react-logo' src='FNFT.png' width='8%' alt='logo' />
-						<Button className='navbar-toggler' type='Button' data-bs-toggle='collapse' data-bs-target='navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'>
+						<img className='react-logo' src='FNFT.png' width='8%' />
+						<a className='navbar-brand px-5' style={{ fontWeight: '800', fontSize: '22px' }} href='#'></a><img className='react-logo' src='FNFT.png' width='8%' />
+						<Button className='navbar-toggler' type='Button' data-bs-toggle='collapse' data-bs-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'>
 							<span className='navbar-toggler-icon'></span>
 						</Button>
 						<div className='collapse navbar-collapse' id='navbarCollapse'>
 							<ul className='navbar-nav me-auto mb-2 px-3 mb-md-0' style={{ fontSize: '22px' }}>
 								<li className='nav-item'>
-									<a className='nav-link active' id='dashboard' aria-current='page' href='dashboard'>Dashboard</a>
+									<a className='nav-link active' aria-current='page' href='#'>Dashboard</a>
 								</li>
 								<li className='nav-item'>
-									<a className='nav-link' id='list-nft' href='list-nft'>List NFTs</a>
+									<a className='nav-link' href='#'>List NFTs</a>
 								</li>
 								<li className='nav-item'>
-									<a className='nav-link' id='upgrade' href='upgrade'>Upgrade NFTs</a>
+									<a className='nav-link' href='#'>Upgrade NFTs</a>
 								</li>
 							</ul>
 						</div>
 					</div>
-					<div className='px-5 ml-150px'>
-						<input id='connectbtn' type='Button' className='connectbutton' onClick={connectWallet} style={{ padding: '5px', fontSize: '15px', border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000', fontFamily: 'Rambla' }} value='Connect Your Wallet' />
+					<div className='px-5'>
+						<input id='connectbtn' type='Button' className='connectbutton' onClick={connectWallet} style={{ fontSize: '15px', border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000', fontFamily: 'Rambla' }} value='Connect Your Wallet' />
 					</div>
 				</nav>
 				<div className='container pt-1' style={{ color: 'white', border: '15px', borderRadius: '25px', boxShadow: '1px 1px 5px #000000' }}>
@@ -548,7 +550,7 @@ class App extends React.Component {
 										<div className='row center'>
 											<h2 className='row center' style={{ color: 'white', border: '1px', paddingInline: '1px', borderRadius: '5px', boxShadow: '1px 1px 5px #000000' }} >NFTs VAULT</h2>
 											<Button onClick={refreshPage} style={{ backgroundColor: 'red', border: '1px', padding: '5px', borderRadius: '5px', boxShadow: "1px 1px 5px #000000" }}>Refresh NFT Vault</Button>
-											<List />
+											<Listnft />
 										</div>
 									</div>
 								</div>
@@ -591,7 +593,6 @@ class App extends React.Component {
 						</body>
 					</div>
 				</div>
-				<Listnft />
 			</div>
 		)
 	}

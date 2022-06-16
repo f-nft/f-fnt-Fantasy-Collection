@@ -1,5 +1,5 @@
 {
-  "name": "website",
+  "name": "fantasy",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -93,5 +93,9 @@
   "include": [
     "src"
   ],
-  "proxy": "http://66.42.40.33:3003/"
+  "proxy": "http://66.42.40.33:3003/",
+  "keywords": [
+    "Fantasy",
+    "Collections"
+  ]
 }

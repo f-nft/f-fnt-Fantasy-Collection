@@ -1,4 +1,4 @@
-import './App.css';
+import '../App.css';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useEffect, useState } from 'react';
@@ -49,7 +49,6 @@ export default function Listnft() {
     const [apicall, getNfts] = useState([])
     const [listtk, getStk] = useState([])
     const [loadingState, setLoadingState] = useState('not-loaded')
-    const [loaded, setLoadedState] = useState('loaded')
 
     useEffect(() => {
         callApi()
@@ -91,7 +90,6 @@ export default function Listnft() {
         getStk(listtk)
         console.log(apicall)
         setLoadingState('loaded')
-        setLoadedState('loaded')
     }
     if (loadingState === 'loaded' && !apicall.length)
         return (
