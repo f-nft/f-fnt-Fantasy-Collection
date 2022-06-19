@@ -2,10 +2,10 @@ import '../App.css';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'sf-font';
-import { polygonscanapikey, moralisapikey, NFTCONTRACT, STAKINGCONTRACT, polygonscanapi, moralisapi } from '../config';
+import { polygonscanapikey, moralisapikey, NFTCONTRACT, STAKINGCONTRACT, polygonscanapi, moralisapi } from '../../config';
 import axios from 'axios';
-import ABI from '../ABI.json';
-import VAULTABI from '../VAULTABI.json';
+import ABI from '../../ABI.json';
+import VAULTABI from '../../VAULTABI.json';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import WalletLink from 'walletlink';
@@ -20,33 +20,33 @@ var vaultcontract = null;
 var web3 = null;
 
 const providerOptions = {
-	binancechainwallet: {
-		package: true
-	},
-	walletconnect: {
-		package: WalletConnectProvider,
-		options: {
-			infuraId: '50f6635fbcc742f18ce7a2a5cbe73ffa'
-		}
-	},
-	walletlink: {
-		package: WalletLink,
-		options: {
-			appName: 'f-nft Polygon',
-			infuraId: '50f6635fbcc742f18ce7a2a5cbe73ffa',
-			rpc: 'https://polygon-mainnet.infura.io/v3',
-			chainId: 137,
-			appLogoUrl: null,
-			darkMode: true
-		}
-	},
+    binancechainwallet: {
+        package: true
+    },
+    walletconnect: {
+        package: WalletConnectProvider,
+        options: {
+            infuraId: '50f6635fbcc742f18ce7a2a5cbe73ffa'
+        }
+    },
+    walletlink: {
+        package: WalletLink,
+        options: {
+            appName: 'f-nft Polygon',
+            infuraId: '50f6635fbcc742f18ce7a2a5cbe73ffa',
+            rpc: 'https://polygon-mainnet.infura.io/v3',
+            chainId: 137,
+            appLogoUrl: null,
+            darkMode: true
+        }
+    },
 };
 
 const web3Modal = new Web3Modal({
-	network: 'mainnet',
-	theme: 'dark',
-	cacheProvider: true,
-	providerOptions
+    network: 'mainnet',
+    theme: 'dark',
+    cacheProvider: true,
+    providerOptions
 });
 
 const onSubmitLogin = () => {
@@ -54,7 +54,7 @@ const onSubmitLogin = () => {
     if (isValid) return;
 
     const params = {
-        
+
     }
 
 }
@@ -104,7 +104,7 @@ class WalletConnect extends Component {
         const expectedBlockTime = 10000;
 
         async function connectWallet(props) {
-			console.log(props);
+            console.log(props);
             var provider = await web3Modal.connect();
             web3 = new Web3(provider);
             await provider.send('eth_requestAccounts');
@@ -112,7 +112,7 @@ class WalletConnect extends Component {
 
             account = accounts[0];
             document.getElementById('wallet-address').textContent = account;
-            
+
             contract = new web3.eth.Contract(ABI, NFTCONTRACT);
             vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
             var getstakednfts = await vaultcontract.methods.tokensOfOwner(account).call();
@@ -155,8 +155,8 @@ class WalletConnect extends Component {
         return (
             <nav className='navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-4'>
                 <div className='container-fluid'>
-                <img className='react-logo' src='FNFT.png' width='8%'/>
-                    <a className='navbar-brand px-5' style={{ fontWeight: '800', fontSize: '22px' }} href='#'></a><img className='react-logo' src='FNFT.png' width='8%'/>
+                    <img className='react-logo' src='FNFT.png' width='8%' />
+                    <a className='navbar-brand px-5' style={{ fontWeight: '800', fontSize: '22px' }} href='#'></a><img className='react-logo' src='FNFT.png' width='8%' />
                     <Button className='navbar-toggler' type='Button' data-bs-toggle='collapse' data-bs-target='#navbarCollapse' aria-controls='navbarCollapse' aria-expanded='false' aria-label='Toggle navigation'>
                         <span className='navbar-toggler-icon'></span>
                     </Button>

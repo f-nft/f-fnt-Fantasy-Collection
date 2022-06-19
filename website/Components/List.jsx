@@ -10,7 +10,6 @@ import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import WalletLink from 'walletlink';
 import Web3 from 'web3';
-
 var account = null;
 var vaultcontract = null;
 var web3 = null;

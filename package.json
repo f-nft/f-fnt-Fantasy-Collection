@@ -1,3 +1,27 @@
 {
-  "name": "hardhat-project"
+  "name": "fnft",
+  "dependencies": {
+    "@react-three/fiber": "^7.0.29",
+    "@thirdweb-dev/sdk": "^2.3.14",
+    "ethers": "^5.6.8",
+    "framer-motion": "^6.3.11",
+    "framer-motion-3d": "^6.3.11",
+    "three": "^0.141.0"
+  },
+  "description": "[![F-NFT](https://user-images.githubusercontent.com/100182093/167264485-8078c87b-7b69-4798-8371-944cdf9620dc.png)](https://f-nft.us) **What is NFT?**",
+  "version": "1.0.0",
+  "main": "sdkscript.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/f-nft/f-fnt-Fantasy-Collection.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/f-nft/f-fnt-Fantasy-Collection/issues"
+  },
+  "homepage": "https://github.com/f-nft/f-fnt-Fantasy-Collection#readme"
 }
