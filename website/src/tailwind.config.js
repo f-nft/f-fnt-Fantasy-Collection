@@ -1,18 +1,16 @@
-const plugin = require("tailwindcss/plugin");
-const colors = require("tailwindcss/colors");
+const plugin = require('tailwindcss/plugin')
+const colors = require('tailwindcss/colors')
 
 module.exports = {
-  purge: {
-    enabled: true,
-    content: ["./src/**/*.{js,jsx,ts,tsx}"],
-    options: {
-      safelist: [],
-    },
-  },
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  // purge: {
+  //   enabled: true,
+  //   content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  //   options: {
+  //     safelist: [],
+  //   },
+  // },
   theme: {
-    colors: {
-      ...colors,
-    },
     'kdam': ['"Kdam Thmor Pro"'],
     'blc': ['"Black Ops One"'],
     'blk': ['Blaka'],
@@ -49,33 +47,81 @@ module.exports = {
         "210-px": "210px",
         "260-px": "260px",
       },
-      height: {
-        "95-px": "95px",
-        "70-px": "70px",
-        "350-px": "350px",
-        "500-px": "500px",
-        "600-px": "600px",
+
+      spacing: {
+        '128': '32rem',
+        '144': '36rem',
       },
-      maxHeight: {
-        "860-px": "860px",
+      borderRadius: {
+        '4xl': '2rem',
       },
-      maxWidth: {
-        "100-px": "100px",
-        "120-px": "120px",
-        "150-px": "150px",
-        "180-px": "180px",
-        "200-px": "200px",
-        "210-px": "210px",
-        "580-px": "580px",
+      gridTemplateRows: {
+        // Simple 8 row grid
+        '8': 'repeat(8, minmax(0, 1fr))',
+
+        // Complex site-specific row configuration
+        'layout': '200px minmax(900px, 1fr) 100px',
       },
-      minWidth: {
-        "140-px": "140px",
-        48: "12rem",
-      },
-      backgroundSize: {
-        full: "100%",
-      },
+      colors: {
+        'blue': '#1fb6ff',
+        'pink': '#ff49db',
+        'orange': '#ff7849',
+        'green': '#13ce66',
+        'gray-dark': '#273444',
+        'gray': '#8492a6',
+        'gray-light': '#d3dce6',
+      }
     },
+
+    height: {
+      "95-px": "95px",
+      "70-px": "70px",
+      "350-px": "350px",
+      "500-px": "500px",
+      "600-px": "600px",
+    },
+    maxHeight: {
+      "860-px": "860px",
+    },
+    maxWidth: {
+      "100-px": "100px",
+      "120-px": "120px",
+      "150-px": "150px",
+      "180-px": "180px",
+      "200-px": "200px",
+      "210-px": "210px",
+      "580-px": "580px",
+    },
+    minWidth: {
+      "140-px": "140px",
+      48: "12rem",
+    },
+    backgroundSize: {
+      full: "100%",
+    },
+    gridColumn: {
+      'span-16': 'span 16 / span 16',
+    },
+    gridColumnStart: {
+      '13': '13',
+      '14': '14',
+      '15': '15',
+      '16': '16',
+      '17': '17',
+    },
+    gridColumnEnd: {
+      '13': '13',
+      '14': '14',
+      '15': '15',
+      '16': '16',
+      '17': '17',
+    },
+    screens: {
+      sm: '480px',
+      md: '768px',
+      lg: '976px',
+      xl: '1440px',
+    }
   },
   variants: [
     "responsive",
@@ -92,49 +138,28 @@ module.exports = {
     "disabled",
   ],
   plugins: [
-    require("@tailwindcss/forms"),
-    plugin(function ({ addComponents, theme }) {
-      const screens = theme("screens", {});
-      addComponents([
-        {
-          ".container": { width: "100%" },
+    plugin(function ({ addBase, addComponents, addUtilities, theme }) {
+      addBase({
+        'h1': {
+          fontSize: theme('fontSize.2xl'),
         },
-        {
-          [`@media (min-width: ${screens.sm})`]: {
-            ".container": {
-              "max-width": "640px",
-            },
-          },
+        'h2': {
+          fontSize: theme('fontSize.xl'),
         },
-        {
-          [`@media (min-width: ${screens.md})`]: {
-            ".container": {
-              "max-width": "768px",
-            },
-          },
-        },
-        {
-          [`@media (min-width: ${screens.lg})`]: {
-            ".container": {
-              "max-width": "1024px",
-            },
-          },
-        },
-        {
-          [`@media (min-width: ${screens.xl})`]: {
-            ".container": {
-              "max-width": "1280px",
-            },
-          },
-        },
-        {
-          [`@media (min-width: ${screens["2xl"]})`]: {
-            ".container": {
-              "max-width": "1280px",
-            },
-          },
-        },
-      ]);
-    }),
-  ],
-};
+      })
+      addComponents({
+        '.card': {
+          backgroundColor: theme('colors.white'),
+          borderRadius: theme('borderRadius.lg'),
+          padding: theme('spacing.6'),
+          boxShadow: theme('boxShadow.xl'),
+        }
+      })
+      addUtilities({
+        '.content-auto': {
+          contentVisibility: 'auto',
+        }
+      })
+    })
+  ]
+}

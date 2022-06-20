@@ -10,7 +10,7 @@
   },
   "description": "[![F-NFT](https://user-images.githubusercontent.com/100182093/167264485-8078c87b-7b69-4798-8371-944cdf9620dc.png)](https://f-nft.us) **What is NFT?**",
   "version": "1.0.0",
-  "main": "sdkscript.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
