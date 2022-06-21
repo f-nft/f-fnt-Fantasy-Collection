@@ -102,10 +102,11 @@ export default function ListNft() {
             <div className="container col-lg-11">
                 <div className="row items px-3 pt-3">
                     <div className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
-                        {apicall.map((nft, i) => {
+                        
+                        {apicall.map((nft, i) =>{
                             var owner = nft.wallet.toLowerCase();
                             if (owner.indexOf(nft.holder) !== -1) {
-                                async function stakeit() {
+                                 async function stakeit() {
                                     vaultcontract.methods.stake([nft.tokenId]).send({ from: account });
                                 }
                                 return (
@@ -125,6 +126,9 @@ export default function ListNft() {
                                         </div>
                                     </div>
                                 )
+                            }
+                            else {
+                                return null;
                             }
                         })}
                         {nftstk.map((nft, i) => {
