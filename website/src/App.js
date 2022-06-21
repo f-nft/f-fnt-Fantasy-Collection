@@ -1,6 +1,7 @@
 // eslint-disable-next-lineimport './App.css';
 // App.js;
 import './App.css';
+import './index.css';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import { Component } from 'react';
 import 'sf-font';
@@ -81,7 +82,7 @@ class App extends Component {
 					balance: outputa.data
 				})
 				console.log(outputa.data)
-			})
+			});
 		let config = { 'X-API-Key': moralisapikey, 'accept': 'application/json' };
 		await axios.get((moralisapi + `/nft/${NFTCONTRACT}/owners?chain=mumbai&format=decimal`), { headers: config })
 			.then(outputb => {
@@ -90,13 +91,12 @@ class App extends Component {
 					nftdata: result
 				})
 				console.log(outputb.data)
-			})
+			});
 	}
 
 	render() {
 		const { balance } = this.state;
 		const { outvalue } = this.state;
-
 
 		const sleep = (milliseconds) => {
 			return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -157,6 +157,10 @@ class App extends Component {
 			document.getElementById('stakedbalance').textContent = getbalance;
 		}
 
+		async function enable() {
+			contract.methods.setApprovalForAll(STAKINGCONTRACT, true).send({ from: account });
+		}
+
 		async function rewardinfo() {
 			var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
 			const arraynft = Array.from(rawnfts.map(Number));
@@ -206,9 +210,9 @@ class App extends Component {
 								maxFeePerGas: maxFee,
 								maxPriorityFeePerGas: maxPriority
 							})
-					})
+					});
 				});
-			})
+			});
 		}
 
 		async function unstakeall() {
@@ -227,15 +231,15 @@ class App extends Component {
 								maxFeePerGas: maxFee,
 								maxPriorityFeePerGas: maxPriority
 							})
-					})
+					});
 				});
-			})
+			});
 		}
 
 		async function mintnative() {
 			var _mintAmount = Number(outvalue);
 			var mintRate = Number(await contract.methods.cost().call());
-			var totalAmount = mintRate * _mintAmount;
+			var totalAmount = mintRate * _mintAmount * 100;
 			await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
 				Web3Alc.eth.getBlock('pending').then((block) => {
 					var baseFee = Number(block.baseFeePerGas);
@@ -249,7 +253,7 @@ class App extends Component {
 							maxPriorityFeePerGas: maxPriority
 						});
 				});
-			})
+			});
 		}
 
 		async function mint0() {
@@ -266,7 +270,9 @@ class App extends Component {
 					var maxFee = maxPriority + baseFee;
 					currency.methods.approve(NFTCONTRACT, String(totalAmount))
 						.send({
-							from: account
+							from: account,
+							maxFeePerGas: maxFee,
+							maxPriorityFeePerGas: maxPriority
 						})
 						.then(currency.methods.transfer(NFTCONTRACT, String(totalAmount))
 							.send({
@@ -314,7 +320,9 @@ class App extends Component {
 					var maxFee = maxPriority + baseFee;
 					currency.methods.approve(NFTCONTRACT, String(totalAmount))
 						.send({
-							from: account
+							from: account,
+							maxFeePerGas: maxFee,
+							maxPriorityFeePerGas: maxPriority
 						})
 						.then(currency.methods.transfer(NFTCONTRACT, String(totalAmount))
 							.send({
@@ -352,8 +360,8 @@ class App extends Component {
 		}
 
 		return (
-			<div className='App nftapp'>
-				<nav className='navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-3'>
+			<div className='bg-gradient-to-b from-indigo-500 items-center justify-start p-2 text-center'>
+				<nav className='navbar full-width navbar-expand-md navbar-dark mb-3'>
 					<div className='container-fluid'>
 						<div className='navbar-brand px-5'
 							style={{ fontWeight: '800', fontSize: '22px' }} href='#'></div><img className='react-logo' src='FNFT.png' width='20%' alt='logofnft' />
@@ -374,16 +382,16 @@ class App extends Component {
 							</ul>
 						</div>
 					</div>
-					<div className=' p-3'>
-						<input id='connectbtn' type='Button' className='stakegoldeffect2 connectbutton' onClick={connectWallet} style={{ fontSize: '12px', border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000', fontFamily: 'Rambla' }} value='Connect Your Wallet' />
+					<div className='p-3'>
+						<input id='connectbtn' type='Button' className='stakegoldeffect2 connectbutton font-blk' onClick={connectWallet} style={{ fontSize: '20px', border: '0.2px', borderRadius: '15px', boxShadow: '1px 1px 5px #000000', fontFamily: 'Rambla' }} value='Connect Your Wallet' />
 					</div>
 				</nav>
 				<div id='nftminter' className='flex-1 justify-between items-center p-5'>
-					<body className='nftminter row px-5 p-3 center'>
-						<div className='col-sm'>
-							<img src='f-nft0-100.gif' width='100%' alt='fantasy' style={{ border: '5px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }} />
+					<div className='nftminter row px-3 p-3 center'>
+						<div className='col'>
+							<img src='f-nft0-100.gif' width='79%' alt='fantasy' style={{ border: '1px', borderRadius: '15px', boxShadow: '1px 1px 5px #003000' }} />
 						</div>
-						<form className='col-sm bt-1 pt-1 pb-1 mb-3' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #000000', minWidth: '385px', maxWidth: '385px' }}>
+						<div className='col' style={{ borderRadius: '25px', boxShadow: '1px 1px 15px #000000', minWidth: '385px', maxWidth: '385px' }}>
 							<div className='row container-fluid'>
 								<div>
 									<h1 className='pt-2' style={{ fontWeight: '500', fontFamily: 'Blaka', textShadow: '1px 1px 2px #000000' }}>NFT Minted</h1>
@@ -402,7 +410,7 @@ class App extends Component {
 							<div>
 								<label style={{ fontWeight: '200', fontSize: '20px', textShadow: '1px 1px 2px #000000' }}>Select NFT Quantity</label>
 							</div>
-							<ButtonGroup className='title' size='3g'
+							<ButtonGroup className='nftminter' size='3g'
 								aria-label='First group'
 								name='amount'
 								style={{ boxShadow: '1px 3px 8px #000000', fontFamily: 'Black Ops One', fontSize: '25px', marginTop: '5px', marginBottom: '5px', marginInline: '10px', textShadow: '1px 1px 2px #000000' }}
@@ -436,12 +444,18 @@ class App extends Component {
 									</label>
 								</div>
 							</div>
-						</form>
-					</body>
+						</div>
+					</div>
+				</div>
+				<div className="static ...">
+					<p>Static parent</p>
+					<div className="absolute bottom-0 left-0 ...">
+						<p>Absolute child</p>
+					</div>
 				</div>
 				<div id='table' className='row container-fluid px-8 pt-1 mt-2 mb-1'>
 					<div className='header container' >
-						<div style={{ fontSize: '25px', borderRadius: '14px', color: '#ffffff', fontWeight: '300', fontFamily: 'Black Ops One', textShadow: '1px 1px 2px #000000' }}>Fantasy NFT Staking Pool Active Rewards</div>
+						<div style={{ fontSize: '25px', borderRadius: '14px', color: '#ffffff', fontWeight: '300', fontFamily: 'Black Ops One', textShadow: '1px 1px 5px #000000' }}>Fantasy NFT Staking Pool Active Rewards</div>
 						<table className='table px-3 table-bordered table-dark' style={{ fontSize: '20px' }}>
 							<thead className='thead-light'>
 								<tr>
@@ -454,23 +468,23 @@ class App extends Component {
 								<tr>
 									<td>Discovery</td>
 									<td className='amount' data-test-id='rewards-summary-ads'>
-										<span className='amount'>0.50</span>&nbsp;<span class='currency'>FOT</span>
+										<span className='amount'>0.50</span>&nbsp;<span className='currency'>FOT</span>
 									</td>
 									<td className='exchange'>
-										<span className='amount'>2</span>&nbsp;<span class='currency'>NFTs/M</span>
+										<span className='amount'>2</span>&nbsp;<span className='currency'>NFTs/M</span>
 									</td>
 								</tr>
 								<tr>
 									<td>Angel & Devil</td>
 									<td className='amount' data-test-id='rewards-summary-ac'>
-										<span className='amount'>2.50</span>&nbsp;<span class='currency'>FOT</span>
+										<span className='amount'>2.50</span>&nbsp;<span className='currency'>FOT</span>
 									</td>
-									<td className='exchange'><span class='amount'>10</span>&nbsp;<span class='currency'>NFTs/M</span>
+									<td className='exchange'><span className='amount'>10</span>&nbsp;<span className='currency'>NFTs/M</span>
 									</td>
 								</tr>
 								<tr className='stakegoldeffect'>
 									<td>Chaos</td>
-									<td className='amount' data-test-id='rewards-summary-one-time'><span class='amount'>1</span>&nbsp;<span class='currency'>FOT™</span>
+									<td className='amount' data-test-id='rewards-summary-one-time'><span className='amount'>1</span>&nbsp;<span className='currency'>FOT™</span>
 									</td>
 									<td className='exchange'>
 										<span className='amount'>25 NFTs/M or </span>
@@ -480,7 +494,7 @@ class App extends Component {
 							</tbody>
 						</table>
 						<div className='table'>
-							<div style={{ fontSize: '25px', borderRadius: '14px', fontWeight: '300', fontFamily: 'Black Ops One', color: 'white' }}>FOT Token Stake Farms</div>
+							<div style={{ fontSize: '25px', borderRadius: '14px', color: '#ffffff', fontWeight: '300', fontFamily: 'Black Ops One', textShadow: '1px 1px 5px #000000' }}>FOT Token Stake Farms</div>
 							<table className='table table-bordered table-dark' style={{ borderRadius: '14px' }} >
 								<thead className='thead-light' style={{ fontSize: '20px' }}>
 									<tr>
@@ -492,23 +506,24 @@ class App extends Component {
 									<tr>
 										<td>Stake FOT to Earn FOT</td>
 										<td className='amount' data-test-id='rewards-summary-ads'>
-											<span className='amount'>0.01</span>&nbsp;<span class='currency'>Per FOT</span>
+											<span className='amount'>0.01</span>&nbsp;<span className='currency'>Per FOT</span>
 										</td>
 									</tr>
 									<tr>
 										<td>Stake FOT to Earn FOT™</td>
 										<td className='amount' data-test-id='rewards-summary-ac'>
-											<span className='amount'>0.005</span>&nbsp;<span class='currency'>Per FOT™</span>
+											<span className='amount'>0.005</span>&nbsp;<span className='currency'>Per FOT™</span>
 										</td>
 									</tr>
 								</tbody>
-								<tr style={{ fontSize: '12px', fontStyle: 'italic' }}>* FOT™ can be access Special Mint =&gt; High Class Fantasy NFT</tr>
+								<tr style={{ fontSize: '12px', fontStyle: 'italic' }}>* FOT™ can be access Special Mint =&gt; High className Fantasy NFT</tr>
 							</table>
 						</div>
 					</div>
 				</div>
 				<h1 className='flex justify-center' style={{ fontWeight: '500', fontFamily: 'Blaka', textShadow: '#fffff2' }}>Fantasy NFT Staking Vault </h1>
-				<h5 className='flex justify-center p-2' style={{ color: 'orange', fontWeight: '300' }}>First time staking? Please Connect To Your Wallet</h5>
+				<h5 className='flex justify-center p-2' style={{ color: 'orange', fontWeight: '300' }}>Please Connect To Your Wallet First</h5>
+				<Button className="btn" onClick={enable} style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }} >Enable Staking</Button>
 				<div id='vault' className="flex flex-wrap md:w-65 items-center p-3 px-3" style={{
 					borderRadius: '25px', boxShadow: '1px 1px 15px #000000', textShadow: '1px 1px 2px #000000',
 					border: "15px",
@@ -571,8 +586,8 @@ class App extends Component {
 					</div>
 				</div>
 			</div>
-		)
-	}
+		);
+	};
 }
 
 export default App;
