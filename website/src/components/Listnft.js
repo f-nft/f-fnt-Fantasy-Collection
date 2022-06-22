@@ -1,8 +1,7 @@
 // eslint-disable-next-line
 import '../App.css';
-import { Button } from 'react-bootstrap';
+import { Button, Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
 import { useEffect, useState } from 'react'
 import 'sf-font';
 import axios from 'axios';
@@ -12,7 +11,7 @@ import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";
 import Web3 from 'web3';
-
+import * as React from "react";
 
 var account = null;
 var vaultcontract = null;
@@ -66,7 +65,7 @@ export default function ListNft() {
         account = accounts[0];
         vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
         let config = { 'X-API-Key': moralisapikey, 'accept': 'application/json' };
-        const nfts = await axios.get((moralisapi + `/nft/${NFTCONTRACT}/owners?chain=mumbai&format=decimal`), { headers: config })
+        const nfts = await axios.get((moralisapi + `/nft/${NFTCONTRACT}/owners?chain=polygon&format=decimal`), { headers: config })
             .then(output => {
                 const { result } = output.data
                 return result;
@@ -94,11 +93,13 @@ export default function ListNft() {
         console.log(apicall);
         setLoadingState('loaded')
     }
+
     if (loadingState === 'loaded' && !apicall.length)
         return (
             <h1 className="text-3xl">Wallet Not Connected</h1>)
+
     return (
-        <div className='nftportal mb-4'>
+        <div className='flex flex-1 justify-center'>
             <div className="container col-lg-11">
                 <div className="row items px-3 pt-3">
                     <div className="ml-3 mr-3" style={{ display: "inline-grid", gridTemplateColumns: "repeat(4, 5fr)", columnGap: "20px" }}>
@@ -109,22 +110,29 @@ export default function ListNft() {
                                     vaultcontract.methods.stake([nft.tokenId]).send({ from: account });
                                 }
                                 return (
-                                    <div className="snap-center card nft-card mt-3 mb-3" style={{ textShadow: "1px 1px 2px #000000", minWidth: '200px' }} key={i} >
-                                        <div className="image-over">
-                                            <img className="card-img-top" src={nftpng + nft.tokenId} alt="Fantasy NFT" />
-                                        </div>
-                                        <div className="card-caption col-12 p-0">
-                                            <div className="card-body">
-                                                <h6 className="mb-0">Fantasy Collection NFT #{nft.tokenId}</h6>
-                                                <h6 className="mb-0 mt-2">Status<p>Ready to Stake</p></h6>
-                                                <div className="card-bottom d-flex justify-content-between">
-                                                    <input key={i} type="hidden" id='stakeid' value={nft.tokenId} />
-                                                    <Button style={{ marginLeft: '15px', backgroundColor: "green", textShadow: "1px 1px 2px #000000", padding: '5px', fontSize: '12px', border: '1px', borderRadius: '2px', boxShadow: '1px 1px 5px #000000', marginBottom: '5px' }} onClick={stakeit}>Stake it</Button>
+                                    <Carousel>
+                                        <Carousel.Item>
+                                            <Carosual.Caption className="snap-center static card nft-card mt-3 mb-3" style={{ scrollPaddingInline: "auto", textShadow: "1px 1px 2px #000000", minWidth: '200px' }} key={i}>
+                                                <div className="image-over">
+                                                    <img className="card-img-top" src={nftpng + nft.tokenId} alt="Fantasy NFT" />
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                <div className="card-caption col-12 p-0">
+                                                    <div className="card-body">
+                                                        <h6 className="mb-0">Fantasy Collection NFT #{nft.tokenId}</h6>
+                                                        <h6 className="mb-0 mt-2">Status<p>Ready to Stake</p></h6>
+                                                        <div className="card-bottom d-flex justify-content-between">
+                                                            <input key={i} type="hidden" id='stakeid' value={nft.tokenId} />
+                                                            <Button className="items-center" style={{ marginLeft: '15px', backgroundColor: "green", textShadow: "1px 1px 2px #000000", padding: '5px', fontSize: '12px', border: '1px', borderRadius: '2px', boxShadow: '1px 1px 5px #000000', marginBottom: '5px' }} onClick={stakeit}>Stake it</Button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Carosual.Caption>
+                                        </Carousel.Item>
+                                    </Carousel>
                                 )
+                            }
+                            else {
+                                return null;
                             }
                         })}
                         {nftstk.map((nft, i) => {
