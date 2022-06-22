@@ -110,25 +110,21 @@ export default function ListNft() {
                                     vaultcontract.methods.stake([nft.tokenId]).send({ from: account });
                                 }
                                 return (
-                                    <Carousel>
-                                        <Carousel.Item>
-                                            <Carosual.Caption className="snap-center static card nft-card mt-3 mb-3" style={{ scrollPaddingInline: "auto", textShadow: "1px 1px 2px #000000", minWidth: '200px' }} key={i}>
-                                                <div className="image-over">
-                                                    <img className="card-img-top" src={nftpng + nft.tokenId} alt="Fantasy NFT" />
+                                    <div className="snap-center static card nft-card mt-3 mb-3" style={{ scrollPaddingInline: "auto", textShadow: "1px 1px 2px #000000", minWidth: '200px' }} key={i}>
+                                        <div className="image-over">
+                                            <img className="card-img-top" src={nftpng + nft.tokenId} alt="Fantasy NFT" />
+                                        </div>
+                                        <div className="card-caption col-12 p-0">
+                                            <div className="card-body">
+                                                <h6 className="mb-0">Fantasy Collection NFT #{nft.tokenId}</h6>
+                                                <h6 className="mb-0 mt-2">Status<p>Ready to Stake</p></h6>
+                                                <div className="card-bottom d-flex justify-content-between">
+                                                    <input key={i} type="hidden" id='stakeid' value={nft.tokenId} />
+                                                    <Button className="items-center" style={{ marginLeft: '15px', backgroundColor: "green", textShadow: "1px 1px 2px #000000", padding: '5px', fontSize: '12px', border: '1px', borderRadius: '2px', boxShadow: '1px 1px 5px #000000', marginBottom: '5px' }} onClick={stakeit}>Stake it</Button>
                                                 </div>
-                                                <div className="card-caption col-12 p-0">
-                                                    <div className="card-body">
-                                                        <h6 className="mb-0">Fantasy Collection NFT #{nft.tokenId}</h6>
-                                                        <h6 className="mb-0 mt-2">Status<p>Ready to Stake</p></h6>
-                                                        <div className="card-bottom d-flex justify-content-between">
-                                                            <input key={i} type="hidden" id='stakeid' value={nft.tokenId} />
-                                                            <Button className="items-center" style={{ marginLeft: '15px', backgroundColor: "green", textShadow: "1px 1px 2px #000000", padding: '5px', fontSize: '12px', border: '1px', borderRadius: '2px', boxShadow: '1px 1px 5px #000000', marginBottom: '5px' }} onClick={stakeit}>Stake it</Button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </Carosual.Caption>
-                                        </Carousel.Item>
-                                    </Carousel>
+                                            </div>
+                                        </div>
+                                    </div>
                                 )
                             }
                             else {

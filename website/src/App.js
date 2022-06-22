@@ -446,7 +446,7 @@ class App extends Component {
 								<h4 style={{ fontFamily: 'Black Ops One', textShadow: '1px 1px 2px #000000' }}>{balance.result}/10,000</h4>
 								<h5>Your Wallet Address</h5>
 								<div id='wallet-address' style={{
-									fontSize: '13px',
+									fontSize: '15px',
 									color: '#39FF14',
 									fontFamily: 'Ubuntu',
 									textShadow: '1px 1px 3px black',
@@ -460,7 +460,7 @@ class App extends Component {
 							<ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size='4g'
 								aria-label='First group'
 								name='amount'
-								style={{ boxShadow: '1px 3px 8px #0010b0', fontFamily: 'Black Ops One', fontSize: '25px', marginTop: '5px', marginBottom: '5px', marginInline: '10px', textShadow: '1px 1px 5px #000000' }}
+								style={{ boxShadow: '1px 3px 8px #0f1fb0', fontFamily: 'Black Ops One', fontSize: '25px', marginTop: '5px', marginBottom: '5px', marginInline: '10px', textShadow: '1px 1px 5px #000000' }}
 								onClick={nftamount => this.handleNFT(nftamount, 'value')}>
 								<Button variant="outline-success" value='1' >1</Button>
 								<Button variant="outline-info" value='5'>5</Button>
@@ -610,14 +610,14 @@ class App extends Component {
 								</div>
 							</div>
 						</div>
-						<div className="grid grid-flow-row-dense grid-cols-4 grid-rows-3 ...">
+						<div className="grid grid-flow-row-dense items-center grid-cols-4 grid-rows-3 ...">
 							<div className="col-span-2 row-span-4 p-2">
-								<div className='flex-non w-64 justify-center items-center p-5' >
-									<img className='flex justify-start react-logo' src='FNFT.png' alt='logo' />
-									<div id='listnft' className='row container'>
+								<div className='flex-non justify-center items-center pb-2' >
+									<img className='flex flex-2 justify-start react-logo' src='FNFT.png' alt='logo' />
+									<div id='listnft' className='row'>
 										<div id='titlelist' className='row center'>
 											<h2 className='row center' style={{ color: 'white', border: '1px', paddingInline: '1px', borderRadius: '5px', boxShadow: '1px 1px 5px #000000' }} >NFTs VAULT</h2>
-											<Button className='btn' onClick={refreshPage} style={{ backgroundColor: 'red', border: '1px', padding: '1px', borderRadius: '5px', boxShadow: "1px 1px 5px #000000" }}>Refresh NFT Vault</Button>
+											<Button className='btn' onClick={refreshPage} style={{ backgroundColor: 'red', border: '1px', padding: '1px', borderRadius: '5px', boxShadow: "1px 1px 5px #000000", maxWidth: "200px" }}>Refresh NFT Vault</Button>
 										</div>
 									</div>
 									<ListNft />
