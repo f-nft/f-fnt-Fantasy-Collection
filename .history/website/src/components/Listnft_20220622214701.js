@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import '../App.css';
-import { Button } from 'react-bootstrap';
+import { Button, Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react'
 import 'sf-font';
