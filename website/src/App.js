@@ -94,53 +94,6 @@ class App extends Component {
 			});
 	}
 
-	// async showShareModal() {
-	// 	Log.debug('show modal');
-	// 	this.modalRef = this.modalService.show(ShareToBlogComponent, {
-	// 		backdrop: true,
-	// 		keyboard: true,
-	// 		focus: true,
-	// 		show: false,
-	// 		ignoreBackdropClick: false,
-	// 		class: 'modal-dialog-scrollable modal-full-height modal-right opacity80 ',
-	// 		containerClass: ' right',
-	// 		animated: true,
-	// 		data: this.feedItem
-	// 	});
-	// 	const that = this;
-	// 	this.modalRef.content.close.subscribe(close => {
-	// 		if (close) {
-	// 			this.modalRef.hide;
-	// 		}
-	// 	});
-	// 	this.modalRef.content.action.subscribe(res => {
-	// 		this.loaderSrv.createLoader('publishing post...');
-	// 		Log.debug('modal result ', res);
-	// 		if (isArray(res)) {
-	// 			res.forEach(blog => {
-	// 				Log.debug('adding post', that.feedItem, blog);
-	// 				that.blogPostSrv
-	// 					.addFeedItemToBlog(that.feedItem, blog.id)
-	// 					.then(published => {
-	// 						Log.debug('published item ', published);
-	// 						this.toastCtrl.success('Published to blog ');
-	// 						this.modalRef.hide();
-	// 						this.loaderSrv.dismiss();
-	// 					})
-	// 					.catch(error => {
-	// 						this.toastCtrl.error(error);
-	// 						this.loaderSrv.dismiss();
-	// 					}).finally(() => {
-	// 						this.loaderSrv.dismiss();
-	// 					});
-	// 			});
-	// 		}
-	// 	}, error => {
-	// 		Log.error('Error subscribing to event ', error);
-	// 		this.loaderSrv.dismiss();
-	// 	});
-	// }
-
 	render() {
 		const { balance } = this.state;
 		const { outvalue } = this.state;
