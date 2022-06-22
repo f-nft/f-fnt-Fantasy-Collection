@@ -75,7 +75,6 @@ class App extends Component {
 	}
 
 	async componentDidMount() {
-
 		await axios.get((polygonscanapi + `?module=stats&action=tokensupply&contractaddress=${NFTCONTRACT}&apikey=${polygonscanapikey}`))
 			.then(outputa => {
 				this.setState({
@@ -84,7 +83,7 @@ class App extends Component {
 				console.log(outputa.data)
 			});
 		let config = { 'X-API-Key': moralisapikey, 'accept': 'application/json' };
-		await axios.get((moralisapi + `/nft/${NFTCONTRACT}/owners?chain=mumbai&format=decimal`), { headers: config })
+		await axios.get((moralisapi + `/nft/${NFTCONTRACT}/owners?chain=polygon&format=decimal`), { headers: config })
 			.then(outputb => {
 				const { result } = outputb.data
 				this.setState({
@@ -355,6 +354,57 @@ class App extends Component {
 				});
 			});
 		}
+
+		async function mint2() {
+			var _pid = "0";
+			var erc20address = await contract.methods.getCryptotoken(_pid).call();
+			var currency = new web3.eth.Contract(TOKENABI, erc20address);
+			var mintRate = await contract.methods.getNFTCost(_pid).call();
+			var _mintAmount = Number(outvalue);
+			var totalAmount = mintRate * _mintAmount;
+			await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+				Web3Alc.eth.getBlock('pending').then((block) => {
+					var baseFee = Number(block.baseFeePerGas);
+					var maxPriority = Number(tip);
+					var maxFee = maxPriority + baseFee;
+					currency.methods.approve(NFTCONTRACT, String(totalAmount))
+						.send({
+							from: account,
+							maxFeePerGas: maxFee,
+							maxPriorityFeePerGas: maxPriority
+						})
+						.then(currency.methods.transfer(NFTCONTRACT, String(totalAmount))
+							.send({
+								from: account,
+								maxFeePerGas: maxFee,
+								maxPriorityFeePerGas: maxPriority
+							},
+								async function (error, transactionHash) {
+									console.log("Transfer Submitted, Hash: ", transactionHash)
+									let transactionReceipt = null
+									while (transactionReceipt == null) {
+										transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+										await sleep(expectedBlockTime)
+									}
+									window.console = {
+										log: function (str) {
+											var out = document.createElement("div");
+											out.appendChild(document.createTextNode(str));
+											document.getElementById("txout").appendChild(out);
+										}
+									}
+									console.log("Transfer Complete", transactionReceipt);
+									contract.methods.mintpid(account, _mintAmount, _pid)
+										.send({
+											from: account,
+											maxFeePerGas: maxFee,
+											maxPriorityFeePerGas: maxPriority
+										});
+								}));
+				});
+			});
+		}
+
 		const refreshPage = () => {
 			window.location.reload();
 		}
@@ -382,12 +432,12 @@ class App extends Component {
 							</ul>
 						</div>
 					</div>
-					<div className='p-3'>
+					<div className='px-5'>
 						<input id='connectbtn' type='Button' className='stakegoldeffect2 connectbutton font-blk' onClick={connectWallet} style={{ fontSize: '20px', border: '0.2px', borderRadius: '15px', boxShadow: '1px 1px 5px #000000', fontFamily: 'Rambla' }} value='Connect Your Wallet' />
 					</div>
 				</nav>
 				<div id='nftminter' className='flex-1 justify-between items-center p-5'>
-					<div className='nftminted row px-3 p-3 center'>
+					<div className='nftminted row p-3 center'>
 						<div className='col'>
 							<img src='f-nft0-100.gif' width='79%' alt='fantasy' />
 						</div>
@@ -421,24 +471,37 @@ class App extends Component {
 								<Button variant="outline-warning" value='50'>50</Button>
 								<Button className="stakegoldeffect2" variant="outline-dark" value='100'>100</Button>
 							</ButtonGroup>
-							<h6 className='pt-2' style={{ fontFamily: 'Rambla', fontWeight: '300', fontSize: '18px', marginBottom: '1px', textShadow: '1px 1px 2px #000000' }}>WHAT DO YOU WANT TO PAY?</h6>
-							<div className='row px-3 pb-1 pt-1 row-style' style={{ marginTop: '1px', fontFamily: 'Rambla', fontWeight: '300', fontSize: '12px' }}>
-
+							<h6 className='pt-1' style={{ fontFamily: 'Rambla', fontWeight: '300', fontSize: '18px', marginBottom: '1px', textShadow: '1px 1px 4px #fffff0' }}>PLEASE CONNECT EXACTLY NETWORK</h6>
+							<div className='row row-style' style={{ color: '#000039', marginTop: '1px', fontFamily: 'Rambla', fontSize: '10px', textShadow: '0px 1px 2px #fffff0' }}>
 								<div className='col'>
 									<Button variant="outline-dark" className='Button-style' onClick={mint1} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
-										<img src='usdt.png' width='30%' alt='usdt' />
+										<img src='usdt.png' width='39%' alt='usdt-polygon' />
 									</Button>
+									<h6>POLYGON</h6>
 								</div>
 								<div className='col'>
 									<Button variant="outline-dark" className='Button-style' onClick={mint0} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
-										<img src={'FNFT.png'} width='30%' alt='fnft' />
+										<img src={'FNFT.png'} width='39%' alt='fnft' />
 									</Button>
+									<h6>POLYGON</h6>
 								</div>
-
+								<div className='col'>
+									<Button variant="outline-dark" className='Button-style' onClick={mint1} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
+										<img src='matic.png' width='39%' alt='matic' />
+									</Button>
+									<h6>POLYGON</h6>
+								</div>
+								<div className='col'>
+									<Button variant="outline-dark" className='Button-style' onClick={mint2} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
+										<img src='bnb.png' width='39%' alt='bnb' />
+									</Button>
+									<h6>BEP20</h6>
+								</div>
 								<div className='col'>
 									<Button variant="outline-dark" className='Button-style' onClick={mintnative} style={{ border: '0.2px', borderRadius: '14px', boxShadow: '1px 1px 5px #000000' }}>
-										<img src='matic.png' width='30%' alt='matic' />
+										<img src='eth.png' width='39%' alt='ethereum' />
 									</Button>
+									<h6>ETHEREUM</h6>
 								</div>
 								<div>
 									<label id='txout pb-2' style={{ color: '#39FF14', marginTop: '5px', fontWeight: '500', textShadow: '1px 1px 2px #000000' }}>
