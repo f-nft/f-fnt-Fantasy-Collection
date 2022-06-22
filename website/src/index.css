@@ -3,14 +3,17 @@
 
 * html
 {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+  padding: 2;
+  margin: 2;
+  box-sizing: full-width;
 }
 
 body
 {
-  margin: 0;
+  max-width: 1920px;
+  margin: 2px;
+  width: 100%;
+  overflow: auto;
   font-family: "Kdam Thmor Pro", sans-serif;
   font-family: "Black Ops One", cursive;
   font-family: "Blaka", cursive;
