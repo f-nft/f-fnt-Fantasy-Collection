@@ -5,34 +5,23 @@
 {
   padding: 2;
   margin: 2;
-  box-sizing: full-width;
 }
 
 body
 {
-  max-width: 1920px;
   margin: 2px;
-  width: 100%;
+  width: 2 00%;
   overflow: auto;
   font-family: "Kdam Thmor Pro", sans-serif;
   font-family: "Black Ops One", cursive;
   font-family: "Blaka", cursive;
   font-family: "Fascinate", cursive;
   font-family: "Ubuntu", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: radial-gradient(circle at 50% 50%,
-      #000000,
-      #060406,
-      #0c080c,
-      #130b13,
-      #190f19,
-      #1e131f,
-      #251724,
-      #2a1b2b,
-      #321e32,
-      #372238,
-      #352034);
+  background: linear-gradient(90deg, #000000, #410036);
+  background-size: 400% 400%;
+  -webkit-animation: AnimationStake 14s ease infinite;
+  -moz-animation: AnimationStake 10s ease infinite;
+  animation: AnimationStake 14s ease infinite;
 }
 
 .gradient-bg-welcome
