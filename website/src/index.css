@@ -9,7 +9,6 @@
 
 body
 {
-  background-image: "./icegif-3384.gif";
   color: rgb(201, 22, 162);
   max-width: fit-content;
   margin: 2px;
@@ -22,7 +21,7 @@ body
   font-family: "Blaka", cursive;
   font-family: "Fascinate", cursive;
   font-family: "Ubuntu", sans-serif;
-  background: linear-gradient(180deg, #e2d51a, #000000);
+  background: linear-gradient(180deg, #48b99d, #a3009b);
   background-size: 400% 400%;
   -webkit-animation: AnimationStake 14s ease infinite;
   -moz-animation: AnimationStake 10s ease infinite;
