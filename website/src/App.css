@@ -432,8 +432,9 @@
   box-shadow: 1px 1px 11px #ffd700;
 }
 
-.navbarglow
+.navbar
 {
+  font-family: "Black Ops One", cursive;
   box-shadow: 0px 8px 10px #17b2ff;
 }
 
@@ -458,11 +459,6 @@
   flex: 1;
   /* additionally, equal width */
   padding: 1em;
-}
-
-.navbarglow
-{
-  box-shadow: 0px 8px 15px #17b2ff;
 }
 
 .farm
