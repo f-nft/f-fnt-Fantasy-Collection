@@ -633,7 +633,7 @@ body
   display: flex;
   align-items: center;
   min-height: 100vh;
-  color: rgb(153, 0, 84);
+  /* color: rgb(153, 0, 84); */
     max-width: fit-content;
     margin: 2px;
     width: 200%;
@@ -645,11 +645,11 @@ body
   font-family: "Blaka", cursive;
   font-family: "Fascinate", cursive;
   font-family: "Ubuntu", sans-serif;
-  background: linear-gradient(0deg, #474747, #851400);
+  background: linear-gradient(270deg, #474747, #3b2f2d);
     background-size: 400% 400%;
-    -webkit-animation: AnimationStake 14s ease infinite;
-    -moz-animation: AnimationStake 10s ease infinite;
-    animation: AnimationStake 14s ease infinite;
+    -webkit-animation: AnimationStake 5s ease infinite;
+      -moz-animation: AnimationStake 5s ease infinite;
+      animation: AnimationStake 5s ease infinite;
 }
 @tailwind base;
 @tailwind components;
