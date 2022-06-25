@@ -9,7 +9,7 @@
     "three": "^0.141.0"
   },
   "description": "[![F-NFT](https://user-images.githubusercontent.com/100182093/167264485-8078c87b-7b69-4798-8371-944cdf9620dc.png)](https://f-nft.us) **What is NFT?**",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,10 +18,13 @@
     "type": "git",
     "url": "git+https://github.com/f-nft/f-fnt-Fantasy-Collection.git"
   },
-  "author": "",
+  "author": "f-nft",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/f-nft/f-fnt-Fantasy-Collection/issues"
   },
-  "homepage": "https://github.com/f-nft/f-fnt-Fantasy-Collection#readme"
+  "homepage": "https://github.com/f-nft/f-fnt-Fantasy-Collection#readme",
+  "keywords": [
+    "f-nft"
+  ]
 }
