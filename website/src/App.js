@@ -126,7 +126,6 @@ class App extends Component {
             await provider.send("eth_requestAccounts");
             var accounts = await web3.eth.getAccounts();
             account = accounts[0];
-
             document.getElementById("wallet-address").textContent = account;
             contract = new web3.eth.Contract(ABI, NFTCONTRACT);
             vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
