@@ -621,13 +621,11 @@
 {
   background-color: theme('colors.green.500');
   padding: theme('spacing.2') theme('spacing.4');
-  /* ... */
 }
 
 .card
 {
   padding: theme('spacing.4');
-  /* ... */
 }
 
 body
@@ -635,112 +633,24 @@ body
   display: flex;
   align-items: center;
   min-height: 100vh;
-}
-
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Blaka&family=Fascinate&family=Kdam+Thmor+Pro&family=Ubuntu:wght@700&display=swap");
-
-* html
-{
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-body
-{
-  color: hsla(30, 98%, 65%, 1);
-  margin: 0;
+  color: rgb(153, 0, 84);
+    max-width: fit-content;
+    margin: 2px;
+    width: 200%;
+    margin: 2px;
+    width: 200%;
+    overflow: auto;
   font-family: "Kdam Thmor Pro", sans-serif;
   font-family: "Black Ops One", cursive;
   font-family: "Blaka", cursive;
   font-family: "Fascinate", cursive;
   font-family: "Ubuntu", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(180deg, #ad6109, #0073df);
+    background-size: 400% 400%;
+    -webkit-animation: AnimationStake 14s ease infinite;
+    -moz-animation: AnimationStake 10s ease infinite;
+    animation: AnimationStake 14s ease infinite;
 }
-
-.gradient-bg-welcome
-{
-  background-color: #0f0e13;
-  background-image: radial-gradient(at 0% 0%,
-      rgba(16, 15, 21, 0.288) 0,
-      transparent 50%),
-    radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
-    radial-gradient(at 100% 0%, rgb(114, 39, 110) 0, transparent 50%);
-}
-
-.gradient-bg-services
-{
-  background-color: #0f0e13;
-  background-image: radial-gradient(at 0% 0%,
-      rgba(16, 15, 21, 0.247) 0,
-      transparent 50%),
-    radial-gradient(at 50% 100%, hsla(225, 39%, 25%, 1) 0, transparent 50%);
-}
-
-.gradient-bg-transactions
-{
-  background-color: #0f0e13;
-  background-image: radial-gradient(at 0% 100%,
-      rgba(20, 15, 21, 0.418) 0,
-      transparent 50%),
-    radial-gradient(at 50% 0%, hsla(225, 39%, 25%, 1) 0, transparent 50%);
-}
-
-.gradient-bg-footer
-{
-  background-color: #0f0e13;
-  background-image: radial-gradient(at 0% 100%,
-      rgba(20, 15, 21, 0.288) 0,
-      transparent 53%),
-    radial-gradient(at 50% 150%, rgb(114, 39, 114) 0, transparent 50%);
-}
-
-.blue-glassmorphism
-{
-  background: rgb(39, 51, 89, 0.4);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(0, 0, 0, 0.3);
-}
-
-/* white glassmorphism */
-.white-glassmorphism
-{
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(251, 212, 255, 0.253);
-}
-
-.eth-card
-{
-  background-color: #a099ff;
-  background-image: radial-gradient(at 83% 67%,
-      rgb(152, 231, 156) 0,
-      transparent 58%),
-    radial-gradient(at 67% 20%, hsla(357, 94%, 71%, 1) 0, transparent 59%),
-    radial-gradient(at 88% 35%, hsla(222, 81%, 65%, 1) 0, transparent 50%),
-    radial-gradient(at 31% 91%, hsla(9, 61%, 61%, 1) 0, transparent 52%),
-    radial-gradient(at 27% 71%, hsla(336, 91%, 65%, 1) 0, transparent 49%),
-    radial-gradient(at 74% 89%, hsla(30, 98%, 65%, 1) 0, transparent 51%),
-    radial-gradient(at 53% 75%, hsla(174, 94%, 68%, 1) 0, transparent 45%);
-}
-
-.text-gradient
-{
-  background-color: #fff;
-  background-image: radial-gradient(at 100% 60%,
-      rgb(0, 0, 0) 0,
-      transparent 50%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
