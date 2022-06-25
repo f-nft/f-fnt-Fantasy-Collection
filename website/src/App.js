@@ -554,7 +554,7 @@ class App extends Component {
                         <div className="col"> <img src="f-nft0-100.gif" width="79%" alt="fantasy" style={{ border: "2px", borderRadius: "15px" }} /> <div> <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000", }} > NFT Minted </h1> </div> <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }} > {balance.result}/10,000 </h4>
                         </div>
                         <div className="col justify-center">
-                            <h5>2,000 Fantasy NFT in Polygon Network Contract<p ahref="https://polygonscan.com/token/0x01296Da17460cc88FCdbfdf0196357D2f6e57472">0x01296Da17460cc88FCdbfdf0196357D2f6e57472</p></h5>
+                            <h5>2,000 Fantasy NFT in Polygon Network Contract<p><WalletLink name="Fantasy_Collections" href="https://polygonscan.com/token/0x01296Da17460cc88FCdbfdf0196357D2f6e57472">0x01296Da17460cc88FCdbfdf0196357D2f6e57472</WalletLink></p></h5>
                             <div className="row container-fluid center p-2"> <h5>Your Wallet Address</h5>
                                 <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black" }} > <label for="floatingInput"> Please <input id="connectbtn" type="Button" className="stakedcard" onClick={connectWallet} style={{ fontSize: "20px", border: "1px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla", }} value="Connect Wallet" /> </label> </div>
                             </div>
