@@ -107,10 +107,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/f-nft/f-fnt-Fantasy-Collection.git"
+    "url": ""
   },
   "bugs": {
     "url": "https://github.com/f-nft/f-fnt-Fantasy-Collection/issues"
   },
-  "homepage": "https://github.com/f-nft/f-fnt-Fantasy-Collection#readme"
+  "homepage": ""
 }
