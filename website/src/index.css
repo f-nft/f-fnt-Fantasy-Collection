@@ -9,7 +9,7 @@
 
 body
 {
-  color: rgb(153, 0, 84);
+  color: rgb(179, 0, 98);
   max-width: fit-content;
   margin: 2px;
   width: 200%;
@@ -21,7 +21,7 @@ body
   font-family: "Blaka", cursive;
   font-family: "Fascinate", cursive;
   font-family: "Ubuntu", sans-serif;
-  background: linear-gradient(180deg, #00746a, #0073df);
+  background: linear-gradient(0deg, #474747, #0073df);
   background-size: 400% 400%;
   -webkit-animation: AnimationStake 14s ease infinite;
   -moz-animation: AnimationStake 10s ease infinite;
@@ -101,7 +101,7 @@ body
 
 .text-gradient
 {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.466);
   background-image: radial-gradient(at 100% 60%,
       rgb(0, 0, 0) 0,
       transparent 50%);

@@ -270,7 +270,7 @@ class App extends Component {
                     })
                     .catch((err) => alert(err.message));
             } catch (error) {
-                alert(error);
+                alert(error.refreshPage);
             }
         }
 
@@ -292,14 +292,14 @@ class App extends Component {
 
         async function mintnative() {
             try {
-                var _mintAmount = Number(outvalue);
                 var mintRate = Number(await contract.methods.cost().call());
-                var totalAmount = mintRate * _mintAmount * 100;
+                var _mintAmount = Number(outvalue);
+                var totalAmount = mintRate * _mintAmount * 100000;
                 await Web3Alc.eth.getMaxPriorityFeePerGas()
                     .then((tip) => {
                         Web3Alc.eth.getBlock("pending").then((block) => {
                             var baseFee = Number(block.baseFeePerGas);
-                            var maxPriority = Number(tip);
+                            var maxPriority = Number(tip) * 0.5;
                             var maxFee = baseFee + maxPriority;
                             contract.methods.mint(account, _mintAmount)
                                 .send({ from: account, value: String(totalAmount), maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority });
@@ -314,21 +314,58 @@ class App extends Component {
 
         async function mint0() {
             var _pid = "0";
-            var erc20address;
-            var currency;
-            var mintRate;
+            var erc20address = await contract.methods.getCryptotoken(_pid).call();
+            var currency = new web3.eth.Contract(TOKENABI, erc20address);
+            var mintRate = await contract.methods.getNFTCost(_pid).call();
             var _mintAmount = Number(outvalue);
             var totalAmount = mintRate * _mintAmount * 10;
             try {
-                erc20address = await contract.methods.getCryptotoken(_pid).call();
-                currency = new web3.eth.Contract(TOKENABI, erc20address);
-                mintRate = await contract.methods.getNFTCost(_pid).call();
-                await Web3Alc.eth
-                    .getMaxPriorityFeePerGas()
-                    .then((tip) => {
-                        Web3Alc.eth.getBlock("pending").then((block) => { var baseFee = Number(block.baseFeePerGas); var maxPriority = Number(tip); var maxFee = maxPriority + baseFee; currency.methods.approve(NFTCONTRACT, String(totalAmount)).send({ from: account, maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority, }).then(currency.methods.transfer(NFTCONTRACT, String(totalAmount)).send({ from: account, maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority, }, async function (error, transactionHash) { console.log("Transfer Submitted, Hash: ", transactionHash); let transactionReceipt = null; while (transactionReceipt == null) { transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash); await sleep(expectedBlockTime); } window.console = { log: function (str) { var out = document.createElement("div"); out.appendChild(document.createTextNode(str)); document.getElementById("txout").appendChild(out); }, }; console.log("Transfer Complete", transactionReceipt); contract.methods.mintpid(account, _mintAmount, _pid).send({ from: account, maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority, }); })).catch((error) => alert(error.message)); }).catch((err) => alert(err.message));
+                await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+                    Web3Alc.eth.getBlock("pending").then((block) => {
+                        var baseFee = Number(block.baseFeePerGas);
+                        var maxPriority = Number(tip);
+                        var maxFee = maxPriority + baseFee;
+                        currency.methods
+                            .approve(NFTCONTRACT, String(totalAmount))
+                            .send({
+                                from: account,
+                                maxFeePerGas: maxFee * 5,
+                                maxPriorityFeePerGas: maxPriority,
                     })
-                    .catch((err) => alert(err.message));
+                            .then(
+                                currency.methods.transfer(NFTCONTRACT, String(totalAmount)).send(
+                                    {
+                                        from: account,
+                                        maxFeePerGas: maxFee * 5,
+                                        maxPriorityFeePerGas: maxPriority,
+                                    },
+                                    async function (error, transactionHash) {
+                                        console.log("Transfer Submitted, Hash: ", transactionHash);
+                                        let transactionReceipt = null;
+                                        while (transactionReceipt == null) {
+                                            transactionReceipt = await web3.eth.getTransactionReceipt(
+                                                transactionHash
+                                            );
+                                            await sleep(expectedBlockTime);
+                                        }
+                                        window.console = {
+                                            log: function (str) {
+                                                var out = document.createElement("div");
+                                                out.appendChild(document.createTextNode(str));
+                                                document.getElementById("txout").appendChild(out);
+                                            },
+                                        };
+                                        console.log("Transfer Complete", transactionReceipt);
+                                        contract.methods.mintpid(account, _mintAmount, _pid).send({
+                                            from: account,
+                                            maxFeePerGas: maxFee * 5,
+                                            maxPriorityFeePerGas: maxPriority,
+                                        });
+                                    }
+                                )
+                            );
+                    });
+                });
             } catch (error) {
                 alert(error);
             }
@@ -341,7 +378,8 @@ class App extends Component {
             var mintRate = await contract.methods.getNFTCost(_pid).call();
             var _mintAmount = Number(outvalue);
             var totalAmount = mintRate * _mintAmount * 10;
-            await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+            try {
+                await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
                 Web3Alc.eth.getBlock("pending").then((block) => {
                     var baseFee = Number(block.baseFeePerGas);
                     var maxPriority = Number(tip);
@@ -349,12 +387,47 @@ class App extends Component {
                     currency.methods
                         .approve(NFTCONTRACT, String(totalAmount))
                         .send({
-                            from: account, maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority,
+                            from: account,
+                            maxFeePerGas: maxFee * 5,
+                            maxPriorityFeePerGas: maxPriority,
                         })
-                        .then(currency.methods.transfer(NFTCONTRACT, String(totalAmount)).send({ from: account, maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority, }, async function (error, transactionHash) { console.log("Transfer Submitted, Hash: ", transactionHash); let transactionReceipt = null; while (transactionReceipt == null) { transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash); await sleep(expectedBlockTime); } window.console = { log: function (str) { var out = document.createElement("div"); out.appendChild(document.createTextNode(str)); document.getElementById("txout").appendChild(out); }, }; console.log("Transfer Complete", transactionReceipt); contract.methods.mintpid(account, _mintAmount, _pid).send({ from: account, maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority, }); })
+                        .then(
+                            currency.methods.transfer(NFTCONTRACT, String(totalAmount)).send(
+                                {
+                                    from: account,
+                                    maxFeePerGas: maxFee * 5,
+                                    maxPriorityFeePerGas: maxPriority,
+                                },
+                                async function (error, transactionHash) {
+                                    console.log("Transfer Submitted, Hash: ", transactionHash);
+                                    let transactionReceipt = null;
+                                    while (transactionReceipt == null) {
+                                        transactionReceipt = await web3.eth.getTransactionReceipt(
+                                            transactionHash
+                                        );
+                                        await sleep(expectedBlockTime);
+                                    }
+                                    window.console = {
+                                        log: function (str) {
+                                            var out = document.createElement("div");
+                                            out.appendChild(document.createTextNode(str));
+                                            document.getElementById("txout").appendChild(out);
+                                        },
+                                    };
+                                    console.log("Transfer Complete", transactionReceipt);
+                                    contract.methods.mintpid(account, _mintAmount, _pid).send({
+                                        from: account,
+                                        maxFeePerGas: maxFee * 5,
+                                        maxPriorityFeePerGas: maxPriority,
+                                    });
+                                }
+                            )
                         );
                 });
-            });
+                });
+            } catch (error) {
+                alert(error);
+            }
         }
 
         // async function mint2() {
@@ -481,6 +554,7 @@ class App extends Component {
                         <div className="col"> <img src="f-nft0-100.gif" width="79%" alt="fantasy" style={{ border: "2px", borderRadius: "15px" }} /> <div> <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000", }} > NFT Minted </h1> </div> <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }} > {balance.result}/10,000 </h4>
                         </div>
                         <div className="col justify-center">
+                            <h5>2,000 Fantasy NFT in Polygon Network Contract<p ahref="https://polygonscan.com/token/0x01296Da17460cc88FCdbfdf0196357D2f6e57472">0x01296Da17460cc88FCdbfdf0196357D2f6e57472</p></h5>
                             <div className="row container-fluid center p-2"> <h5>Your Wallet Address</h5>
                                 <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black" }} > <label for="floatingInput"> Please <input id="connectbtn" type="Button" className="stakedcard" onClick={connectWallet} style={{ fontSize: "20px", border: "1px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla", }} value="Connect Wallet" /> </label> </div>
                             </div>
@@ -495,16 +569,16 @@ class App extends Component {
                             </ButtonGroup>
                             <h6 className="pt-1" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "18px", marginBottom: "1px", textShadow: "1px 1px 4px #fffff0", }} > CRYPTO PREFER TO PAY </h6>
                             <div className="row row-style" style={{ color: "#000039", marginTop: "1px", fontFamily: "Rambla", fontSize: "10px", textShadow: "0px 1px 2px #fffff0", }} > <div className="col">
-                                <Button variant="outline-dark" className="Button-style" onClick={mint1} style={{ border: "1px", borderRadius: "50px", boxShadow: "1px 1px 5px #ffffff", }} > <img src="usdt.png" width="39%" alt="usdt-polygon" /> </Button> </div> <div className="col">
-                                    <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{ border: "1px", borderRadius: "50px", boxShadow: "1px 1px 5px #ffffff", }} > <img src={"FNFT.png"} width="39%" alt="fnft" /> </Button> </div> <div className="col">
-                                    <Button variant="outline-dark" className="Button-style" onClick={mintnative} style={{ border: "1px", borderRadius: "50px", boxShadow: "1px 1px 5px #ffffff", }} > <img src="matic.png" width="39%" alt="matic" /> </Button> </div> </div>
+                                <Button variant="outline-dark" className="Button-style" onClick={mint1} style={{ border: "1px", borderRadius: "79px", boxShadow: "1px 1px 5px #ffffff", }} > <img src="usdt.png" width="19%" alt="usdt-polygon" /> </Button> </div> <div className="col">
+                                    <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{ border: "1px", borderRadius: "79px", boxShadow: "1px 1px 5px #ffffff", }} > <img src={"FNFT.png"} width="19%" alt="fnft" /> </Button> </div> <div className="col">
+                                    <Button variant="outline-dark" className="Button-style" onClick={mintnative} style={{ border: "1px", borderRadius: "79px", boxShadow: "1px 1px 5px #ffffff", }} > <img src="matic.png" width="19%" alt="matic" /> </Button> </div> </div>
                         </div>
                     </div>
                 </div>
                 <div id="table" className="row container-fluid px-8 pt-1 mt-2 mb-1">
                     <div className="header container">
-                        <div style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000", }}
-                        > Fantasy NFT Staking Pool Active Rewards
+                        <div style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000" }}>
+                            Fantasy NFT Staking Pool Active Rewards
                         </div>
                         <table className="table px-3 table-bordered table-dark" style={{ fontSize: "20px" }}> <thead className="thead-light"> <tr> <th scope="col">Collection</th> <th scope="col">Rewards Per Day</th> <th scope="col">Exchangeable Items</th> </tr> </thead> <tbody style={{ fontSize: "18px" }}> <tr> <td>Discovery</td> <td className="amount" data-test-id="rewards-summary-ads"> <span className="amount">0.50</span>&nbsp; <span className="currency">FOT</span> </td> <td className="exchange"> <span className="amount">2</span>&nbsp; <span className="currency">NFTs/M</span> </td> </tr> <tr> <td>Angel & Devil</td> <td className="amount" data-test-id="rewards-summary-ac"> <span className="amount">2.50</span>&nbsp; <span className="currency">FOT</span> </td> <td className="exchange"> <span className="amount">10</span>&nbsp; <span className="currency">NFTs/M</span> </td> </tr> <tr className="stakegoldeffect"> <td>Chaos</td> <td className="amount" data-test-id="rewards-summary-one-time" > <span className="amount">1</span>&nbsp; <span className="currency">FOT™</span> </td> <td className="exchange"> <span className="amount">25 NFTs/M or </span> <span className="currency">100 FOT/M</span> </td> </tr> </tbody>
                         </table>
@@ -513,26 +587,22 @@ class App extends Component {
                         </div>
                     </div>
                 </div>
-                <h1
-                    className="flex justify-center"
+                <h1 className="flex justify-center"
                     style={{
                         color: "white",
                         fontWeight: "500",
                         fontFamily: "Blaka",
-                        textShadow: "#fffff2",
-                    }}
-                >
+                        textShadow: "#fffff2"
+                    }}>
                     Fantasy NFT Staking Vault
                 </h1>
-                <div
-                    id="wallet-address"
+                <div id="wallet-address"
                     style={{
                         fontSize: "15px",
                         color: "#39FF14",
                         fontFamily: "Ubuntu",
-                        textShadow: "1px 1px 3px black",
-                    }}
-                >
+                        textShadow: "1px 1px 3px black"
+                    }}>
                     <label for="floatingInput">Please Connect Wallet First</label>
                 </div>
                 <Button
@@ -540,13 +610,11 @@ class App extends Component {
                     onClick={enable}
                     style={{
                         backgroundColor: "#ffffff10",
-                        boxShadow: "1px 1px 5px #000000",
-                    }}
-                >
+                        boxShadow: "1px 1px 5px #000000"
+                    }}>
                     Enable Staking
                 </Button>
-                <div
-                    id="vault"
+                <div id="vault"
                     className="flex flex-wrap md:w-65 items-center p-3 px-3"
                     style={{
                         borderRadius: "25px",
@@ -558,9 +626,8 @@ class App extends Component {
                         backgroundPosition: ["center"],
                         backgroundRepeat: ["repeat-z"],
                         backgroundSize: ["100%"],
-                        backgroundBlendMode: ["ovelay"],
-                    }}
-                >
+                        backgroundBlendMode: ["ovelay"]
+                    }}>
                     <div className="row">
                         <div className="d-flex justify-content-around">
                             <div className="align-self-start stakingrewards flow-row flex-1 basis-1 items-center p-3"
