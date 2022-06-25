@@ -31,6 +31,7 @@ var web3 = null;
 const Web3Alc = createAlchemyWeb3(
     "https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk"
 );
+
 const moralisapikey =
     "1ByvMyujsaXkDVTlnUjQIje5e09J2zLHGaS2P6JytHVA1LxfAPPYE8UdOpEjc6ca";
 const polygonscanapikey = "QW34TJU2T87NCU4HWKR7TGUEC1I8TYVDHW";
@@ -119,7 +120,6 @@ class App extends Component {
         };
 
         const expectedBlockTime = 10000;
-
         async function connectWallet() {
             var provider = await web3Modal.connect();
             web3 = new Web3(provider);
@@ -257,6 +257,7 @@ class App extends Component {
                 var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
                 const arraynft = Array.from(rawnfts.map(Number));
                 const tokenid = arraynft.filter(Number);
+                await Web3Alc.eth.getMaxPriorityFeePerGas().then(console.log); 
                 await Web3Alc.eth
                     .getMaxPriorityFeePerGas()
                     .then((tip) => {
@@ -293,11 +294,17 @@ class App extends Component {
             try {
                 var _mintAmount = Number(outvalue);
                 var mintRate = Number(await contract.methods.cost().call());
-                var totalAmount = mintRate * _mintAmount * 1000;
-                await Web3Alc.eth
-                    .getMaxPriorityFeePerGas()
+                var totalAmount = mintRate * _mintAmount * 100;
+                await Web3Alc.eth.getMaxPriorityFeePerGas()
                     .then((tip) => {
-                        Web3Alc.eth.getBlock("pending").then((block) => { var baseFee = Number(block.baseFeePerGas); var maxPriority = Number(tip); var maxFee = baseFee + maxPriority; contract.methods.mint(account, _mintAmount).send({ from: account, value: String(totalAmount), maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority, }); }).catch((err) => alert(err.message));
+                        Web3Alc.eth.getBlock("pending").then((block) => {
+                            var baseFee = Number(block.baseFeePerGas);
+                            var maxPriority = Number(tip);
+                            var maxFee = baseFee + maxPriority;
+                            contract.methods.mint(account, _mintAmount)
+                                .send({ from: account, value: String(totalAmount), maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority });
+                            
+                        }).catch((err) => alert(err.message));
                     })
                     .catch((err) => alert(err.message));
             } catch (error) {
@@ -342,7 +349,7 @@ class App extends Component {
                     currency.methods
                         .approve(NFTCONTRACT, String(totalAmount))
                         .send({
-                            from: account, maxFeePerGas: maxFee * 5 * 5, maxPriorityFeePerGas: maxPriority,
+                            from: account, maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority,
                         })
                         .then(currency.methods.transfer(NFTCONTRACT, String(totalAmount)).send({ from: account, maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority, }, async function (error, transactionHash) { console.log("Transfer Submitted, Hash: ", transactionHash); let transactionReceipt = null; while (transactionReceipt == null) { transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash); await sleep(expectedBlockTime); } window.console = { log: function (str) { var out = document.createElement("div"); out.appendChild(document.createTextNode(str)); document.getElementById("txout").appendChild(out); }, }; console.log("Transfer Complete", transactionReceipt); contract.methods.mintpid(account, _mintAmount, _pid).send({ from: account, maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority, }); })
                         );
