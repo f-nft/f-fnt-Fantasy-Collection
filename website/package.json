@@ -1,6 +1,6 @@
 {
   "name": "fantasy",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
@@ -68,7 +68,7 @@
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
-  "author": "",
+  "author": "f-nft",
   "license": "MIT",
   "devDependencies": {
     "@alch/alchemy-web3": "^0.1.18",
@@ -104,5 +104,13 @@
   "keywords": [
     "Fantasy",
     "Collections"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/f-nft/f-fnt-Fantasy-Collection.git"
+  },
+  "bugs": {
+    "url": "https://github.com/f-nft/f-fnt-Fantasy-Collection/issues"
+  },
+  "homepage": "https://github.com/f-nft/f-fnt-Fantasy-Collection#readme"
 }
