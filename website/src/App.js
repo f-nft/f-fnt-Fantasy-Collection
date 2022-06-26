@@ -260,7 +260,16 @@ class App extends Component {
                         Web3Alc.eth
                             .getBlock("pending")
                             .then((block) => {
-                                var baseFee = Number(block.baseFeePerGas); var maxPriority = Number(tip); var maxFee = maxPriority + baseFee; tokenid.forEach(async (id) => { await vaultcontract.methods.claim([id]).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, }); });
+                                console.log("baseFee", Number(block.baseFeePerGas));
+                                var baseFee = Number(block.baseFeePerGas); 
+                                var maxPriority = Number(tip); 
+                                var maxFee = maxPriority + baseFee; 
+                                tokenid.forEach(async (id) => { 
+                                    await vaultcontract.methods.claim([id]).send({ 
+                                        from: account, 
+                                        maxFeePerGas: maxFee, 
+                                        maxPriorityFeePerGas: maxPriority, 
+                                    }); });
                             })
                             .catch((err) => alert(err.message));
                     })
