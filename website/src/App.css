@@ -645,7 +645,7 @@ body
   font-family: "Blaka", cursive;
   font-family: "Fascinate", cursive;
   font-family: "Ubuntu", sans-serif;
-  background: linear-gradient(0deg, #474747, #3b3b3b);
+  background: linear-gradient(270deg, #474747, #474747);
     background-size: 400% 400%;
     -webkit-animation: AnimationStake 5s ease infinite;
       -moz-animation: AnimationStake 5s ease infinite;
