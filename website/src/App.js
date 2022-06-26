@@ -58,9 +58,12 @@ const providerOptions = {
 const web3Modal = new Web3Modal({
     network: "mainnet",
     theme: "dark",
-    cacheProvider: true,
+    cacheProvider: false,
     providerOptions,
 });
+console.log('open');
+const provider = await web3Modal.connect();
+console.log('close');
 
 class App extends Component {
     constructor() {
@@ -116,9 +119,12 @@ class App extends Component {
         };
 
         const expectedBlockTime = 10000;
+
         async function connectWallet() {
             var provider = await web3Modal.connect();
             web3 = new Web3(provider);
+            document.querySelector("#prepare").style.display = "none";
+            document.querySelector("#connected").style.display = "block";
             await provider.send("eth_requestAccounts");
             var accounts = await web3.eth.getAccounts();
             account = accounts[0];
@@ -445,83 +451,6 @@ class App extends Component {
                 alert(error);
             }
         }
-
-        // async function mint2() {
-        // var _pid = "2";
-        // var erc20address;
-        // var mintRate;
-        // var currency;
-        // var _mintAmount = Number(outvalue);
-        // var totalAmount = mintRate * _mintAmount;
-        // try {
-        // erc20address = await contract.methods.getCryptotoken(_pid).call();
-        // currency = new web3.eth.Contract(TOKENABI, erc20address);
-        // mintRate = await contract.methods.getNFTCost(_pid).call();
-        // await Web3Alc.eth
-        // .getMaxPriorityFeePerGas()
-        // .then((tip) => {
-        // Web3Alc.eth
-        // .getBlock("pending")
-        // .then((block) => {
-        // var baseFee = Number(block.baseFeePerGas);
-        // var maxPriority = Number(tip);
-        // var maxFee = maxPriority + baseFee;
-        // currency.methods
-        // .approve(NFTCONTRACT, String(totalAmount))
-        // .send({
-        // from: account,
-        // maxFeePerGas: maxFee * 2,
-        // maxPriorityFeePerGas: maxPriority,
-        // })
-        // .then(
-        // currency.methods
-        // .transfer(NFTCONTRACT, String(totalAmount))
-        // .send(
-        // {
-        // from: account,
-        // maxFeePerGas: maxFee * 2,
-        // maxPriorityFeePerGas: maxPriority,
-        // },
-        // async function (error, transactionHash) {
-        // console.log(
-        // "Transfer Submitted, Hash: ",
-        // transactionHash
-        // );
-        // let transactionReceipt = null;
-        // while (transactionReceipt == null) {
-        // transactionReceipt =
-        //await web3.eth.getTransactionReceipt(
-        // transactionHash
-        //);
-        // await sleep(expectedBlockTime);
-        // }
-        // window.console = {
-        // log: function (str) {
-        //var out = document.createElement("div");
-        //out.appendChild(document.createTextNode(str));
-        //document.getElementById("txout").appendChild(out);
-        // },
-        // };
-        // console.log("Transfer Complete", transactionReceipt);
-        // contract.methods
-        // .mintpid(account, _mintAmount, _pid)
-        // .send({
-        //from: account,
-        //maxFeePerGas: maxFee * 2,
-        //maxPriorityFeePerGas: maxPriority,
-        // });
-        // }
-        // )
-        // )
-        // .catch((err) => alert(err.message));
-        // })
-        // .catch((err) => alert(err.message));
-        // })
-        // .catch((err) => alert(err.message));
-        // } catch (err) {
-        // alert(err);
-        // }
-        // }
 
         const refreshPage = () => {
             window.location.reload();
