@@ -282,7 +282,14 @@ class App extends Component {
                 await Web3Alc.eth
                     .getMaxPriorityFeePerGas()
                     .then((tip) => {
-                        Web3Alc.eth.getBlock("pending").then((block) => { var baseFee = Number(block.baseFeePerGas); var maxPriority = Number(tip); var maxFee = maxPriority + baseFee; tokenid.forEach(async (id) => { await vaultcontract.methods.unstake([id]).send({ from: account, maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority, }); }); }).catch((err) => alert(err.message));
+                        Web3Alc.eth.getBlock("pending").then((block) => { 
+                            var baseFee = Number(block.baseFeePerGas); 
+                            var maxPriority = Number(tip); 
+                            var maxFee = maxPriority + baseFee; tokenid.forEach(async (id) => { 
+                                await vaultcontract.methods.unstake([id]).send({ 
+                                    from: account, maxFeePerGas: 
+                                    maxFee * 2, 
+                                    maxPriorityFeePerGas: maxPriority, }); }); }).catch((err) => alert(err.message));
                     })
                     .catch((err) => alert(err.message));
             } catch (error) {
@@ -302,7 +309,11 @@ class App extends Component {
                             var maxPriority = Number(tip) * 0.5;
                             var maxFee = baseFee + maxPriority;
                             contract.methods.mint(account, _mintAmount)
-                                .send({ from: account, value: String(totalAmount), maxFeePerGas: maxFee * 5, maxPriorityFeePerGas: maxPriority });
+                                .send({ 
+                                    from: account, 
+                                    value: String(totalAmount), 
+                                    maxFeePerGas: maxFee * 2, 
+                                    maxPriorityFeePerGas: maxPriority });
                             
                         }).catch((err) => alert(err.message));
                     })
@@ -329,14 +340,14 @@ class App extends Component {
                             .approve(NFTCONTRACT, String(totalAmount))
                             .send({
                                 from: account,
-                                maxFeePerGas: maxFee * 5,
+                                maxFeePerGas: maxFee * 2,
                                 maxPriorityFeePerGas: maxPriority,
                     })
                             .then(
                                 currency.methods.transfer(NFTCONTRACT, String(totalAmount)).send(
                                     {
                                         from: account,
-                                        maxFeePerGas: maxFee * 5,
+                                        maxFeePerGas: maxFee * 2,
                                         maxPriorityFeePerGas: maxPriority,
                                     },
                                     async function (error, transactionHash) {
@@ -358,7 +369,7 @@ class App extends Component {
                                         console.log("Transfer Complete", transactionReceipt);
                                         contract.methods.mintpid(account, _mintAmount, _pid).send({
                                             from: account,
-                                            maxFeePerGas: maxFee * 5,
+                                            maxFeePerGas: maxFee * 2,
                                             maxPriorityFeePerGas: maxPriority,
                                         });
                                     }
@@ -388,14 +399,14 @@ class App extends Component {
                         .approve(NFTCONTRACT, String(totalAmount))
                         .send({
                             from: account,
-                            maxFeePerGas: maxFee * 5,
+                            maxFeePerGas: maxFee * 2,
                             maxPriorityFeePerGas: maxPriority,
                         })
                         .then(
                             currency.methods.transfer(NFTCONTRACT, String(totalAmount)).send(
                                 {
                                     from: account,
-                                    maxFeePerGas: maxFee * 5,
+                                    maxFeePerGas: maxFee * 2,
                                     maxPriorityFeePerGas: maxPriority,
                                 },
                                 async function (error, transactionHash) {
@@ -417,7 +428,7 @@ class App extends Component {
                                     console.log("Transfer Complete", transactionReceipt);
                                     contract.methods.mintpid(account, _mintAmount, _pid).send({
                                         from: account,
-                                        maxFeePerGas: maxFee * 5,
+                                        maxFeePerGas: maxFee * 2,
                                         maxPriorityFeePerGas: maxPriority,
                                     });
                                 }
@@ -454,7 +465,7 @@ class App extends Component {
         // .approve(NFTCONTRACT, String(totalAmount))
         // .send({
         // from: account,
-        // maxFeePerGas: maxFee * 5,
+        // maxFeePerGas: maxFee * 2,
         // maxPriorityFeePerGas: maxPriority,
         // })
         // .then(
@@ -463,7 +474,7 @@ class App extends Component {
         // .send(
         // {
         // from: account,
-        // maxFeePerGas: maxFee * 5,
+        // maxFeePerGas: maxFee * 2,
         // maxPriorityFeePerGas: maxPriority,
         // },
         // async function (error, transactionHash) {
@@ -491,7 +502,7 @@ class App extends Component {
         // .mintpid(account, _mintAmount, _pid)
         // .send({
         //from: account,
-        //maxFeePerGas: maxFee * 5,
+        //maxFeePerGas: maxFee * 2,
         //maxPriorityFeePerGas: maxPriority,
         // });
         // }
