@@ -58,7 +58,7 @@ body
 
 .gradient-bg-footer
 {
-  background-color: #0f0e13;
+  background-color: #58585a;
   background-image: radial-gradient(at 0% 100%,
       rgba(20, 15, 21, 0.288) 0,
       transparent 53%),
@@ -101,7 +101,7 @@ body
 
 .text-gradient
 {
-  background-color: rgba(255, 255, 255, 0.466);
+  background-color: rgba(131, 0, 87, 0.664);
   background-image: radial-gradient(at 100% 60%,
       rgb(0, 0, 0) 0,
       transparent 50%);

@@ -134,7 +134,11 @@ export default function ListNft() {
                         })}
                         {nftstk.map((nft, i) => {
                             async function unstakeit() {
-                                vaultcontract.methods.unstake([nft.tokenId]).send({ from: account });
+                                vaultcontract.methods.unstake([nft.tokenId]).send({
+                                    from: account,
+                                    gas: "30000",
+                                    gasPriceinWei: "1000",
+                                });
                             }
                             return (
                                 <div className="snap-center card stakedcard mt-3 mb-3" style={{ textShadow: "1px 1px 2px #000000", minWidth: '200px' }} key={i} >

@@ -51,7 +51,6 @@
 
 .App-header
 {
-  background-color: #332531;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -328,7 +327,7 @@
 {
   float: left;
   margin: 10px;
-  background-color: grey;
+  background-color: rgb(80, 80, 80);
   padding-bottom: 100%;
   margin-bottom: -100%;
 }
@@ -633,7 +632,6 @@ body
   display: flex;
   align-items: center;
   min-height: 100vh;
-  /* color: rgb(153, 0, 84); */
     max-width: fit-content;
     margin: 2px;
     width: 200%;
