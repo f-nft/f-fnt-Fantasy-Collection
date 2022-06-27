@@ -45,7 +45,7 @@ const providerOptions = {
 const web3Modal = new Web3Modal({
   network: "rinkeby",
   theme: "dark",
-  cacheProvider: true,
+  cacheProvider: false,
   providerOptions,
 });
 class App extends Component {
@@ -163,7 +163,6 @@ class App extends Component {
     return processArray([rwdArray])
 
   }
-
 
   async componentDidMount() {
     //check if user is already logged in then connect wallet
@@ -323,10 +322,8 @@ class App extends Component {
             tokenid.forEach(async (id) => {
               await vaultcontract.methods.unstake([id]).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
             });
-          })
-            .catch((err) => alert(err.message));
-        })
-          .catch((err) => alert(err.message));
+          }).catch((err) => alert(err.message));
+        }).catch((err) => alert(err.message));
       } catch (error) {
         alert(error);
       }
@@ -334,24 +331,33 @@ class App extends Component {
 
     async function mintnative() {
       try {
+        var maticRate = 100;
         var _mintAmount = Number(outvalue);
         var mintRate = Number(await contract.methods.cost().call());
-        var totalAmount = mintRate * _mintAmount * 100;
-        await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+        var totalAmount = mintRate * _mintAmount * maticRate;
+        web3.eth.estimateGas({
+          from: account,
+          data: ""
+        }).then((estimatedGas) => {
+          Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
           Web3Alc.eth.getBlock("pending").then((block) => {
-            var baseFee = Number(block.baseFeePerGas);
-            var maxPriority = Number(tip);
-            var maxFee = baseFee + maxPriority;
-            contract.methods.mint(account, _mintAmount).send({ from: account, value: String(totalAmount), maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
-          })
-            .catch((err) => alert(err.message));
-        })
-          .catch((err) => alert(err.message));
+            const baseFee = Number(block.baseFeePerGas);
+            const maxPriority = Number(tip);
+            const maxFee = baseFee + maxPriority;
+            contract.methods.mint(account, _mintAmount).send({
+              from: account,
+              gas: estimatedGas,
+              maxPriorityFeePerGas: maxPriority,
+              value: String(totalAmount),
+              maxFeePerGas: maxFee
+            })
+          });
+          }).catch((err) => alert(err.message));
+        }).catch((err) => alert(err.message));
       } catch (error) {
         alert(error);
       }
     }
-
 
     async function mint0() {
       var _pid = "0";
@@ -502,7 +508,7 @@ class App extends Component {
       <div className="items-center justify-start p-2 text-center">
         <nav className="navbar full-width navbar-expand-md navbar-dark mb-3">
           <div className="container-fluid">
-            <div className="navbar-brand px-5" style={{ fontWeight: "800", fontSize: "22px" }} href="#"></div>
+            <div className="navbar-brand px-5" style={{ fontWeight: "300", fontSize: "18px" }} href="#"></div>
             <img className="react-logo" src="FNFT.png" width="20%" alt="logofnft" />
             <Button className="navbar-toggler" type="Button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
@@ -510,7 +516,7 @@ class App extends Component {
             <div className="collapse navbar-collapse" id="navbarCollapse">
               <ul
                 className="navbar-nav me-auto mb-2 px-3 mb-md-0"
-                style={{ fontSize: "22px" }}>
+                style={{ fontSize: "18px", fontFamily: "Black Ops One" }}>
                 <li className="nav-item">
                   <a className="nav-link active" aria-current="page" href="#">
                     Dashboard
@@ -541,14 +547,11 @@ class App extends Component {
             </div>
           )}
         </nav>
-        <div id="nftminter" className="flex-1 justify-between items-center p-5">
+        <div id="nftminter" className="flex-1 justify-center items-center p-5">
           <div className="nftminted row px-3 p-3 center">
             <div className="col">
               <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
-            </div>
-            <div className="col justify-center">
-              <div className="row container-fluid">
-                <div>
+              <div>
                   <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
                     NFT Minted
                   </h1>
@@ -556,6 +559,9 @@ class App extends Component {
                 <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
                   {balance.result}/10,000
                 </h4>
+            </div>
+            <div className="col justify-center">
+              <div className="row container-fluid">
                 <h5>Your Wallet Address</h5>
                 <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
                   <label htmlFor="floatingInput">Please Connect Wallet</label>
@@ -576,7 +582,7 @@ class App extends Component {
                 <Button className="stakegoldeffect2" variant="outline-dark" defaultValue="100">100</Button>
               </ButtonGroup>
               <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "18px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
-                WHAT DO YOU WANT TO PAY?
+                PAYMENT
               </h6>
               <div className="row px-3 pb-1 pt-1 row-style"
                 style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", }}>
@@ -713,7 +719,7 @@ class App extends Component {
                 <Button onClick={verify} id="verify" style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }}>
                   Verify
                 </Button>
-                <table className="mt-3 mb-5 px-3 center ">
+                <table className="mt-3 mb-5 px-3 center">
                   <tbody>
                     <tr>
                       <td style={{ fontSize: "16px" }}>

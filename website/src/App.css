@@ -649,6 +649,8 @@ body
       -moz-animation: AnimationStake 5s ease infinite;
       animation: AnimationStake 5s ease infinite;
 }
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
