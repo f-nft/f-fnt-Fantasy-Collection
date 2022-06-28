@@ -1,10 +1,8 @@
 {
   "name": "fantasy",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.1.1",
-    "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@headlessui/react": "^1.6.4",
     "@heroicons/react": "^1.0.6",
@@ -36,7 +34,8 @@
     "react-scripts": "^4.0.3",
     "redis": "^4.1.0",
     "typescript": "^4.7.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webpack": "^4.44.2"
   },
   "resolutions": {
     "react-error-overlay": "6.0.9"
@@ -66,7 +65,7 @@
       "last 1 safari version"
     ]
   },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "description": "The Journey to challenge yourself",
   "main": "index.js",
   "author": "",
   "license": "MIT",
@@ -82,7 +81,7 @@
     "eslint": "^7.32.0",
     "postcss": "^8.4.14",
     "prettier": "^2.7.0",
-    "react": "^18.2.0",
+    "react": "^16.13.0",
     "react-bootstrap": "^2.4.0",
     "react-error-overlay": "6.0.9",
     "sf-font": "^1.0.0",
