@@ -70,6 +70,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@alch/alchemy-web3": "^0.1.18",
     "@fortawesome/fontawesome-free": "^6.1.1",
     "@types/react-native": "^0.67.8",
