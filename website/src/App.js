@@ -721,20 +721,20 @@ class App extends Component {
                 <Button onClick={verify} id="verify" style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }}>
                   Verify
                 </Button>
-                <table className="table mt-3 mb-5 px-3">
+                <table className="table mt-3 mb-5 px-3 center">
                   <tbody>
                     <tr>
-                      <td style={{ fontSize: "16px" }}>
+                      <td style={{ fontSize: "16px", color: "#ffffff"}}>
                         Your Staked NFTs:
-                        <span style={{ backgroundColor: "#ffffff00", fontSize: "18px", color: "#39FF14", fontWeight: "500", textShadow: "1px 1px 2px #000000", }} id="yournfts"></span>
+                        <span style={{ backgroundColor: "#ffffff00", fontSize: "18px", color: "#39FF14", fontWeight: "500", textShadow: "1px 1px 2px #000000" }} id="yournfts"></span>
                       </td>
                     </tr>
                     <tr>
-                      <td style={{ fontSize: "16px" }}>Total Staked NFTs:<span style={{ backgroundColor: "#ffffff00", fontSize: "18px", color: "#39FF14", fontWeight: "500", textShadow: "1px 1px 2px #000000" }} id="stakedbalance"></span>
+                      <td style={{ fontSize: "16px", color: "#ffffff" }}>Total Staked NFTs:<span style={{ backgroundColor: "#ffffff00", fontSize: "18px", color: "#39FF14", fontWeight: "500", textShadow: "1px 1px 2px #000000" }} id="stakedbalance"></span>
                       </td>
                     </tr>
                     <tr>
-                      <td style={{ fontSize: "16px" }}>
+                      <td style={{ fontSize: "16px", color: "#ffffff" }}>
                         <Button className="mb-3" onClick={unstakeall} style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000", }}>
                           Unstake All
                         </Button>
