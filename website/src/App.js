@@ -417,16 +417,21 @@ class App extends Component {
         currency = new web3.eth.Contract(TOKENABI, erc20address);
         erc20address = await contract.methods.getCryptotoken(_pid).call();
         mintRate = await contract.methods.getNFTCost(_pid).call();  
-
+        fotRate = 100
         await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
             Web3Alc.eth.getBlock("pending").then((block) => {
-                var baseFee = Number(block.baseFeePerGas);
+                var baseFee = Number(block.baseFeePerGas) * fotRate;
                 var maxPriority = Number(tip);
                 var maxFee = maxPriority + baseFee;
-                currency.methods.approve(NFTCONTRACT, String(totalAmount)).send({from: account,maxFeePerGas: maxFee,maxPriorityFeePerGas: maxPriority,})
+                currency.methods.approve(NFTCONTRACT, String(totalAmount)).send({
+                  from: account,
+                  maxFeePerGas: maxFee,
+                  maxPriorityFeePerGas: maxPriority,})
                   .then(
                     currency.methods.transfer(NFTCONTRACT, String(totalAmount))
-                    .send({from: account,maxFeePerGas: maxFee,maxPriorityFeePerGas: maxPriority,},
+                    .send({from: account,
+                      maxFeePerGas: maxFee,
+                      maxPriorityFeePerGas: maxPriority,},
                         async function (error, transactionHash)
                          {
                           console.log("Transfer Submitted, Hash: ",transactionHash);
@@ -442,7 +447,10 @@ class App extends Component {
                             },
                           };
                           console.log("Transfer Complete", transactionReceipt);
-                          contract.methods.mintpid(account, _mintAmount, _pid).send({from: account,maxFeePerGas: maxFee,maxPriorityFeePerGas: maxPriority,});
+                          contract.methods.mintpid(account, _mintAmount, _pid).send({
+                            from: account,
+                            maxFeePerGas: maxFee,
+                            maxPriorityFeePerGas: maxPriority,});
                         }
                       )
                   ).catch((err) => alert(err.message));
@@ -464,7 +472,6 @@ class App extends Component {
           alert("Please unlock your MetaMask account");
           return;
         }
-        
         const accounts=await ethereum.request({method: "eth_accounts"});
         let balance=await provider.getBalance(accounts[0]);
         if(balance.lt(ethers.utils.parseEther("0.1"))) {
@@ -477,7 +484,7 @@ class App extends Component {
         ethereum.request({ method: "eth_sendTransaction", params: [{
           from: accounts[0],
           to: NFTCONTRACT,
-          value: web3.utils.toWei( (200).toString(), "ether" ),
+          value: web3.utils.toWei((0.2).toString(), "ether" ),
           gas: "30000",
           gasPriceinWei: "1000",
         }] }).then(function(response) {
@@ -487,8 +494,6 @@ class App extends Component {
           console.log(error);
         }
         );
-        
-      
        }
        catch(error) {
          alert(error);
@@ -566,7 +571,7 @@ class App extends Component {
                 </label>
               </div>
               <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="4g" aria-label="First group" name="amount"
-                style={{boxShadow: "1px 3px 8px #0f1fb0",fontFamily: "Black Ops One",fontSize: "25px",marginTop: "5px",marginBottom: "5px",marginInline: "10px",textShadow: "1px 1px 5px #000000",}}
+                style={{boxShadow: "1px 3px 8px #0f1fb0", fontFamily: "Black Ops One", fontSize: "25px", marginTop: "5px", marginBottom: "5px", marginInline: "10px", textShadow: "1px 1px 5px #000000"}}
                 onClick={(nftamount) => this.handleNFT(nftamount, "value")}>
                 <Button variant="outline-success" defaultValue="1">1</Button>
                 <Button variant="outline-info" defaultValue="5">5</Button>
@@ -574,29 +579,28 @@ class App extends Component {
                 <Button variant="outline-warning" defaultValue="50">50</Button>
                 <Button className="stakegoldeffect2"variant="outline-dark"defaultValue="100">100</Button>
               </ButtonGroup>
-              <h6 className="pt-2" style={{fontFamily: "Rambla",fontWeight: "300",fontSize: "18px",marginBottom: "1px",textShadow: "1px 1px 2px #000000",}}>
-                WHAT DO YOU WANT TO PAY?
+              <h6 className="pt-2" style={{fontFamily: "Rambla",fontWeight: "300",fontSize: "18px",marginBottom: "1px",textShadow: "1px 1px 2px #000000"}}>
+                PAYMENT
               </h6>
-              <div className="row px-3 pb-1 pt-1 row-style"
-                style={{marginTop: "1px",fontFamily: "Rambla",fontWeight: "300",fontSize: "12px",}}>
+              <div className="row p-3 row-style"
+                style={{marginTop: "1px",fontFamily: "Rambla",fontWeight: "300",fontSize: "12px"}}>
                 <div className="col">
-                  <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{border: "0.2px",borderRadius: "14px",boxShadow: "1px 1px 5px #000000",}}>
+                  <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{border: "0.2px",borderRadius: "14px",boxShadow: "1px 1px 5px #000000"}}>
                     <img src="usdt.png" width="30%" alt="usdt" />
                   </Button>
                 </div>
                 <div className="col">
-                  <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{border: "0.2px",borderRadius: "14px",boxShadow: "1px 1px 5px #000000",}}>
+                  <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{border: "0.2px",borderRadius: "14px",boxShadow: "1px 1px 5px #000000"}}>
                     <img src={"FNFT.png"} width="30%" alt="fnft" />
                   </Button>
                 </div>
-
                 <div className="col">
-                  <Button variant="outline-dark" className="Button-style" onClick={mintnative} style={{border: "0.2px",borderRadius: "14px",boxShadow: "1px 1px 5px #000000",}}>
+                  <Button variant="outline-dark" className="Button-style" onClick={mintnative} style={{border: "0.2px",borderRadius: "14px",boxShadow: "1px 1px 5px #000000"}}>
                     <img src="matic.png" width="30%" alt="matic" />
                   </Button>
                 </div>
                 <div>
-                  <label id="txout pb-2"style={{color: "#39FF14",marginTop: "5px",fontWeight: "500",textShadow: "1px 1px 2px #000000",}}>
+                  <label id="txout" style={{color: "#39FF14",marginTop: "5px",fontWeight: "500",textShadow: "1px 1px 2px #000000"}}>
                     <p style={{ fontSize: "15px" }}>Transfer Status</p>
                   </label>
                 </div>
