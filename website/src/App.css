@@ -664,7 +664,14 @@ animation-direction: normal;
 animation-fill-mode: backwards;
 animation-play-state: running;
 animation-name: bloop;
-animation-fill-mode: backwards
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 3px;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  animation: cool-flip-dude 10s cubic-bezier(.645,.045,.355,1) .5s infinite;
 }
 
 @tailwind base;

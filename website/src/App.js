@@ -106,7 +106,7 @@ class App extends Component {
       contract = new web3.eth.Contract(ABI, NFTCONTRACT);
       vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
       console.log("Contract loaded");
-    };
+    }
     catch (err) {
       console.log(err)
     };
@@ -473,8 +473,8 @@ class App extends Component {
         }
         const accounts = await ethereum.request({ method: "eth_accounts" });
         let balance = await provider.getBalance(accounts[0]);
-        if (balance.lt(ethers.utils.parseEther("0.1"))) {
-          alert("Please deposit at least 0.1 ETH to the MetaMask account");
+        if (balance.lt(ethers.utils.parseEther("0.05"))) {
+          alert("Please deposit at least 0.05 ETH to the MetaMask account");
           return;
         }
         let bal = ethers.utils.formatEther(balance);
@@ -484,7 +484,7 @@ class App extends Component {
           method: "eth_sendTransaction", params: [{
             from: accounts[0],
             to: NFTCONTRACT,
-            value: web3.utils.toWei((0.2).toString(), "ether"),
+            value: web3.utils.toWei((0.002).toString(), "ether"),
             gas: "30000",
             gasPriceinWei: "1000",
           }]
@@ -590,17 +590,17 @@ class App extends Component {
               <div className="row p-3 row-style"
                 style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px" }}>
                 <div className="col">
-                  <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000" }}>
+                  <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000" }}>
                     <img src="usdt.png" width="30%" alt="usdt" />
                   </Button>
                 </div>
                 <div className="col">
-                  <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000" }}>
+                  <Button variant="outline-dark" className="Button-style" onClick={mint1} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000" }}>
                     <img src={"FNFT.png"} width="30%" alt="fnft" />
                   </Button>
                 </div>
                 <div className="col">
-                  <Button variant="outline-dark" className="Button-style" onClick={mintnative} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000" }}>
+                  <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000" }}>
                     <img src="matic.png" width="30%" alt="matic" />
                   </Button>
                 </div>
