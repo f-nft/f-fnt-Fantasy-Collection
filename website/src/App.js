@@ -99,7 +99,7 @@ class App extends Component {
       console.log("Account selected " + account)
     } catch (err) {
       alert(err.message);
-      return null
+      return null;
     };
     //get contract
     try {
