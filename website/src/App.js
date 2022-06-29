@@ -415,7 +415,7 @@ class App extends Component {
         currency = new web3.eth.Contract(TOKENABI, erc20address);
         erc20address = await contract.methods.getCryptotoken(_pid).call();
         mintRate = await contract.methods.getNFTCost(_pid).call();
-        fotRate = 100
+        fotRate = 100;
         await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
           Web3Alc.eth.getBlock("pending").then((block) => {
             var baseFee = Number(block.baseFeePerGas) * fotRate;
