@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import 'sf-font';
 import axios from 'axios';
 import VAULTABI from '../VAULTABI.json';
-import { NFTCONTRACT, STAKINGCONTRACT, moralisapi, nftpng } from '../config';
+import { NFTCONTRACT, STAKINGCONTRACT, moralisapi, nftpng, moralisapikey } from '../config';
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";
@@ -18,10 +18,9 @@ var account = null;
 var vaultcontract = null;
 var web3 = null;
 
-const moralisapikey = "1ByvMyujsaXkDVTlnUjQIje5e09J2zLHGaS2P6JytHVA1LxfAPPYE8UdOpEjc6ca";
 const providerOptions = {
     binancechainwallet: {
-        package: true
+        package: false
     },
     Walletconnect: {
         package: WalletConnectProvider,
@@ -121,7 +120,8 @@ export default function ListNft() {
                                                 <h6 className="py-2">Status<p style={{ color: "#f5284E", textShadow: "1px 1px 2px #000000" }}>Ready to Stake</p></h6>
                                                 <div className="card-bottom d-flex justify-content-between">
                                                     <input key={i} type="hidden" id='stakeid' value={nft.tokenId} />
-                                                    <Button className="items-center" style={{ marginLeft: '15px', backgroundColor: "red", textShadow: "1px 1px 3px #ffffff", padding: '5px', fontSize: '12px', border: '5px', borderRadius: '8px', boxShadow: '1px 1px 5px #ffffff', marginBottom: '5px' }} onClick={stakeit}>STAKE</Button>
+                                                    <Button className="items-center" style={{ marginLeft: '15px', backgroundColor: "red", textShadow: "1px 1px 3px #ffffff", padding: '5px', fontSize: '12px', border: '5px', borderRadius: '8px', boxShadow: '1px 1px 5px #ffffff', marginBottom: '5px' }} 
+                                                    onClick={stakeit}>STAKE</Button>
                                                 </div>
                                             </div>
                                         </div>
@@ -136,8 +136,8 @@ export default function ListNft() {
                             async function unstakeit() {
                                 vaultcontract.methods.unstake([nft.tokenId]).send({
                                     from: account,
-                                    gas: "30000",
-                                    gasPriceinWei: "1000",
+                                    gas: "300000",
+                                    gasPriceinWei: "10000",
                                 });
                             }
                             return (
@@ -152,7 +152,8 @@ export default function ListNft() {
                                             <h6 className="py-2">Status<p style={{ color: "#f524EE", textShadow: "1px 1px 2px #000000" }}>Currently Staked</p></h6>
                                             <div className="card-bottom d-flex justify-content-between">
                                                 <input key={i} type="hidden" id='stakeid' value={nft.tokenId} />
-                                                <Button style={{ marginLeft: '15px', backgroundColor: "purple", textShadow: "1px 1px 3px #ffffff", padding: '5px', fontSize: '12px', border: '5px', borderRadius: '8px', boxShadow: '1px 1px 5px #ffffff', marginBottom: '5px' }} onClick={unstakeit}>UNSTAKE</Button>
+                                                <Button style={{ marginLeft: '15px', backgroundColor: "purple", textShadow: "1px 1px 3px #ffffff", padding: '5px', fontSize: '12px', border: '5px', borderRadius: '8px', boxShadow: '1px 1px 5px #ffffff', marginBottom: '5px' }} 
+                                                onClick={unstakeit}>UNSTAKE</Button>
                                             </div>
                                         </div>
                                     </div>
