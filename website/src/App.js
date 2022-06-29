@@ -550,12 +550,11 @@ class App extends Component {
                   {balance.result}/10,000
                 </h4>
             </div>
-            <div className="image">
+            <div className="col motion">
             <img src={"FNFT.png"} width="30%" alt="fnft" />
             </div>
             <div className="col justify-center">
               <div className="row container-fluid">
-                
                 <h5>Your Wallet Address</h5>
                 <div id="wallet-address" style={{fontSize: "15px",color: "#39FF14",fontFamily: "Ubuntu",textShadow: "1px 1px 3px black",}}>
                   <label htmlFor="floatingInput">Please Connect Wallet</label>
@@ -683,18 +682,18 @@ class App extends Component {
                     </td>
                   </tr>
                 </tbody>
-                  <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
+              </table>
+              <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
                     <td>
                       * FOT™ can be access Special Mint =&gt; High className
                       Fantasy NFT
                     </td>
                   </tr>
-              </table>
             </div>
           </div>
         </div>
         <h1 className="flex justify-center"style={{color: "white",fontWeight: "500",fontFamily: "Blaka",textShadow: "#fffff2",}}>
-          Fantasy NFT Staking Vault{" "}
+          Fantasy NFT Staking Vault
         </h1>
         <h5 className="flex justify-center p-2"style={{ color: "orange", fontWeight: "300" }}>
           Please Connect To Your Wallet First
@@ -738,7 +737,6 @@ class App extends Component {
               <img className="align-self-center" src="logonew.png" width="200" alt="feature"/>
               <div className=" align-self-end stakingrewards flex-1 basis-1 items-center p-3" style={{borderRadius: "25px",boxShadow: "1px 1px 15px #ffffff",fontFamily: "Rambla",minWidth: "250px",maxWidth: "250px",maxHeight: "300px",minHeight: "300px",}}>
                 <h4 style={{ color: "#FFFFFF", fontWeight: "300" }}>
-                  {" "}
                   Staking Rewards
                 </h4>
                 <Button onClick={rewardinfo}style={{backgroundColor: "#ffffff10",boxShadow: "1px 1px 5px #000000",}}>
