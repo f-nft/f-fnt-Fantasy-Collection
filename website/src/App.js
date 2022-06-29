@@ -683,14 +683,12 @@ class App extends Component {
                     </td>
                   </tr>
                 </tbody>
-                <tbody>
                   <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
                     <td>
                       * FOT™ can be access Special Mint =&gt; High className
                       Fantasy NFT
                     </td>
                   </tr>
-                </tbody>
               </table>
             </div>
           </div>
@@ -715,7 +713,7 @@ class App extends Component {
                 <Button onClick={verify} id="verify" style={{backgroundColor: "#ffffff10",boxShadow: "1px 1px 5px #000000"}}>
                   Verify
                 </Button>
-                <table className="table mt-3 mb-5 px-3 table-dark">
+                <table className="table mt-3 mb-5 px-3">
                   <tbody>
                     <tr>
                       <td style={{ fontSize: "16px" }}>

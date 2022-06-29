@@ -655,7 +655,7 @@ body
   text-align: center;
 vertical-align: middle;
 z-index: 2;
-animation: share-tool-bloop .25s cubic-bezier(.77,0,.175,1) .1s;
+animation: bloop .25s cubic-bezier(.77,0,.175,1) .1s;
 animation-duration: 0.25s;
 animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
 animation-delay: 0.1s;
@@ -663,7 +663,7 @@ animation-iteration-count: 1;
 animation-direction: normal;
 animation-fill-mode: backwards;
 animation-play-state: running;
-animation-name: share-tool-bloop
+animation-name: bloop;
 animation-fill-mode: backwards
 }
 
