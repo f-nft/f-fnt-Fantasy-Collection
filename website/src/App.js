@@ -456,7 +456,6 @@ class App extends Component {
       window.location.reload();
     };
 
-    
     async function metamint(){
       //mint for metamask polygon network
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -542,10 +541,7 @@ class App extends Component {
           <div className="nftminted row px-3 p-3 center">
             <div className="col">
               <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
-            </div>
-            <div className="col justify-center">
-              <div className="row container-fluid">
-                <div>
+              <div>
                   <h1 className="pt-2" style={{fontWeight: "500",fontFamily: "Blaka",textShadow: "1px 1px 2px #000000"}}>
                     NFT Minted
                   </h1>
@@ -553,6 +549,13 @@ class App extends Component {
                 <h4 style={{fontFamily: "Black Ops One",textShadow: "1px 1px 2px #000000",}}>
                   {balance.result}/10,000
                 </h4>
+            </div>
+            <div className="image">
+            <img src={"FNFT.png"} width="30%" alt="fnft" />
+            </div>
+            <div className="col justify-center">
+              <div className="row container-fluid">
+                
                 <h5>Your Wallet Address</h5>
                 <div id="wallet-address" style={{fontSize: "15px",color: "#39FF14",fontFamily: "Ubuntu",textShadow: "1px 1px 3px black",}}>
                   <label htmlFor="floatingInput">Please Connect Wallet</label>
