@@ -547,18 +547,18 @@ class App extends Component {
             </div>
           )}
         </nav>
-        <div id="nftminter" className="flex-1 justify-between items-center p-5">
+        <div id="nftminter" className="flex-1 justify-start items-center p-3">
           <div className="nftminted row justify-center">
             <div className="col p-2 justify-center">
               <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
               <div>
-                <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
+                <h2 className="pt-2" style={{ fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
                   NFT Minted
-                </h1>
+                </h2>
               </div>
-              <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
+              <h5 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
                 {balance.result}/10,000
-              </h4>
+              </h5>
             </div>
             <div className="col motion justify-center">
               <img src={"FNFT.png"} width="20%" alt="fnft" />
