@@ -212,9 +212,8 @@ class App extends Component {
       isWalletConnect = false;
       localStorage.setItem('isWalletConnected', false)
       web3Modal.clearCachedProvider();
-      window.location.reload()
-    };
-
+      window.location.reload();
+    
     async function verify() {
       try {
         var accounts = await ethereum.request({ method: "eth_accounts" });
@@ -348,6 +347,8 @@ class App extends Component {
       } catch (error) {
         alert(error);
       }
+    }
+    
     };
 
     async function mint0() {
