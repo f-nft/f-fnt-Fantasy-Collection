@@ -1,6 +1,6 @@
 {
   "name": "fantasy",
-  "version": "1.1.1",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
@@ -8,7 +8,6 @@
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@headlessui/react": "^1.6.4",
     "@heroicons/react": "^1.0.6",
-    "@alch/alchemy-web3": "^1.4.4",
     "@maticnetwork/maticjs-web3": "^1.0.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -21,22 +20,23 @@
     "babel-preset-react-app": "^3.1.2",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.30.0",
-    "ethers": "^5.6.9",
+    "ethers": "^5.6.8",
     "font-awesome": "^4.7.0",
     "framer-motion": "^6.3.11",
     "moralis": "^1.8.0",
-    "react-animation-components": "^3.0.0",
+    "react-animation-components": "^1.0.2",
     "react-dom": "^18.1.0",
     "react-error-boundary": "^3.1.4",
     "react-layout-library": "^1.5.7",
     "react-moralis": "^1.4.0",
     "react-native": "^0.63.2",
     "react-native-web": "^0.18.1",
+    "react-outside-click-handler": "^1.3.0",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "^5.0.1",
-    "react-text-truncate": "^0.19.0",
+    "react-scripts": "^4.0.3",
     "redis": "^4.1.0",
-    "webpack": "^4.44.2",
+    "rgt": "^1.0.7",
+    "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
   },
   "resolutions": {
@@ -67,30 +67,29 @@
       "last 1 safari version"
     ]
   },
-  "description": "The Journey to challenge yourself",
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
-  "author": "f-nft",
-  "license": "",
+  "author": "",
+  "license": "MIT",
   "devDependencies": {
-    "@alch/alchemy-web3": "^1.4.4",
+    "@alch/alchemy-web3": "^0.1.18",
     "@fortawesome/fontawesome-free": "^6.1.1",
     "@types/react-native": "^0.67.8",
     "@walletconnect/web3-provider": "^1.7.8",
     "autoprefixer": "^10.4.7",
     "axios": "^0.27.2",
-    "bootstrap": "^5.1.2",
-    "css-loader": "^5.2.7",
-    "eslint": "^8.4.3",
+    "bootstrap": "^5.2.0-beta1",
+    "css-loader": "^6.7.1",
+    "eslint": "^7.32.0",
     "postcss": "^8.4.14",
     "prettier": "^2.7.0",
-    "react": "^18.1.0",
+    "react": "^18.2.0",
     "react-bootstrap": "^2.4.0",
     "react-error-overlay": "6.0.9",
     "sf-font": "^1.0.0",
     "style-loader": "^3.3.1",
     "styled-components": "^5.3.5",
     "tailwindcss": "^3.1.3",
-    "typescript": "^4.7.4",
     "walletlink": "^2.5.0",
     "web3": "^1.7.4",
     "web3modal": "^1.9.8",
@@ -106,13 +105,5 @@
   "keywords": [
     "Fantasy",
     "Collections"
-  ],
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "bugs": {
-    "url": "https://github.com/f-nft/f-fnt-Fantasy-Collection/issues"
-  },
-  "homepage": "https://f-nft.us"
+  ]
 }
