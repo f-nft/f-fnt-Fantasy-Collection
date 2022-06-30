@@ -54,7 +54,6 @@ export default function AppFunctional() {
     const [outvalue, setOutvalue] = useState();
     const [balance, setBalance] = useState([]);
     const [rawearn, setRawearn] = useState([]);
-
     const [nftdata, setNftData] = useState();
 
     async function connectWallet() {
@@ -188,8 +187,6 @@ export default function AppFunctional() {
     }, []);
 
     const handleModal = () => setShow(!show)
-
-
     const handleNFT = nftamount => setOutvalue(nftamount.target.value)
 
     const sleep = (milliseconds) => {
@@ -197,8 +194,6 @@ export default function AppFunctional() {
     };
 
     const expectedBlockTime = 10000;
-
-    //connect wallet
 
 
     //disconnectWallet function
@@ -340,9 +335,14 @@ export default function AppFunctional() {
             await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
                 Web3Alc.eth.getBlock("pending").then((block) => {
                     var baseFee = Number(block.baseFeePerGas);
-                    var maxPriority = Number(tip);
+                    var maxPriority = Number(tip) + 18;
                     var maxFee = baseFee + maxPriority;
-                    contract.methods.mint(account, _mintAmount).send({ from: account, value: String(totalAmount), maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
+                    contract.methods.mint(account, _mintAmount).send(Web3Alc,{ 
+                        nonce: sameNonceAsOriginalTransaction,
+                        from: account, 
+                        value: String(totalAmount), 
+                        maxFeePerGas: maxFee, 
+                        maxPriorityFeePerGas: maxPriority, });
                 })
                     .catch((err) => alert(err.message));
             })

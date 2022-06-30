@@ -156,9 +156,6 @@ export default function NavBar(props) {
         return processArray([rwdArray]);
     }
 
-
-
-
     return (
         <nav className='navbar navbarfont navbarglow navbar-expand-md navbar-dark bg-dark mb-4'>
             <div className='container-fluid'>
