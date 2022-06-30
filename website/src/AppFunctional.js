@@ -143,7 +143,7 @@ export default function AppFunctional() {
             });
         });
         function delay() {
-            return new Promise((resolve) => setTimeout(resolve, 300));
+            return new Promise((resolve) => setTimeout(resolve, 30000));
         }
         async function delayedLog(item) {
             await delay();
@@ -160,7 +160,6 @@ export default function AppFunctional() {
 
     }
 
-
     useEffect(() => {
         const init = async () => {
             //check if user is already logged in then connect wallet
@@ -176,7 +175,7 @@ export default function AppFunctional() {
                 })
                 .catch((err) => alert(err.message));
             let config = { "X-API-Key": moralisapikey, accept: "application/json" };
-            await axios.get(moralisapi + `/nft/${NFTCONTRACT}/owners?chain=mumbai&format=decimal`, { headers: config })
+            await axios.get(moralisapi + `/nft/${NFTCONTRACT}/owners?chain=polygon&format=decimal`, { headers: config })
                 .then((outputb) => {
                     const { result } = outputb.data;
                     setNftData(result);
@@ -189,7 +188,6 @@ export default function AppFunctional() {
 
     const handleModal = () => setShow(!show)
 
-
     const handleNFT = nftamount => setOutvalue(nftamount.target.value)
 
     const sleep = (milliseconds) => {
@@ -199,7 +197,6 @@ export default function AppFunctional() {
     const expectedBlockTime = 10000;
 
     //connect wallet
-
 
     //disconnectWallet function
     async function disconnectWallet() {
@@ -288,6 +285,27 @@ export default function AppFunctional() {
         return processArray([rwdArray]);
     }
 
+    async function main() {
+        // Import the AlchemyWeb3 library. Filepath to functions: 
+        // /@alch/alchemy-web3/dist/alchemyWeb3.js
+        const { createAlchemyWeb3 } = require("@alch/alchemy-web3");
+    
+           // Replace with your Alchemy API key:
+        const apiKey = "demo";
+        
+        // Initialize an alchemy-web3 instance:
+        const web3 = createAlchemyWeb3(
+            `https://eth-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk`);
+        
+        // Query the blockchain (replace example parameters)
+            const fee = await web3.eth.maxPriorityFeePerGas(); 
+        
+        // Print the output to console
+        console.log(fee);
+       }
+    
+    main();
+
     async function claimit() {
         try {
             var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
@@ -337,7 +355,7 @@ export default function AppFunctional() {
             var _mintAmount = Number(outvalue);
             var mintRate = Number(await contract.methods.cost().call());
             var totalAmount = mintRate * _mintAmount * 100;
-            await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+            await Web3Alc.eth.main().then((tip) => {
                 Web3Alc.eth.getBlock("pending").then((block) => {
                     var baseFee = Number(block.baseFeePerGas);
                     var maxPriority = Number(tip);
