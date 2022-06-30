@@ -703,15 +703,15 @@ export default function AppFunctional() {
                                     </td>
                                 </tr>
                             </tbody>
-                            <tbody>
+                        </table>
+                        <tbody>
                                 <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
                                     <td>
                                         * FOT™ can be access Special Mint =&gt; High className
                                         Fantasy NFT
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                        </tbody>
                     </div>
                 </div>
             </div>
