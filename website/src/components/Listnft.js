@@ -58,40 +58,46 @@ export default function ListNft() {
     }, [])
 
     async function callApi() {
-        var provider = await web3Modal.connect();
-        web3 = new Web3(provider);
-        await provider.send('eth_requestAccounts');
-        var accounts = await web3.eth.getAccounts();
-        account = accounts[0];
-        vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
-        let config = { 'X-API-Key': moralisapikey, 'accept': 'application/json' };
-        const nfts = await axios.get((moralisapi + `/nft/${NFTCONTRACT}/owners?chain=polygon&format=decimal`), { headers: config })
-            .then(output => {
-                const { result } = output.data
-                return result;
-            })
-        const apicall = await Promise.all(nfts.map(async i => {
-            let item = {
-                tokenId: i.token_id,
-                holder: i.owner_of,
-                wallet: account,
-            }
-            return item
-        }))
-        const stakednfts = await vaultcontract.methods.tokensOfOwner(account).call()
-            .then(id => {
-                return id;
-            })
-        const nftstk = await Promise.all(stakednfts.map(async i => {
-            let stkid = {
-                tokenId: i,
-            }
-            return stkid
-        }))
-        getNfts(apicall)
-        getStk(nftstk)
-        console.log(apicall);
-        setLoadingState('loaded')
+        try {
+            var provider = await web3Modal.connect();
+            web3 = new Web3(provider);
+            await provider.send('eth_requestAccounts');
+            var accounts = await web3.eth.getAccounts();
+            account = accounts[0];
+            vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
+            let config = { 'X-API-Key': moralisapikey, 'accept': 'application/json' };
+            const nfts = await axios.get((moralisapi + `/nft/${NFTCONTRACT}/owners?chain=polygon&format=decimal`), { headers: config })
+                .then(output => {
+                    const { result } = output.data
+                    return result;
+                })
+            const apicall = await Promise.all(nfts.map(async i => {
+                let item = {
+                    tokenId: i.token_id,
+                    holder: i.owner_of,
+                    wallet: account,
+                }
+                return item
+            }))
+            const stakednfts = await vaultcontract.methods.tokensOfOwner(account).call()
+                .then(id => {
+                    return id;
+                })
+            const nftstk = await Promise.all(stakednfts.map(async i => {
+                let stkid = {
+                    tokenId: i,
+                }
+                return stkid
+            }))
+            getNfts(apicall)
+            getStk(nftstk)
+            console.log(apicall);
+            setLoadingState('loaded');
+            console.log("[INFO] Success")
+        } catch (error) {
+            console.log("[ERROR]:", error)
+        }
+
     }
 
     if (loadingState === 'loaded' && !apicall.length)
