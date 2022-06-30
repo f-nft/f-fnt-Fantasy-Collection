@@ -205,14 +205,6 @@ class App extends Component {
       isWalletConnect = false;
       localStorage.setItem('isWalletConnected', false)
       web3Modal.clearCachedProvider();
-      web3 = null;
-      account = null;
-      contract = null;
-      vaultcontract = null;
-      document.getElementById("wallet-address").textContent = "";
-      document.getElementById("yournfts").textContent = "";
-      document.getElementById("stakedbalance").textContent = "";
-      document.getElementById("earned").textContent = "";
       window.location.reload();
     }
 
@@ -350,8 +342,7 @@ class App extends Component {
         alert(error);
       }
     }
-
-
+    
     async function mint0() {
       var _pid = "0";
       var erc20address;
