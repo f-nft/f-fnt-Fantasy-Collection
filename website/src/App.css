@@ -650,6 +650,29 @@ body
       animation: AnimationStake 5s ease infinite;
 }
 
+.motion 
+{
+  text-align: center;
+vertical-align: middle;
+z-index: 2;
+animation: bloop .25s cubic-bezier(.77,0,.175,1) .1s;
+animation-duration: 0.25s;
+animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+animation-delay: 0.1s;
+animation-iteration-count: 1;
+animation-direction: normal;
+animation-fill-mode: backwards;
+animation-play-state: running;
+animation-name: bloop;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 3px;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  animation: cool-flip-dude 10s cubic-bezier(.645,.045,.355,1) .5s infinite;
+}
 
 @tailwind base;
 @tailwind components;
