@@ -682,15 +682,15 @@ export default function AppFunctional() {
                                     </td>
                                 </tr>
                             </tbody>
-                            <tbody>
-                                <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
-                                    <td>
-                                        * FOT™ can be access Special Mint =&gt; High className
-                                        Fantasy NFT
-                                    </td>
-                                </tr>
-                            </tbody>
                         </table>
+                        <tbody>
+                            <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
+                                <td>
+                                    * FOT™ can be access Special Mint =&gt; High className
+                                    Fantasy NFT
+                                </td>
+                            </tr>
+                        </tbody>
                     </div>
                 </div>
             </div>
@@ -739,7 +739,6 @@ export default function AppFunctional() {
                         <img className="align-self-center" src="logonew.png" width="200" alt="feature" />
                         <div className=" align-self-end stakingrewards flex-1 basis-1 items-center p-3" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: "Rambla", minWidth: "250px", maxWidth: "250px", maxHeight: "300px", minHeight: "300px", }}>
                             <h4 style={{ color: "#FFFFFF", fontWeight: "300" }}>
-                                {" "}
                                 Staking Rewards
                             </h4>
                             <Button onClick={rewardinfo} style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000", }}>
