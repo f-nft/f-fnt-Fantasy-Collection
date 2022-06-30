@@ -20,7 +20,7 @@
     "babel-jest": "^28.1.2",
     "babel-preset-react-app": "^10.0.1",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-react": "^8.4.3",
+    "eslint-plugin-react": "^7.30.1",
     "ethers": "^5.6.9",
     "font-awesome": "^4.7.0",
     "framer-motion": "^6.3.16",
