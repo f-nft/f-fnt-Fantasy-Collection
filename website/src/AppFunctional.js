@@ -38,14 +38,21 @@ const providerOptions = {
     },
     walletlink: {
         package: WalletLink,
-        options: { appName: "f-nft Polygon", infuraId: "50f6635fbcc742f18ce7a2a5cbe73ffa", rpc: "", chainId: 137, appLogoUrl: null, darkMode: true, },
+        options: { 
+            appName: "f-nft Polygon", 
+            infuraId: "50f6635fbcc742f18ce7a2a5cbe73ffa", 
+            rpc: "", 
+            chainId: 137, 
+            appLogoUrl: null, 
+            darkMode: true
+        },
     },
 };
 
 const web3Modal = new Web3Modal({
-    network: "rinkeby",
+    network: "mainnet",
     theme: "dark",
-    cacheProvider: true,
+    cacheProvider: false,
     providerOptions,
 });
 
@@ -72,11 +79,10 @@ export default function AppFunctional() {
 
         //get account
         try {
-            var accounts = await ethereum.request({ method: "eth_accounts" });
+            var accounts = await ethereum.request({ method: 'eth_accounts' });
             console.log(accounts);
             account = accounts[0];
             isWalletConnect = true;
-
             // account = await web3.eth.getAccounts().then((accounts) => accounts[0]);
 
             console.log("Account selected " + account);
@@ -356,14 +362,14 @@ export default function AppFunctional() {
             await Web3Alc.eth.main().then((tip) => {
                 Web3Alc.eth.getBlock("pending").then((block) => {
                     var baseFee = Number(block.baseFeePerGas);
-                    var maxPriority = Number(tip) + 18;
+                    var maxPriority = Number(tip);
                     var maxFee = baseFee + maxPriority;
                     contract.methods.mint(account, _mintAmount).send(Web3Alc,{ 
                         nonce: sameNonceAsOriginalTransaction,
                         from: account, 
                         value: String(totalAmount), 
                         maxFeePerGas: maxFee, 
-                        maxPriorityFeePerGas: maxPriority, });
+                        maxPriorityFeePerGas: maxPriority + 18});
                 })
                     .catch((err) => alert(err.message));
             })
@@ -565,10 +571,7 @@ export default function AppFunctional() {
                 <div className="nftminted row px-3 p-3 center">
                     <div className="col">
                         <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
-                    </div>
-                    <div className="col justify-center">
-                        <div className="row container-fluid">
-                            <div>
+                        <div>
                                 <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
                                     NFT Minted
                                 </h1>
@@ -576,6 +579,9 @@ export default function AppFunctional() {
                             <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
                                 {balance.result}/10,000
                             </h4>
+                    </div>
+                    <div className="col justify-center">
+                        <div className="row container-fluid">
                             <h5>Your Wallet Address</h5>
                             <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
                                 <label htmlFor="floatingInput">Please Connect Wallet</label>
@@ -711,15 +717,15 @@ export default function AppFunctional() {
                                         Fantasy NFT
                                     </td>
                                 </tr>
-                        </tbody>
+                            </tbody>
                     </div>
                 </div>
             </div>
             <h1 className="flex justify-center" style={{ color: "white", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
-                Fantasy NFT Staking Vault{" "}
+                Fantasy NFT Staking Vault
             </h1>
             <h5 className="flex justify-center p-2" style={{ color: "orange", fontWeight: "300" }}>
-                Please Connect To Your Wallet First
+                Please Connect To Your Wallet First If Connected 
             </h5>
             <Button className="btn" onClick={enable} style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000", }}>
                 Enable Staking
