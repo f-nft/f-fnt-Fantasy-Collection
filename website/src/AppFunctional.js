@@ -365,7 +365,6 @@ export default function AppFunctional() {
                     var maxPriority = Number(tip);
                     var maxFee = baseFee + maxPriority;
                     contract.methods.mint(account, _mintAmount).send(Web3Alc,{ 
-                        nonce: sameNonceAsOriginalTransaction,
                         from: account, 
                         value: String(totalAmount), 
                         maxFeePerGas: maxFee, 
