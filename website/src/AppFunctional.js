@@ -479,7 +479,7 @@ export default function AppFunctional() {
 
     return (
         <div className="items-center justify-start p-2 text-center">
-            <Modal.Dialog>
+            {/* <Modal.Dialog>
                 <Modal.Header closeButton>
                     <Modal.Title>FANTASY NFT MINTING ON POLYGON NETWORK</Modal.Title>
                 </Modal.Header>
@@ -493,7 +493,7 @@ export default function AppFunctional() {
                     <Button variant="secondary" onClick={!show} defaultValue="Close" />
                     <Button id="connectbtn" onClick={connectWallet} defaultValue="Connect Your Wallet" />
                 </Modal.Footer>
-            </Modal.Dialog>
+            </Modal.Dialog> */}
             <nav className="navbar full-width navbar-expand-md navbar-dark mb-3">
                 <div className="container-fluid">
                     <div className="navbar-brand px-5" style={{ fontWeight: "800", fontSize: "22px" }} href="#"></div>
