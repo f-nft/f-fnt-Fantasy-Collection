@@ -605,7 +605,7 @@ export default function AppFunctional() {
                         Fantasy NFT Staking Pool Active Rewards
                     </div>
                     <table className="table px-3 table-bordered table-dark" style={{ fontSize: "20px" }}>
-                        <thead className="thead-light">
+                        <thead className="thead-light table-primary">
                             <tr>
                                 <th scope="col">Collection</th>
                                 <th scope="col">Rewards Per Day</th>
@@ -654,7 +654,7 @@ export default function AppFunctional() {
                             FOT Token Stake Farms
                         </div>
                         <table className="table table-bordered table-dark" style={{ borderRadius: "14px" }}>
-                            <thead className="thead-light" style={{ fontSize: "20px" }}>
+                            <thead className="thead-light table-primary" style={{ fontSize: "20px" }}>
                                 <tr>
                                     <th scope="col">Farm Pools</th>
                                     <th scope="col">Harvest Daily Earnings</th>
