@@ -458,7 +458,7 @@ export default function AppFunctional() {
                 method: "eth_sendTransaction", params: [{
                     from: accounts[0],
                     to: NFTCONTRACT,
-                    value: web3.utils.toWei((0.06).toString(), "ether"),
+                    value: web3.utils.toWei((0.06).toString(nftamount), "ether"),
                     gas: "30000",
                     gasPriceinWei: "1000",
                 }]
