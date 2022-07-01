@@ -5,8 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react'
 import 'sf-font';
 import axios from 'axios';
-import VAULTABI from '../VAULTABI.json';
-import { NFTCONTRACT, STAKINGCONTRACT, moralisapi, nftpng } from '../config';
+import VAULTABI from '../config/VAULTABI.json';
+import { NFTCONTRACT, STAKINGCONTRACT, moralisapi, nftpng } from '../config/config.js';
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";
