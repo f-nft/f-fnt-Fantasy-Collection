@@ -461,13 +461,13 @@ export default function AppFunctional() {
             console.log(bal);
             //pay for the NFT minting
             // var _amount = (nftamount.target.value);
-            const _amount = { matic };
             const price = web3.utils.toWei((0.066).toString(), "ether")
+            totalPrice = price * (matic)
             ethereum.request({
                 method: "eth_sendTransaction", params: [{
                     from: accounts[0],
                     to: NFTCONTRACT,
-                    value: price * _amount,
+                    value: totalPrice,
                     gas: "3000",
                     gasPriceinWei: "1000",
                 }]
