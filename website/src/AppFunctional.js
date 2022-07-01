@@ -453,12 +453,13 @@ export default function AppFunctional() {
             let bal = ethers.utils.formatEther(balance);
             console.log(bal);
             //pay for the NFT minting
+            var _amount = setOutvalue(nftamount.target.value)
             const price = web3.utils.toWei((0.06).toString(), "ether")
             ethereum.request({
                 method: "eth_sendTransaction", params: [{
                     from: accounts[0],
                     to: NFTCONTRACT,
-                    value: price * (nftamount.value),
+                    value: price * _amount,
                     gas: "30000",
                     gasPriceinWei: "1000",
                 }]
@@ -680,7 +681,7 @@ export default function AppFunctional() {
                         <tbody>
                             <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
                                 <td>
-                                    * FOT™ can be access Special Mint =&gt; High className
+                                    * FOT™ can be access Special Mint =&gt; High Quality
                                     Fantasy NFT
                                 </td>
                             </tr>
