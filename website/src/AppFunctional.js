@@ -446,8 +446,8 @@ export default function AppFunctional() {
 
             const accounts = await ethereum.request({ method: "eth_accounts" });
             let balance = await provider.getBalance(accounts[0]);
-            if (balance.lt(ethers.utils.parseEther("0.1"))) {
-                alert("Please deposit at least 0.1 ETH to the MetaMask account");
+            if (balance.lt(ethers.utils.parseEther("0.01"))) {
+                alert("Your wallet is empty, Please deposit at least 100 Matic to ready Mint");
                 return;
             }
             let bal = ethers.utils.formatEther(balance);
