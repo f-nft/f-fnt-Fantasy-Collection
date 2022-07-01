@@ -198,7 +198,6 @@ export default function AppFunctional() {
 
     // Modal State
     const handleModal = () => setShow(!show)
-    const handleClose = () => onchange(!show)
 
     const handleNFT = nftamount => setOutvalue(nftamount.target.value)
 
@@ -491,7 +490,7 @@ export default function AppFunctional() {
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose} defaultValue="Close" />
+                    <Button variant="secondary" onClick={!show} defaultValue="Close" />
                     <Button id="connectbtn" onClick={connectWallet} defaultValue="Connect Your Wallet" />
                 </Modal.Footer>
             </Modal.Dialog>
