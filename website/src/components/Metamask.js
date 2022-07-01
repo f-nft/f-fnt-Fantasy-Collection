@@ -91,4 +91,3 @@ function connect() {
       }
     })}
 };
-export function connect ();
