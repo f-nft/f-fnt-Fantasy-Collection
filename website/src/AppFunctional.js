@@ -61,10 +61,7 @@ export default function AppFunctional() {
     const [outvalue, setOutvalue] = useState();
     const [balance, setBalance] = useState([]);
     const [rawearn, setRawearn] = useState([]);
-    // Modal State
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+
     const [nftdata, setNftData] = useState();
 
     const maxPriority = maxPriority + 18;
@@ -198,8 +195,11 @@ export default function AppFunctional() {
         init();
     }, []);
 
-    const handleModal = () => setShow(!show)
 
+    // Modal State
+    const handleModal = () => setShow(!show)
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const handleNFT = nftamount => setOutvalue(nftamount.target.value)
 
@@ -387,15 +387,19 @@ export default function AppFunctional() {
                     var maxPriority = Number(tip);
                     var maxFee = maxPriority + baseFee;
                     currency.methods.approve(NFTCONTRACT, String(totalAmount))
-                        .send({ from: account, 
-                            maxFeePerGas: maxFee, 
-                            maxPriorityFeePerGas: maxPriority })
+                        .send({
+                            from: account,
+                            maxFeePerGas: maxFee,
+                            maxPriorityFeePerGas: maxPriority
+                        })
                         .then(
                             currency.methods.transfer(NFTCONTRACT, String(totalAmount))
                                 .send(
-                                    { from: account, 
-                                        maxFeePerGas: maxFee, 
-                                        maxPriorityFeePerGas: maxPriority },
+                                    {
+                                        from: account,
+                                        maxFeePerGas: maxFee,
+                                        maxPriorityFeePerGas: maxPriority
+                                    },
                                     async function (error, transactionHash) {
                                         console.log("Transfer Submitted, Hash: ", transactionHash);
                                         let transactionReceipt = null;
@@ -411,10 +415,11 @@ export default function AppFunctional() {
                                             },
                                         };
                                         console.log("Transfer Complete", transactionReceipt);
-                                        contract.methods.mintpid(account, _mintAmount, _pid).send({ 
-                                            from: account, maxFeePerGas: 
-                                            maxFee, maxPriorityFeePerGas: 
-                                            maxPriority, });
+                                        contract.methods.mintpid(account, _mintAmount, _pid).send({
+                                            from: account, maxFeePerGas:
+                                                maxFee, maxPriorityFeePerGas:
+                                                maxPriority,
+                                        });
                                     }
                                 )
                         )
