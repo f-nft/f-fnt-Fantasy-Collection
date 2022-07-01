@@ -26,7 +26,7 @@ var web3 = null;
 var isWalletConnect = false;
 
 const Web3Alc = createAlchemyWeb3("https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk");
-const tip = await Web3Alc.eth.maxPriorityFeePerGas(); 
+const tip = await Web3Alc.eth.maxPriorityFeePerGas();
 const moralisapikey = "1ByvMyujsaXkDVTlnUjQIje5e09J2zLHGaS2P6JytHVA1LxfAPPYE8UdOpEjc6ca";
 const polygonscanapikey = "QW34TJU2T87NCU4HWKR7TGUEC1I8TYVDHW";
 
@@ -43,7 +43,7 @@ const providerOptions = {
 };
 
 const web3Modal = new Web3Modal({
-    network: "rinkeby",
+    network: "mainnet",
     theme: "dark",
     cacheProvider: false,
     providerOptions,
@@ -340,11 +340,12 @@ export default function AppFunctional() {
                     var baseFee = Number(block.baseFeePerGas);
                     var maxPriority = Number(tip);
                     var maxFee = baseFee + maxPriority;
-                    contract.methods.mint(account, _mintAmount).send({ 
-                        from: account, 
-                        value: String(totalAmount), 
-                        maxFeePerGas: maxFee, 
-                        maxPriorityFeePerGas: maxPriority + 18 });
+                    contract.methods.mint(account, _mintAmount).send({
+                        from: account,
+                        value: String(totalAmount),
+                        maxFeePerGas: maxFee,
+                        maxPriorityFeePerGas: maxPriority + 18
+                    });
                 })
                     .catch((err) => alert(err.message));
             })
@@ -372,9 +373,11 @@ export default function AppFunctional() {
                     var maxPriority = Number(tip);
                     var maxFee = maxPriority + baseFee;
                     currency.methods.approve(NFTCONTRACT, String(totalAmount))
-                        .send({ from: account, 
-                            maxFeePerGas: maxFee, 
-                            maxPriorityFeePerGas: maxPriority, })
+                        .send({
+                            from: account,
+                            maxFeePerGas: maxFee,
+                            maxPriorityFeePerGas: maxPriority,
+                        })
                         .then(
                             currency.methods.transfer(NFTCONTRACT, String(totalAmount))
                                 .send(
@@ -547,17 +550,18 @@ export default function AppFunctional() {
                 <div className="nftminted row px-3 p-3 center">
                     <div className="col">
                         <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
+                        <div>
+                            <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
+                                NFT Minted
+                            </h1>
+                        </div>
+                        <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
+                            {balance.result}/10,000
+                        </h4>
                     </div>
                     <div className="col justify-center">
                         <div className="row container-fluid">
-                            <div>
-                                <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
-                                    NFT Minted
-                                </h1>
-                            </div>
-                            <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
-                                {balance.result}/10,000
-                            </h4>
+
                             <h5>Your Wallet Address</h5>
                             <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
                                 <label htmlFor="floatingInput">Please Connect Wallet</label>
