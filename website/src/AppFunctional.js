@@ -61,8 +61,12 @@ export default function AppFunctional() {
     const [outvalue, setOutvalue] = useState();
     const [balance, setBalance] = useState([]);
     const [rawearn, setRawearn] = useState([]);
-
+    // Modal State
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     const [nftdata, setNftData] = useState();
+
     const maxPriority = maxPriority + 18;
 
     async function connectWallet() {
@@ -516,10 +520,6 @@ export default function AppFunctional() {
             alert(error);
         }
     }
-
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     return (
         <div className="items-center justify-start p-2 text-center">
