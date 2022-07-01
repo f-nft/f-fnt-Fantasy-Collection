@@ -19,7 +19,7 @@ import moving from "./images/moving.gif";
 import ListNft from "./components/Listnft";
 import { ethers } from "ethers";
 const { ethereum } = window;
-import Card from "./components/Card";
+import Card from "./components/Card.js";
 
 var account = null;
 var contract = null;
