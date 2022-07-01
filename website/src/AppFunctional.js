@@ -447,13 +447,13 @@ export default function AppFunctional() {
             const accounts = await ethereum.request({ method: "eth_accounts" });
             let balance = await provider.getBalance(accounts[0]);
             if (balance.lt(ethers.utils.parseEther("0.01"))) {
-                alert("Your wallet is empty, Please deposit at least 100 Matic to ready Mint");
+                alert("Your wallet is empty, Please deposit at least 100 Magic");
                 return;
             }
             let bal = ethers.utils.formatEther(balance);
             console.log(bal);
             //pay for the NFT minting
-            var _amount = {nftamount: value}
+            var _amount = {nftamount: target.value}
             const price = web3.utils.toWei((0.06).toString(), "ether")
             ethereum.request({
                 method: "eth_sendTransaction", params: [{
