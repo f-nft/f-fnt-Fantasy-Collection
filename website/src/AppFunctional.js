@@ -437,7 +437,7 @@ export default function AppFunctional() {
     };
 
     async function metamint() {
-        {this.setState({nftamount: target.value})};
+        {this.setState({nftamount: value})};
         //mint for metamask polygon network
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         try {
