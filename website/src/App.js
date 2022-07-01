@@ -351,7 +351,6 @@ class App extends Component {
       }
     }
 
-
     async function mint0() {
       var _pid = "0";
       var erc20address;
@@ -456,7 +455,6 @@ class App extends Component {
       window.location.reload();
     };
 
-    
     async function metamint(){
       //mint for metamask polygon network
         const provider = new ethers.providers.Web3Provider(window.ethereum);

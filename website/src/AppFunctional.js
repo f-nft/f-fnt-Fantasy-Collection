@@ -574,7 +574,7 @@ export default function AppFunctional() {
                             <Button className="stakegoldeffect2" variant="outline-dark" defaultValue="1">100</Button>
                         </ButtonGroup>
                         <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "18px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
-                            PAYMENT (Only 140 Matic)
+                            PAYMENT (Only 120 Matic)
                         </h6>
                         <div className="row px-3 pb-1 pt-1 row-style"
                             style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", }}>
@@ -589,8 +589,8 @@ export default function AppFunctional() {
                                 </Button>
                             </div> */}
                             <div className="col">
-                                <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
-                                    <img src="matic.png" width="30%" alt="matic" />
+                                <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.1px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
+                                    <img src="matic.png" width="10%" alt="matic" />
                                 </Button>
                             </div>
                             <div>
