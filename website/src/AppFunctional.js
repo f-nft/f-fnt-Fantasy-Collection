@@ -2,6 +2,7 @@
 import "./App.css";
 import "./index.css";
 import { Button, ButtonGroup } from "react-bootstrap";
+import Modal from 'react-bootstrap/Modal';
 import React, { useEffect, useState } from 'react';
 import "sf-font";
 import axios from "axios";
@@ -18,6 +19,7 @@ import moving from "./images/moving.gif";
 import ListNft from "./components/Listnft";
 import { ethers } from "ethers";
 const { ethereum } = window;
+import Card from "./components/Card";
 
 var account = null;
 var contract = null;
@@ -50,7 +52,7 @@ const providerOptions = {
 const web3Modal = new Web3Modal({
     network: "mainnet",
     theme: "dark",
-    cacheProvider: true,
+    cacheProvider: false,
     providerOptions,
 });
 
@@ -61,6 +63,7 @@ export default function AppFunctional() {
     const [rawearn, setRawearn] = useState([]);
 
     const [nftdata, setNftData] = useState();
+    const maxPriority = maxPriority + 18;
 
     async function connectWallet() {
         //if outside modal is clicked, close modal and return to main page in catch block
@@ -380,11 +383,15 @@ export default function AppFunctional() {
                     var maxPriority = Number(tip);
                     var maxFee = maxPriority + baseFee;
                     currency.methods.approve(NFTCONTRACT, String(totalAmount))
-                        .send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, })
+                        .send({ from: account, 
+                            maxFeePerGas: maxFee, 
+                            maxPriorityFeePerGas: maxPriority })
                         .then(
                             currency.methods.transfer(NFTCONTRACT, String(totalAmount))
                                 .send(
-                                    { from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, },
+                                    { from: account, 
+                                        maxFeePerGas: maxFee, 
+                                        maxPriorityFeePerGas: maxPriority },
                                     async function (error, transactionHash) {
                                         console.log("Transfer Submitted, Hash: ", transactionHash);
                                         let transactionReceipt = null;
@@ -400,7 +407,10 @@ export default function AppFunctional() {
                                             },
                                         };
                                         console.log("Transfer Complete", transactionReceipt);
-                                        contract.methods.mintpid(account, _mintAmount, _pid).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
+                                        contract.methods.mintpid(account, _mintAmount, _pid).send({ 
+                                            from: account, maxFeePerGas: 
+                                            maxFee, maxPriorityFeePerGas: 
+                                            maxPriority, });
                                     }
                                 )
                         )
@@ -571,7 +581,8 @@ export default function AppFunctional() {
             <div id="nftminter" className="flex-1 justify-between items-center p-5">
                 <div className="nftminted row px-3 p-3 center">
                     <div className="col">
-                        <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
+                        <Card />
+                        {/* <img src="f-nft0-100.gif" width="79%" alt="fantasy" /> */}
                         <div>
                             <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
                                 NFT Minted
