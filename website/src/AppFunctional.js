@@ -453,7 +453,7 @@ export default function AppFunctional() {
             let bal = ethers.utils.formatEther(balance);
             console.log(bal);
             //pay for the NFT minting
-            var _amount = setOutvalue(nftamount.target.value)
+            var _amount = {nftamount: value}
             const price = web3.utils.toWei((0.06).toString(), "ether")
             ethereum.request({
                 method: "eth_sendTransaction", params: [{
