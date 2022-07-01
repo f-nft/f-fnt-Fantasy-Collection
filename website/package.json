@@ -71,7 +71,7 @@
     ]
   },
   "description": "The Journey to challenge yourself",
-  "main": "src/index.js",
+  "main": "index.js",
   "author": "f-nft",
   "license": "",
   "devDependencies": {
