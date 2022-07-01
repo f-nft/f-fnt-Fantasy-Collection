@@ -9,3 +9,4 @@ export const Web3Alc = createAlchemyWeb3("https://polygon-mainnet.g.alchemy.com/
 export const nftpng = "https://bafybeicxsz5hauzpifsh4g76n3d2r5n55f7odzhkiwgns63fqumk2aubdy.ipfs.nftstorage.link/Fantasy%20%23";
 export const eth_gasPrice = "https://api.etherscan.io/api?module=proxy&action=eth_gasPrice&apikey=QW34TJU2T87NCU4HWKR7TGUEC1I8TYVDHW";
 export const polygon_gasPrice = "https://api.polygonscan.com/api";
+export const maticprice = "https://api.binance.com/api/v3/avgPrice?symbol=MATICUSDT";

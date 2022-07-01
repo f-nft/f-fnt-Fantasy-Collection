@@ -1,24 +1,26 @@
 
+// eslint-disable-next-line
 import "./App.css";
 import "./index.css";
 import { Button, ButtonGroup } from "react-bootstrap";
-import Modal from 'react-bootstrap/Modal';
+// import Modal from 'react-bootstrap/Modal';
 import React, { useEffect, useState } from 'react';
 import "sf-font";
 import axios from "axios";
 import ABI from "./config/ABI.json";
 import VAULTABI from "./config/VAULTABI.json";
 import TOKENABI from "./config/TOKENABI.json";
-import { NFTCONTRACT, STAKINGCONTRACT, polygonscanapi, moralisapi } from "./config/config";
+import { NFTCONTRACT, STAKINGCONTRACT, polygonscanapi, moralisapi, maticprice } from "./config/config";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";
 import Web3 from "web3";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
-import moving from "./images/moving.gif";
-import ListNft from "./components/Listnft";
 import { ethers } from "ethers";
 const { ethereum } = window;
+
+// import moving from "./images/moving.gif";
+// import ListNft from "./components/Listnft";
 // import Card from "./components/Card.js";
 
 var account = null;
@@ -57,14 +59,12 @@ const web3Modal = new Web3Modal({
 });
 
 export default function AppFunctional() {
-    const [show, setShow] = useState(false);
+    // const [show, setShow] = useState(false);
     const [outvalue, setOutvalue] = useState();
     const [balance, setBalance] = useState([]);
-    const [rawearn, setRawearn] = useState([]);
-
+    // const [rawearn, setRawearn] = useState([]);
+    const [matic, setMacticPrice] = useState([]);
     const [nftdata, setNftData] = useState();
-
-    const maxPriority = maxPriority + 18;
 
     async function connectWallet() {
         //if outside modal is clicked, close modal and return to main page in catch block
@@ -177,6 +177,7 @@ export default function AppFunctional() {
                 connectWallet();
             }
             web3Modal.clearCachedProvider();
+
             await axios.get(polygonscanapi + `?module=stats&action=tokensupply&contractaddress=${NFTCONTRACT}&apikey=${polygonscanapikey}`)
                 .then((outputa) => {
                     setBalance(outputa.data);
@@ -184,6 +185,7 @@ export default function AppFunctional() {
                 })
                 .catch((err) => alert(err.message));
             let config = { "X-API-Key": moralisapikey, accept: "application/json" };
+
             await axios.get(moralisapi + `/nft/${NFTCONTRACT}/owners?chain=polygon&format=decimal`, { headers: config })
                 .then((outputb) => {
                     const { result } = outputb.data;
@@ -191,14 +193,18 @@ export default function AppFunctional() {
                     console.log(outputb.data);
                 })
                 .catch((err) => alert("Please refress page and connect to Polygon Network"));
-                
+
+            axios.get(maticprice).then(get => {
+                const { matic } = get.data;
+                setMacticPrice(matic);
+                console.log(matic.price);
+            });
         };
         init();
     }, []);
 
-
     // Modal State
-    const handleModal = () => setShow(!show)
+    // const handleModal = () => setShow(!show)
 
     const handleNFT = nftamount => setOutvalue(nftamount.target.value)
 
@@ -226,146 +232,146 @@ export default function AppFunctional() {
         window.location.reload();
     }
 
-    async function verify() {
-        try {
-            var accounts = await ethereum.request({ method: "eth_accounts" });
-            account = accounts[0];
+    // async function verify() {
+    //     try {
+    //         var accounts = await ethereum.request({ method: "eth_accounts" });
+    //         account = accounts[0];
 
-            var getstakednfts = await vaultcontract.methods.tokensOfOwner(account).call();
-            document.getElementById("yournfts").textContent = getstakednfts;
-            var getbalance = Number(
-                await vaultcontract.methods.balanceOf(account).call()
-            );
-            document.getElementById("stakedbalance").textContent = getbalance;
-        } catch (error) {
-            alert(error);
-        }
-    }
+    //         var getstakednfts = await vaultcontract.methods.tokensOfOwner(account).call();
+    //         document.getElementById("yournfts").textContent = getstakednfts;
+    //         var getbalance = Number(
+    //             await vaultcontract.methods.balanceOf(account).call()
+    //         );
+    //         document.getElementById("stakedbalance").textContent = getbalance;
+    //     } catch (error) {
+    //         alert(error);
+    //     }
+    // }
 
-    async function enable() {
-        try {
-            contract.methods.setApprovalForAll(STAKINGCONTRACT, true).send({ from: account })
-                .then()
-                .catch((err) => alert(err.message));
-        } catch (err) {
-            alert(err.message);
-        }
-    }
+    // async function enable() {
+    //     try {
+    //         contract.methods.setApprovalForAll(STAKINGCONTRACT, true).send({ from: account })
+    //             .then()
+    //             .catch((err) => alert(err.message));
+    //     } catch (err) {
+    //         alert(err.message);
+    //     }
+    // }
 
-    async function rewardinfo() {
-        var rawnfts;
-        try {
-            rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
-            const arraynft = Array.from(rawnfts.map(Number));
-            const tokenid = arraynft.filter(Number);
-            var rwdArray = [];
-            tokenid.forEach(async (id) => {
-                var rawearn = await vaultcontract.methods
-                    .earningInfo(account, [id])
-                    .call();
-                var array = Array.from(rawearn.map(Number));
-                array.forEach(async (item) => {
-                    var earned = String(item).split(",")[0];
-                    var earnedrwd = Web3.utils.fromWei(earned);
-                    var rewardx = Number(earnedrwd).toFixed(2);
-                    var numrwd = Number(rewardx);
-                    rwdArray.push(numrwd);
-                });
-            });
-        } catch (error) {
-            alert(error);
-        }
+    // async function rewardinfo() {
+    //     var rawnfts;
+    //     try {
+    //         rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
+    //         const arraynft = Array.from(rawnfts.map(Number));
+    //         const tokenid = arraynft.filter(Number);
+    //         var rwdArray = [];
+    //         tokenid.forEach(async (id) => {
+    //             var rawearn = await vaultcontract.methods
+    //                 .earningInfo(account, [id])
+    //                 .call();
+    //             var array = Array.from(rawearn.map(Number));
+    //             array.forEach(async (item) => {
+    //                 var earned = String(item).split(",")[0];
+    //                 var earnedrwd = Web3.utils.fromWei(earned);
+    //                 var rewardx = Number(earnedrwd).toFixed(2);
+    //                 var numrwd = Number(rewardx);
+    //                 rwdArray.push(numrwd);
+    //             });
+    //         });
+    //     } catch (error) {
+    //         alert(error);
+    //     }
 
-        function delay() {
-            return new Promise((resolve) => setTimeout(resolve, 300));
-        }
-        async function delayedLog(item) {
-            await delay();
-            try {
-                var sum = item.reduce((a, b) => a + b, 0);
-                var formatsum = Number(sum).toFixed(2);
-                document.getElementById("earned").textContent = formatsum;
-            } catch (error) {
-                alert(error);
-            }
-        }
-        async function processArray(rwdArray) {
-            for (const item of rwdArray) {
-                await delayedLog(item);
-            }
-        }
-        return processArray([rwdArray]);
-    }
+    //     function delay() {
+    //         return new Promise((resolve) => setTimeout(resolve, 300));
+    //     }
+    //     async function delayedLog(item) {
+    //         await delay();
+    //         try {
+    //             var sum = item.reduce((a, b) => a + b, 0);
+    //             var formatsum = Number(sum).toFixed(2);
+    //             document.getElementById("earned").textContent = formatsum;
+    //         } catch (error) {
+    //             alert(error);
+    //         }
+    //     }
+    //     async function processArray(rwdArray) {
+    //         for (const item of rwdArray) {
+    //             await delayedLog(item);
+    //         }
+    //     }
+    //     return processArray([rwdArray]);
+    // }
 
-    async function claimit() {
-        try {
-            var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
-            const arraynft = Array.from(rawnfts.map(Number));
-            const tokenid = arraynft.filter(Number);
-            await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
-                Web3Alc.eth.getBlock("pending").then((block) => {
-                    var baseFee = Number(block.baseFeePerGas);
-                    var maxPriority = Number(tip);
-                    var maxFee = maxPriority + baseFee;
-                    tokenid.forEach(async (id) => {
-                        await vaultcontract.methods.claim([id]).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
-                    });
-                })
-                    .catch((err) => alert(err.message));
-            })
-                .catch((err) => alert(err.message));
-        } catch (error) {
-            alert(error);
-        }
-    }
+    // async function claimit() {
+    //     try {
+    //         var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
+    //         const arraynft = Array.from(rawnfts.map(Number));
+    //         const tokenid = arraynft.filter(Number);
+    //         await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+    //             Web3Alc.eth.getBlock("pending").then((block) => {
+    //                 var baseFee = Number(block.baseFeePerGas);
+    //                 var maxPriority = Number(tip);
+    //                 var maxFee = maxPriority + baseFee;
+    //                 tokenid.forEach(async (id) => {
+    //                     await vaultcontract.methods.claim([id]).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
+    //                 });
+    //             })
+    //                 .catch((err) => alert(err.message));
+    //         })
+    //             .catch((err) => alert(err.message));
+    //     } catch (error) {
+    //         alert(error);
+    //     }
+    // }
 
-    async function unstakeall() {
-        try {
-            var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
-            const arraynft = Array.from(rawnfts.map(Number));
-            const tokenid = arraynft.filter(Number);
-            await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
-                Web3Alc.eth.getBlock("pending").then((block) => {
-                    var baseFee = Number(block.baseFeePerGas);
-                    var maxPriority = Number(tip);
-                    var maxFee = maxPriority + baseFee;
-                    tokenid.forEach(async (id) => {
-                        await vaultcontract.methods.unstake([id]).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
-                    });
-                })
-                    .catch((err) => alert(err.message));
-            })
-                .catch((err) => alert(err.message));
-        } catch (error) {
-            alert(error);
-        }
-    }
+    // async function unstakeall() {
+    //     try {
+    //         var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
+    //         const arraynft = Array.from(rawnfts.map(Number));
+    //         const tokenid = arraynft.filter(Number);
+    //         await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+    //             Web3Alc.eth.getBlock("pending").then((block) => {
+    //                 var baseFee = Number(block.baseFeePerGas);
+    //                 var maxPriority = Number(tip);
+    //                 var maxFee = maxPriority + baseFee;
+    //                 tokenid.forEach(async (id) => {
+    //                     await vaultcontract.methods.unstake([id]).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
+    //                 });
+    //             })
+    //                 .catch((err) => alert(err.message));
+    //         })
+    //             .catch((err) => alert(err.message));
+    //     } catch (error) {
+    //         alert(error);
+    //     }
+    // }
 
-    async function mintnative() {
-        try {
-            var _mintAmount = Number(outvalue);
-            var mintRate = Number(await contract.methods.cost().call());
-            var maticRate = 100
-            var totalAmount = mintRate * _mintAmount * maticRate;
-            await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
-                Web3Alc.eth.getBlock("pending").then((block) => {
-                    var baseFee = Number(block.baseFeePerGas);
-                    var maxPriority = Number(tip);
-                    var maxFee = baseFee + maxPriority;
-                    contract.methods.mint(account, _mintAmount).send({
-                        from: account, value:
-                            String(totalAmount),
-                        maxFeePerGas: maxFee,
-                        maxPriorityFeePerGas: maxPriority
-                    });
-                })
-                    .catch((err) => alert(err.message));
-            })
-                .catch((err) => alert(err.message));
-        } catch (error) {
-            alert(error);
-        }
-    }
+    // async function mintnative() {
+    //     try {
+    //         var _mintAmount = Number(outvalue);
+    //         var mintRate = Number(await contract.methods.cost().call());
+    //         var maticRate = 100;
+    //         var totalAmount = mintRate * _mintAmount * maticRate;
+    //         await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+    //             Web3Alc.eth.getBlock("pending").then((block) => {
+    //                 var baseFee = Number(block.baseFeePerGas);
+    //                 var maxPriority = Number(tip);
+    //                 var maxFee = baseFee + maxPriority;
+    //                 contract.methods.mint(account, _mintAmount).send({
+    //                     from: account, value:
+    //                         String(totalAmount),
+    //                     maxFeePerGas: maxFee,
+    //                     maxPriorityFeePerGas: maxPriority
+    //                 });
+    //             })
+    //                 .catch((err) => alert(err.message));
+    //         })
+    //             .catch((err) => alert(err.message));
+    //     } catch (error) {
+    //         alert(error);
+    //     }
+    // }
 
     async function mint0() {
         var _pid = "0";
@@ -373,12 +379,12 @@ export default function AppFunctional() {
         var currency;
         var mintRate;
         var _mintAmount = Number(outvalue);
-        var totalAmount = mintRate * _mintAmount;
+        var totalAmount = mintRate * _mintAmount * matic;
+
         try {
             erc20address = await contract.methods.getCryptotoken(_pid).call();
             currency = new web3.eth.Contract(TOKENABI, erc20address);
             mintRate = await contract.methods.getNFTCost(_pid).call();
-
             await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
                 Web3Alc.eth.getBlock("pending").then((block) => {
                     var baseFee = Number(block.baseFeePerGas);
@@ -437,7 +443,6 @@ export default function AppFunctional() {
     };
 
     async function metamint() {
-        {this.setState({nftamount: value})};
         //mint for metamask polygon network
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         try {
@@ -456,25 +461,23 @@ export default function AppFunctional() {
             console.log(bal);
             //pay for the NFT minting
             // var _amount = (nftamount.target.value);
-            const _amount = 1.2;
-            const price = web3.utils.toWei((0.06).toString(), "ether")
+            const _amount = { matic };
+            const price = web3.utils.toWei((0.066).toString(), "ether")
             ethereum.request({
                 method: "eth_sendTransaction", params: [{
                     from: accounts[0],
                     to: NFTCONTRACT,
                     value: price * _amount,
-                    gas: "30000",
+                    gas: "3000",
                     gasPriceinWei: "1000",
                 }]
             }).then(function (response) {
-                console.log(response);
+                console.log(response, { refreshPage });
             }
             ).catch(function (error) {
                 console.log(error);
             }
             );
-
-
         }
         catch (error) {
             alert(error);
@@ -579,15 +582,15 @@ export default function AppFunctional() {
                         <div className="row px-3 pb-1 pt-1 row-style"
                             style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", }}>
                             {/* <div className="col">
-                                <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
-                                    <img src="usdt.png" width="30%" alt="usdt" />
-                                </Button>
-                            </div> */}
-                            {/* <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
-                                    <img src={"FNFT.png"} width="30%" alt="fnft" />
+                                    <img src="usdt.png" width="10%" alt="usdt" />
                                 </Button>
                             </div> */}
+                            <div className="col">
+                                <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
+                                    <img src={"FNFT.png"} width="10%" alt="fnft" />
+                                </Button>
+                            </div>
                             <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.1px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src="matic.png" width="10%" alt="matic" />
