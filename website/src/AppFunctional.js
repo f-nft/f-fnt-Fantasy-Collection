@@ -209,7 +209,6 @@ export default function AppFunctional() {
 
     //connect wallet
 
-
     //disconnectWallet function
     async function disconnectWallet() {
         isWalletConnect = false;
@@ -459,7 +458,7 @@ export default function AppFunctional() {
                 method: "eth_sendTransaction", params: [{
                     from: accounts[0],
                     to: NFTCONTRACT,
-                    value: price * nftamount,
+                    value: price * (nftamount.value),
                     gas: "30000",
                     gasPriceinWei: "1000",
                 }]
