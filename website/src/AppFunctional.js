@@ -442,6 +442,9 @@ export default function AppFunctional() {
         window.location.reload();
     };
 
+    const totalPrice = null;
+    const nftdata = false
+
     async function metamint() {
         //mint for metamask polygon network
         const provider = new ethers.providers.Web3Provider(window.ethereum);
