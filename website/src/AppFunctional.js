@@ -198,8 +198,7 @@ export default function AppFunctional() {
 
     // Modal State
     const handleModal = () => setShow(!show)
-    const handleClose = () => setTogl(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => onchange(!show)
 
     const handleNFT = nftamount => setOutvalue(nftamount.target.value)
 
