@@ -19,7 +19,7 @@ import moving from "./images/moving.gif";
 import ListNft from "./components/Listnft";
 import { ethers } from "ethers";
 const { ethereum } = window;
-import Card from "./components/Card.js";
+// import Card from "./components/Card.js";
 
 var account = null;
 var contract = null;
@@ -586,8 +586,8 @@ export default function AppFunctional() {
             <div id="nftminter" className="flex-1 justify-between items-center p-5">
                 <div className="nftminted row px-3 p-3 center">
                     <div className="col">
-                        <Card />
-                        {/* <img src="f-nft0-100.gif" width="79%" alt="fantasy" /> */}
+                        {/* <Card /> */}
+                        <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
                         <div>
                             <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
                                 NFT Minted
