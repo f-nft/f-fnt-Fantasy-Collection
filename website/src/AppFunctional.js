@@ -28,8 +28,7 @@ var contract = null;
 var vaultcontract = null;
 var web3 = null;
 var isWalletConnect = false;
-const totalPrice = null;
-const nftdata = false;
+const totalPrice = true;
 
 const Web3Alc = createAlchemyWeb3("https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk");
 const moralisapikey = "1ByvMyujsaXkDVTlnUjQIje5e09J2zLHGaS2P6JytHVA1LxfAPPYE8UdOpEjc6ca";
@@ -66,7 +65,7 @@ export default function AppFunctional() {
     const [balance, setBalance] = useState([]);
     // const [rawearn, setRawearn] = useState([]);
     const [matic, setMacticPrice] = useState([]);
-    const [nftdata, setNftData] = useState();
+    // const [nftdata, setNftData] = useState();
 
     async function connectWallet() {
         //if outside modal is clicked, close modal and return to main page in catch block
@@ -188,13 +187,13 @@ export default function AppFunctional() {
                 .catch((err) => alert(err.message));
             let config = { "X-API-Key": moralisapikey, accept: "application/json" };
 
-            await axios.get(moralisapi + `/nft/${NFTCONTRACT}/owners?chain=polygon&format=decimal`, { headers: config })
-                .then((outputb) => {
-                    const { result } = outputb.data;
-                    setNftData(result);
-                    console.log(outputb.data);
-                })
-                .catch((err) => alert("Please refress page and connect to Polygon Network"));
+            // await axios.get(moralisapi + `/nft/${NFTCONTRACT}/owners?chain=polygon&format=decimal`, { headers: config })
+            //     .then((outputb) => {
+            //         const { result } = outputb.data;
+            //         setNftData(result);
+            //         console.log(outputb.data);
+            //     })
+            //     .catch((err) => alert("Please refress page and connect to Polygon Network"));
 
             axios.get(maticprice).then(get => {
                 const { matic } = get.data;
