@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion, useSpring, useMotionValue, useTransform } from "framer-motion";
 import { interpolate } from "@popmotion/popcorn";
-import images from '../../public/f-nft0-100.gif';
 
 const Container = styled.div`
   border-radius: 8px;
@@ -54,7 +53,7 @@ const Image = styled.div`
   bottom: 0;
   background-size: cover;
   border-radius: 1rem;
-  background-image: url("images");
+  background-image: url("../assets/f-nft0-100.gif");
 `;
 
 const Gradient = styled(motion.div)`

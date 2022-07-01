@@ -9,7 +9,7 @@ import axios from "axios";
 import ABI from "./ABI.json";
 import VAULTABI from "./VAULTABI.json";
 import TOKENABI from "./TOKENABI.json";
-import {NFTCONTRACT,STAKINGCONTRACT,polygonscanapi,moralisapi} from "./config";
+import {NFTCONTRACT,STAKINGCONTRACT,polygonscanapi,moralisapi} from "./config/config";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";

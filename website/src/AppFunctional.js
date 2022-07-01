@@ -6,10 +6,10 @@ import "./index.css";
 import { Button, ButtonGroup } from "react-bootstrap";
 import "sf-font";
 import axios from "axios";
-import ABI from "./ABI.json";
-import VAULTABI from "./VAULTABI.json";
-import TOKENABI from "./TOKENABI.json";
-import { NFTCONTRACT, STAKINGCONTRACT, polygonscanapi, moralisapi } from "./config";
+import ABI from "./config/ABI.json";
+import VAULTABI from "./config/VAULTABI.json";
+import TOKENABI from "./config/TOKENABI.json";
+import { NFTCONTRACT, STAKINGCONTRACT, polygonscanapi, moralisapi } from "./config/config.js";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";
@@ -27,6 +27,7 @@ var web3 = null;
 var isWalletConnect = false;
 
 const Web3Alc = createAlchemyWeb3("https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk");
+const tip = await Web3Alc.eth.maxPriorityFeePerGas(); 
 const moralisapikey = "1ByvMyujsaXkDVTlnUjQIje5e09J2zLHGaS2P6JytHVA1LxfAPPYE8UdOpEjc6ca";
 const polygonscanapikey = "QW34TJU2T87NCU4HWKR7TGUEC1I8TYVDHW";
 
@@ -55,8 +56,6 @@ export default function AppFunctional() {
     const [balance, setBalance] = useState([]);
     const [rawearn, setRawearn] = useState([]);
     const [nftdata, setNftData] = useState();
-    const [walletConnected, setWalletConnected] = useEffect({});
-
     async function connectWallet() {
         //if outside modal is clicked, close modal and return to main page in catch block
         try {
@@ -160,7 +159,6 @@ export default function AppFunctional() {
 
     }
 
-
     useEffect(() => {
         const init = async () => {
             //check if user is already logged in then connect wallet
@@ -176,7 +174,7 @@ export default function AppFunctional() {
                 })
                 .catch((err) => alert(err.message));
             let config = { "X-API-Key": moralisapikey, accept: "application/json" };
-            await axios.get(moralisapi + `/nft/${NFTCONTRACT}/owners?chain=mumbai&format=decimal`, { headers: config })
+            await axios.get(moralisapi + `/nft/${NFTCONTRACT}/owners?chain=polygon&format=decimal`, { headers: config })
                 .then((outputb) => {
                     const { result } = outputb.data;
                     setNftData(result);
@@ -335,14 +333,19 @@ export default function AppFunctional() {
     async function mintnative() {
         try {
             var _mintAmount = Number(outvalue);
+            var maticRate = 100
             var mintRate = Number(await contract.methods.cost().call());
-            var totalAmount = mintRate * _mintAmount * 100;
+            var totalAmount = mintRate * _mintAmount * maticRate;
             await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
                 Web3Alc.eth.getBlock("pending").then((block) => {
                     var baseFee = Number(block.baseFeePerGas);
                     var maxPriority = Number(tip);
                     var maxFee = baseFee + maxPriority;
-                    contract.methods.mint(account, _mintAmount).send({ from: account, value: String(totalAmount), maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
+                    contract.methods.mint(account, _mintAmount).send({ 
+                        from: account, 
+                        value: String(totalAmount), 
+                        maxFeePerGas: maxFee, 
+                        maxPriorityFeePerGas: maxPriority + 18 });
                 })
                     .catch((err) => alert(err.message));
             })
@@ -351,7 +354,6 @@ export default function AppFunctional() {
             alert(error);
         }
     }
-
 
     async function mint0() {
         var _pid = "0";
@@ -371,7 +373,9 @@ export default function AppFunctional() {
                     var maxPriority = Number(tip);
                     var maxFee = maxPriority + baseFee;
                     currency.methods.approve(NFTCONTRACT, String(totalAmount))
-                        .send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, })
+                        .send({ from: account, 
+                            maxFeePerGas: maxFee, 
+                            maxPriorityFeePerGas: maxPriority, })
                         .then(
                             currency.methods.transfer(NFTCONTRACT, String(totalAmount))
                                 .send(
@@ -453,10 +457,6 @@ export default function AppFunctional() {
             alert(err);
         }
     }
-    const refreshPage = () => {
-        window.location.reload();
-    };
-
 
     async function metamint() {
         //mint for metamask polygon network
@@ -498,6 +498,10 @@ export default function AppFunctional() {
             alert(error);
         }
     }
+
+    const refreshPage = () => {
+        window.location.reload();
+    };
     return (
         <div className="items-center justify-start p-2 text-center">
             <nav className="navbar full-width navbar-expand-md navbar-dark mb-3">
@@ -584,12 +588,11 @@ export default function AppFunctional() {
                                     <img src="usdt.png" width="30%" alt="usdt" />
                                 </Button>
                             </div>
-                            <div className="col">
+                            {/* <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src={"FNFT.png"} width="30%" alt="fnft" />
                                 </Button>
-                            </div>
-
+                            </div> */}
                             <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={mintnative} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src="matic.png" width="30%" alt="matic" />
