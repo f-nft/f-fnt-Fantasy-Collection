@@ -19,6 +19,7 @@ import moving from "./images/moving.gif";
 import ListNft from "./components/Listnft";
 import { ethers } from "ethers";
 const { ethereum } = window;
+import { Card } from './components/Card';
 
 var account = null;
 var contract = null;
@@ -160,7 +161,6 @@ export default function AppFunctional() {
 
     }
 
-
     useEffect(() => {
         const init = async () => {
             //check if user is already logged in then connect wallet
@@ -183,12 +183,12 @@ export default function AppFunctional() {
                     console.log(outputb.data);
                 })
                 .catch((err) => alert(err.message));
+                
         };
         init();
     }, []);
 
     const handleModal = () => setShow(!show)
-
 
     const handleNFT = nftamount => setOutvalue(nftamount.target.value)
 
@@ -199,7 +199,10 @@ export default function AppFunctional() {
     const expectedBlockTime = 10000;
 
     //connect wallet
-
+    async function componentDidMount() {
+        console.log('Object')
+        return ('isWalletConnected', true)
+      }
 
     //disconnectWallet function
     async function disconnectWallet() {
@@ -352,111 +355,110 @@ export default function AppFunctional() {
         }
     }
 
+    // async function mint0() {
+    //     var _pid = "0";
+    //     var erc20address;
+    //     var currency;
+    //     var mintRate;
+    //     var _mintAmount = Number(outvalue);
+    //     var totalAmount = mintRate * _mintAmount;
+    //     try {
+    //         erc20address = await contract.methods.getCryptotoken(_pid).call();
+    //         currency = new web3.eth.Contract(TOKENABI, erc20address);
+    //         mintRate = await contract.methods.getNFTCost(_pid).call();
 
-    async function mint0() {
-        var _pid = "0";
-        var erc20address;
-        var currency;
-        var mintRate;
-        var _mintAmount = Number(outvalue);
-        var totalAmount = mintRate * _mintAmount;
-        try {
-            erc20address = await contract.methods.getCryptotoken(_pid).call();
-            currency = new web3.eth.Contract(TOKENABI, erc20address);
-            mintRate = await contract.methods.getNFTCost(_pid).call();
+    //         await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+    //             Web3Alc.eth.getBlock("pending").then((block) => {
+    //                 var baseFee = Number(block.baseFeePerGas);
+    //                 var maxPriority = Number(tip);
+    //                 var maxFee = maxPriority + baseFee;
+    //                 currency.methods.approve(NFTCONTRACT, String(totalAmount))
+    //                     .send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, })
+    //                     .then(
+    //                         currency.methods.transfer(NFTCONTRACT, String(totalAmount))
+    //                             .send(
+    //                                 { from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, },
+    //                                 async function (error, transactionHash) {
+    //                                     console.log("Transfer Submitted, Hash: ", transactionHash);
+    //                                     let transactionReceipt = null;
+    //                                     while (transactionReceipt == null) {
+    //                                         transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+    //                                         await sleep(expectedBlockTime);
+    //                                     }
+    //                                     window.console = {
+    //                                         log: function (str) {
+    //                                             var out = document.createElement("div");
+    //                                             out.appendChild(document.createTextNode(str));
+    //                                             document.getElementById("txout").appendChild(out);
+    //                                         },
+    //                                     };
+    //                                     console.log("Transfer Complete", transactionReceipt);
+    //                                     contract.methods.mintpid(account, _mintAmount, _pid).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
+    //                                 }
+    //                             )
+    //                     )
+    //                     .catch((err) => alert(err.message));
+    //             })
+    //                 .catch((err) => alert(err.message));
+    //         })
+    //             .catch((err) => alert(err.message));
+    //     }
+    //     catch (error) {
+    //         alert(error);
+    //     }
+    // }
 
-            await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
-                Web3Alc.eth.getBlock("pending").then((block) => {
-                    var baseFee = Number(block.baseFeePerGas);
-                    var maxPriority = Number(tip);
-                    var maxFee = maxPriority + baseFee;
-                    currency.methods.approve(NFTCONTRACT, String(totalAmount))
-                        .send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, })
-                        .then(
-                            currency.methods.transfer(NFTCONTRACT, String(totalAmount))
-                                .send(
-                                    { from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, },
-                                    async function (error, transactionHash) {
-                                        console.log("Transfer Submitted, Hash: ", transactionHash);
-                                        let transactionReceipt = null;
-                                        while (transactionReceipt == null) {
-                                            transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
-                                            await sleep(expectedBlockTime);
-                                        }
-                                        window.console = {
-                                            log: function (str) {
-                                                var out = document.createElement("div");
-                                                out.appendChild(document.createTextNode(str));
-                                                document.getElementById("txout").appendChild(out);
-                                            },
-                                        };
-                                        console.log("Transfer Complete", transactionReceipt);
-                                        contract.methods.mintpid(account, _mintAmount, _pid).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
-                                    }
-                                )
-                        )
-                        .catch((err) => alert(err.message));
-                })
-                    .catch((err) => alert(err.message));
-            })
-                .catch((err) => alert(err.message));
-        }
-        catch (error) {
-            alert(error);
-        }
-    }
+    // async function mint1() {
 
-    async function mint1() {
+    //     var _pid = "1";
+    //     var erc20address;
+    //     var mintRate;
+    //     var currency;
+    //     var _mintAmount = Number(outvalue);
+    //     var totalAmount = mintRate * _mintAmount;
+    //     try {
+    //         currency = new web3.eth.Contract(TOKENABI, erc20address);
+    //         erc20address = await contract.methods.getCryptotoken(_pid).call();
+    //         mintRate = await contract.methods.getNFTCost(_pid).call();
 
-        var _pid = "1";
-        var erc20address;
-        var mintRate;
-        var currency;
-        var _mintAmount = Number(outvalue);
-        var totalAmount = mintRate * _mintAmount;
-        try {
-            currency = new web3.eth.Contract(TOKENABI, erc20address);
-            erc20address = await contract.methods.getCryptotoken(_pid).call();
-            mintRate = await contract.methods.getNFTCost(_pid).call();
+    //         await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+    //             Web3Alc.eth.getBlock("pending").then((block) => {
+    //                 var baseFee = Number(block.baseFeePerGas);
+    //                 var maxPriority = Number(tip);
+    //                 var maxFee = maxPriority + baseFee;
+    //                 currency.methods.approve(NFTCONTRACT, String(totalAmount)).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, })
+    //                     .then(
+    //                         currency.methods.transfer(NFTCONTRACT, String(totalAmount))
+    //                             .send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, },
+    //                                 async function (error, transactionHash) {
+    //                                     console.log("Transfer Submitted, Hash: ", transactionHash);
+    //                                     let transactionReceipt = null;
+    //                                     while (transactionReceipt == null) {
+    //                                         transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+    //                                         await sleep(expectedBlockTime);
+    //                                     }
+    //                                     window.console = {
+    //                                         log: function (str) {
+    //                                             var out = document.createElement("div");
+    //                                             out.appendChild(document.createTextNode(str));
+    //                                             document.getElementById("txout").appendChild(out);
+    //                                         },
+    //                                     };
+    //                                     console.log("Transfer Complete", transactionReceipt);
+    //                                     contract.methods.mintpid(account, _mintAmount, _pid).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
+    //                                 }
+    //                             )
+    //                     ).catch((err) => alert(err.message));
+    //             }).catch((err) => alert(err.message));
+    //         }).catch((err) => alert(err.message));
+    //     } catch (err) {
+    //         alert(err);
+    //     }
+    // }
 
-            await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
-                Web3Alc.eth.getBlock("pending").then((block) => {
-                    var baseFee = Number(block.baseFeePerGas);
-                    var maxPriority = Number(tip);
-                    var maxFee = maxPriority + baseFee;
-                    currency.methods.approve(NFTCONTRACT, String(totalAmount)).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, })
-                        .then(
-                            currency.methods.transfer(NFTCONTRACT, String(totalAmount))
-                                .send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, },
-                                    async function (error, transactionHash) {
-                                        console.log("Transfer Submitted, Hash: ", transactionHash);
-                                        let transactionReceipt = null;
-                                        while (transactionReceipt == null) {
-                                            transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
-                                            await sleep(expectedBlockTime);
-                                        }
-                                        window.console = {
-                                            log: function (str) {
-                                                var out = document.createElement("div");
-                                                out.appendChild(document.createTextNode(str));
-                                                document.getElementById("txout").appendChild(out);
-                                            },
-                                        };
-                                        console.log("Transfer Complete", transactionReceipt);
-                                        contract.methods.mintpid(account, _mintAmount, _pid).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
-                                    }
-                                )
-                        ).catch((err) => alert(err.message));
-                }).catch((err) => alert(err.message));
-            }).catch((err) => alert(err.message));
-        } catch (err) {
-            alert(err);
-        }
-    }
     const refreshPage = () => {
         window.location.reload();
     };
-
 
     async function metamint() {
         //mint for metamask polygon network
@@ -498,8 +500,11 @@ export default function AppFunctional() {
             alert(error);
         }
     }
+
     return (
+
         <div className="items-center justify-start p-2 text-center">
+            <Nav
             <nav className="navbar full-width navbar-expand-md navbar-dark mb-3">
                 <div className="container-fluid">
                     <div className="navbar-brand px-5" style={{ fontWeight: "800", fontSize: "22px" }} href="#"></div>
@@ -543,18 +548,20 @@ export default function AppFunctional() {
             <div id="nftminter" className="flex-1 justify-between items-center p-5">
                 <div className="nftminted row px-3 p-3 center">
                     <div className="col">
-                        <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
+                        <Card />
+                        <div>
+                            <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
+                                NFT Minted
+                            </h1>
+                        </div>
+                        <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
+                            {balance.result}/10,000
+                        </h4>
+                        {/* <img src="f-nft0-100.gif" width="79%" alt="fantasy" /> */}
                     </div>
                     <div className="col justify-center">
                         <div className="row container-fluid">
-                            <div>
-                                <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
-                                    NFT Minted
-                                </h1>
-                            </div>
-                            <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
-                                {balance.result}/10,000
-                            </h4>
+
                             <h5>Your Wallet Address</h5>
                             <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
                                 <label htmlFor="floatingInput">Please Connect Wallet</label>
@@ -575,7 +582,7 @@ export default function AppFunctional() {
                             <Button className="stakegoldeffect2" variant="outline-dark" defaultValue="100">100</Button>
                         </ButtonGroup>
                         <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "18px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
-                            WHAT DO YOU WANT TO PAY?
+                            PAYMENT
                         </h6>
                         <div className="row px-3 pb-1 pt-1 row-style"
                             style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", }}>
@@ -584,12 +591,11 @@ export default function AppFunctional() {
                                     <img src="usdt.png" width="30%" alt="usdt" />
                                 </Button>
                             </div>
-                            <div className="col">
+                            {/* <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src={"FNFT.png"} width="30%" alt="fnft" />
                                 </Button>
-                            </div>
-
+                            </div> */}
                             <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={mintnative} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src="matic.png" width="30%" alt="matic" />
@@ -694,8 +700,8 @@ export default function AppFunctional() {
                     </div>
                 </div>
             </div>
-            <h1 className="flex justify-center" style={{ color: "white", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
-                Fantasy NFT Staking Vault{" "}
+            {/* <h1 className="flex justify-center" style={{ color: "white", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
+                Fantasy NFT Staking Vault{"Coming Soon"}
             </h1>
             <h5 className="flex justify-center p-2" style={{ color: "orange", fontWeight: "300" }}>
                 Please Connect To Your Wallet First
@@ -706,7 +712,7 @@ export default function AppFunctional() {
             <div id="vault" className="flex flex-wrap md:w-65 items-center p-3 px-3" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #000000", textShadow: "1px 1px 2px #000000", border: "15px", fontFamily: "Rambla", backgroundImage: [`url(${moving})`], backgroundPosition: ["center"], backgroundRepeat: ["repeat-z"], backgroundSize: ["100%"], backgroundBlendMode: ["ovelay"], }}>
                 <div className="row">
                     <div className="d-flex justify-content-around">
-                        <div className="align-self-start stakingrewards flow-row flex-1 basis-1 items-center p-3" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: "Rambla", minWidth: "250px", maxWidth: "250px", maxHeight: "300px", minHeight: "300px", }}>
+                        <div className="align-self-start stakingrewards flow-row flex-1 basis-1 items-center p-3" id="vaultactive" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: "Rambla", minWidth: "250px", maxWidth: "250px", maxHeight: "300px", minHeight: "300px", }}>
                             <h4 style={{ color: "#FFFFFF", fontWeight: "300" }}>
                                 Your Vault Activity
                             </h4>
@@ -714,7 +720,7 @@ export default function AppFunctional() {
                             <Button onClick={verify} id="verify" style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }}>
                                 Verify
                             </Button>
-                            <table className="table mt-3 mb-5 px-3 table-dark">
+                            <table className="table mt-3 mb-5 px-3 table-dark" id="stakingnft">
                                 <tbody>
                                     <tr>
                                         <td style={{ fontSize: "16px" }}>
@@ -737,7 +743,7 @@ export default function AppFunctional() {
                             </table>
                         </div>
                         <img className="align-self-center" src="logonew.png" width="200" alt="feature" />
-                        <div className=" align-self-end stakingrewards flex-1 basis-1 items-center p-3" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: "Rambla", minWidth: "250px", maxWidth: "250px", maxHeight: "300px", minHeight: "300px", }}>
+                        <div className=" align-self-end stakingrewards flex-1 basis-1 items-center p-3" id="stakingreward" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: "Rambla", minWidth: "250px", maxWidth: "250px", maxHeight: "300px", minHeight: "300px", }}>
                             <h4 style={{ color: "#FFFFFF", fontWeight: "300" }}>
                                 Staking Rewards
                             </h4>
@@ -775,7 +781,7 @@ export default function AppFunctional() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

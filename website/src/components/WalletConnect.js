@@ -58,6 +58,7 @@ const onSubmitLogin = () => {
     }
 
 }
+
 class WalletConnect extends Component {
     constructor(props) {
         super(props);
