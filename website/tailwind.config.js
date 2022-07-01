@@ -3,13 +3,13 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
-  // purge: {
-  //   enabled: true,
-  //   content: ["./src/**/*.{js,jsx,ts,tsx}"],
-  //   options: {
-  //     safelist: [],
-  //   },
-  // },
+  purge: {
+    enabled: true,
+    content: ["./src/**/*.{js,jsx,ts,tsx}"],
+    options: {
+      safelist: [],
+    },
+  },
   theme: {
     'kdam': ['"Kdam Thmor Pro"'],
     'blc': ['"Black Ops One"'],

@@ -55,6 +55,7 @@ export default function AppFunctional() {
     const [balance, setBalance] = useState([]);
     const [rawearn, setRawearn] = useState([]);
     const [nftdata, setNftData] = useState();
+    
     async function connectWallet() {
         //if outside modal is clicked, close modal and return to main page in catch block
         try {
