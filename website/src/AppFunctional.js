@@ -19,7 +19,8 @@ import moving from "./images/moving.gif";
 import ListNft from "./components/Listnft";
 import { ethers } from "ethers";
 const { ethereum } = window;
-import { Card } from './components/Card';
+import { Card } from './components/Card.js';
+import { NavBar } from './components/NavBarFunctional.js';
 
 var account = null;
 var contract = null;
@@ -50,6 +51,7 @@ const web3Modal = new Web3Modal({
     providerOptions,
 });
 
+
 export default function AppFunctional() {
     const [show, setShow] = useState(false);
     const [outvalue, setOutvalue] = useState();
@@ -63,12 +65,16 @@ export default function AppFunctional() {
         try {
             var provider = await web3Modal.connect()
             web3 = new Web3(provider);
+            console.log('open'); // printed to console
+
         }
         catch (error) {
             alert("Please select a wallet");
+            console.log('close'); 
             console.log(error);
             return;
         }
+
         isWalletConnect = true;
         localStorage.setItem("isWalletConnected", true);
 
@@ -504,7 +510,7 @@ export default function AppFunctional() {
     return (
 
         <div className="items-center justify-start p-2 text-center">
-            <Nav
+            <NavBar />
             <nav className="navbar full-width navbar-expand-md navbar-dark mb-3">
                 <div className="container-fluid">
                     <div className="navbar-brand px-5" style={{ fontWeight: "800", fontSize: "22px" }} href="#"></div>
