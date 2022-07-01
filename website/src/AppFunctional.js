@@ -45,7 +45,7 @@ const providerOptions = {
 const web3Modal = new Web3Modal({
     network: "rinkeby",
     theme: "dark",
-    cacheProvider: true,
+    cacheProvider: false,
     providerOptions,
 });
 
@@ -54,14 +54,14 @@ export default function AppFunctional() {
     const [outvalue, setOutvalue] = useState();
     const [balance, setBalance] = useState([]);
     const [rawearn, setRawearn] = useState([]);
-
     const [nftdata, setNftData] = useState();
+    const [walletConnected, setWalletConnected] = useEffect({});
 
     async function connectWallet() {
         //if outside modal is clicked, close modal and return to main page in catch block
         try {
             var provider = await web3Modal.connect()
-            web3 = new Web3(provider);
+            web3 = new window.ethereum.Web3(provider);
         }
         catch (error) {
             alert("Please select a wallet");
