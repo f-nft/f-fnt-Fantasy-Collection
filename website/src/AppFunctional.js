@@ -198,7 +198,7 @@ export default function AppFunctional() {
 
     // Modal State
     const handleModal = () => setShow(!show)
-    const handleClose = () => setShow(false);
+    const handleClose = () => setTogl(false);
     const handleShow = () => setShow(true);
 
     const handleNFT = nftamount => setOutvalue(nftamount.target.value)
@@ -434,13 +434,12 @@ export default function AppFunctional() {
         }
     }
 
-    async function mint1() {
-        var _pid = "1";
-        var erc20address;
-        var mintRate;
-        var currency;
-        var _mintAmount = Number(outvalue);
-        var totalAmount = mintRate * _mintAmount;
+    const refreshPage = () => {
+        window.location.reload();
+    };
+
+    async function metamint() {
+        //mint for metamask polygon network
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         try {
             if (!window.ethereum.selectedAddress) {
@@ -448,19 +447,6 @@ export default function AppFunctional() {
                 return;
             }
 
-            currency = new web3.eth.Contract(TOKENABI, erc20address);
-            erc20address = await contract.methods.getCryptotoken(_pid).call();
-            mintRate = await contract.methods.getNFTCost(_pid).call();
-            currency.methods.approve(NFTCONTRACT, String(totalAmount)).ethereum.request({ method: "eth_accounts" });
-            // new function
-            window.console = {
-                log: function (str) {
-                    var out = document.createElement("div");
-                    out.appendChild(document.createTextNode(str));
-                    document.getElementById("txout").appendChild(out);
-                },
-            };
-            console.log("Transfer Complete", transactionReceipt)
             const accounts = await ethereum.request({ method: "eth_accounts" });
             let balance = await provider.getBalance(accounts[0]);
             if (balance.lt(ethers.utils.parseEther("0.1"))) {
@@ -470,11 +456,11 @@ export default function AppFunctional() {
             let bal = ethers.utils.formatEther(balance);
             console.log(bal);
             //pay for the NFT minting
-            contract.methods.mintpid(account, _mintAmount, _pid).ethereum.request({
+            ethereum.request({
                 method: "eth_sendTransaction", params: [{
                     from: accounts[0],
                     to: NFTCONTRACT,
-                    value: web3.utils.toWei((0.02).toString(), "ether"),
+                    value: web3.utils.toWei((0.1).toString(), "ether"),
                     gas: "30000",
                     gasPriceinWei: "1000",
                 }]
@@ -483,271 +469,231 @@ export default function AppFunctional() {
             }
             ).catch(function (error) {
                 console.log(error);
-            })
-        } catch (error) {
+            }
+            );
+
+
+        }
+        catch (error) {
             alert(error);
         }
+    }
 
-        const refreshPage = () => {
-            window.location.reload();
-        };
-
-        async function metamint() {
-            //mint for metamask polygon network
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            try {
-                if (!window.ethereum.selectedAddress) {
-                    alert("Please unlock your MetaMask account");
-                    return;
-                }
-
-                const accounts = await ethereum.request({ method: "eth_accounts" });
-                let balance = await provider.getBalance(accounts[0]);
-                if (balance.lt(ethers.utils.parseEther("0.1"))) {
-                    alert("Please deposit at least 0.1 ETH to the MetaMask account");
-                    return;
-                }
-                let bal = ethers.utils.formatEther(balance);
-                console.log(bal);
-                //pay for the NFT minting
-                ethereum.request({
-                    method: "eth_sendTransaction", params: [{
-                        from: accounts[0],
-                        to: NFTCONTRACT,
-                        value: web3.utils.toWei((0.02).toString(), "ether"),
-                        gas: "30000",
-                        gasPriceinWei: "1000",
-                    }]
-                }).then(function (response) {
-                    console.log(response);
-                }
-                ).catch(function (error) {
-                    console.log(error);
-                }
-                );
-
-
-            }
-            catch (error) {
-                alert(error);
-            }
-        }
-
-        return (
-            <div className="items-center justify-start p-2 text-center">
-                <Modal.Dialog>
-                    <Modal.Header closeButton>
-                        <Modal.Title>FANTASY NFT MINTING ON POLYGON NETWORK</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <p>Please connect to Metamask with Polygon network
-                            If you not setup Polygon Network for Metamask: Please follow this step
-                            https://coinmarketcap.com/alexandria/article/connect-metamask-to-polygon-network
-                        </p>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>Close</Button>
-                        <input id="connectbtn" onClick={connectWallet} defaultValue="Connect Your Wallet" />
-                    </Modal.Footer>
-                </Modal.Dialog>
-                <nav className="navbar full-width navbar-expand-md navbar-dark mb-3">
-                    <div className="container-fluid">
-                        <div className="navbar-brand px-5" style={{ fontWeight: "800", fontSize: "22px" }} href="#"></div>
-                        <img className="react-logo" src="FNFT.png" width="20%" alt="logofnft" />
-                        <Button className="navbar-toggler" type="Button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </Button>
-                        <div className="collapse navbar-collapse" id="navbarCollapse">
-                            <ul
-                                className="navbar-nav me-auto mb-2 px-3 mb-md-0"
-                                style={{ fontSize: "22px" }}>
-                                <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="#">
-                                        Dashboard
-                                    </a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">
-                                        List NFTs
-                                    </a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">
-                                        Upgrade NFTs
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+    return (
+        <div className="items-center justify-start p-2 text-center">
+            <Modal.Dialog>
+                <Modal.Header closeButton>
+                    <Modal.Title>FANTASY NFT MINTING ON POLYGON NETWORK</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Please connect to Metamask with Polygon network
+                        If you not setup Polygon Network for Metamask: Please follow this step
+                        <link>https://coinmarketcap.com/alexandria/article/connect-metamask-to-polygon-network</link>
+                    </p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose} defaultValue="Close" />
+                    <Button id="connectbtn" onClick={connectWallet} defaultValue="Connect Your Wallet" />
+                </Modal.Footer>
+            </Modal.Dialog>
+            <nav className="navbar full-width navbar-expand-md navbar-dark mb-3">
+                <div className="container-fluid">
+                    <div className="navbar-brand px-5" style={{ fontWeight: "800", fontSize: "22px" }} href="#"></div>
+                    <img className="react-logo" src="FNFT.png" width="20%" alt="logofnft" />
+                    <Button className="navbar-toggler" type="Button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </Button>
+                    <div className="collapse navbar-collapse" id="navbarCollapse">
+                        <ul
+                            className="navbar-nav me-auto mb-2 px-3 mb-md-0"
+                            style={{ fontSize: "22px" }}>
+                            <li className="nav-item">
+                                <a className="nav-link active" aria-current="page" href="#">
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">
+                                    List NFTs
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">
+                                    Upgrade NFTs
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    {!isWalletConnect ? (
-                        <div className="p-3">
-                            <input id="connectbtn" type="Button" className="stakegoldeffect2 connectbutton font-blk" onClick={connectWallet} style={{ fontSize: "20px", border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla" }} defaultValue="Connect Your Wallet" />
+                </div>
+                {!isWalletConnect ? (
+                    <div className="p-3">
+                        <input id="connectbtn" type="Button" className="stakegoldeffect2 connectbutton font-blk" onClick={connectWallet} style={{ fontSize: "20px", border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla" }} defaultValue="Connect Your Wallet" />
+                    </div>
+                ) : (
+                    <div className="p-3">
+                        <input id="connectbtn" type="Button" className="stakegoldeffect2 connectbutton font-blk" onClick={disconnectWallet}
+                            style={{ fontSize: "20px", border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla" }} defaultValue="Disconnect Wallet" />
+                    </div>
+                )}
+            </nav>
+            <div id="nftminter" className="flex-1 justify-between items-center p-5">
+                <div className="nftminted row px-3 p-3 center">
+                    <div className="col">
+                        {/* <Card /> */}
+                        <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
+                        <div>
+                            <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
+                                NFT Minted
+                            </h1>
                         </div>
-                    ) : (
-                        <div className="p-3">
-                            <input id="connectbtn" type="Button" className="stakegoldeffect2 connectbutton font-blk" onClick={disconnectWallet}
-                                style={{ fontSize: "20px", border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla" }} defaultValue="Disconnect Wallet" />
+                        <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
+                            {balance.result}/10,000
+                        </h4>
+                    </div>
+                    <div className="col justify-center">
+                        <div className="row container-fluid">
+                            <h5>Your Wallet Address</h5>
+                            <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
+                                <label htmlFor="floatingInput">Please Connect Wallet</label>
+                            </div>
                         </div>
-                    )}
-                </nav>
-                <div id="nftminter" className="flex-1 justify-between items-center p-5">
-                    <div className="nftminted row px-3 p-3 center">
-                        <div className="col">
-                            {/* <Card /> */}
-                            <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
-                            <div>
-                                <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
-                                    NFT Minted
-                                </h1>
-                            </div>
-                            <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
-                                {balance.result}/10,000
-                            </h4>
+                        <div>
+                            <label style={{ fontWeight: "200", fontSize: "20px", textShadow: "1px 1px 2px #000000", }}>
+                                Select NFT Quantity
+                            </label>
                         </div>
-                        <div className="col justify-center">
-                            <div className="row container-fluid">
-                                <h5>Your Wallet Address</h5>
-                                <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
-                                    <label htmlFor="floatingInput">Please Connect Wallet</label>
-                                </div>
-                            </div>
-                            <div>
-                                <label style={{ fontWeight: "200", fontSize: "20px", textShadow: "1px 1px 2px #000000", }}>
-                                    Select NFT Quantity
-                                </label>
-                            </div>
-                            <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="4g" aria-label="First group" name="amount"
-                                style={{ boxShadow: "1px 3px 8px #0f1fb0", fontFamily: "Black Ops One", fontSize: "25px", marginTop: "5px", marginBottom: "5px", marginInline: "10px", textShadow: "1px 1px 5px #000000", }}
-                                onClick={(nftamount) => handleNFT(nftamount, "value")}>
-                                <Button variant="outline-success" defaultValue="1">1</Button>
-                                <Button variant="outline-info" defaultValue="5">5</Button>
-                                <Button variant="outline-secondary" defaultValue="10">10</Button>
-                                <Button variant="outline-warning" defaultValue="50">50</Button>
-                                <Button className="stakegoldeffect2" variant="outline-dark" defaultValue="100">100</Button>
-                            </ButtonGroup>
-                            <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "18px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
-                                PAYMENT
-                            </h6>
-                            <div className="row px-3 pb-1 pt-1 row-style"
-                                style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", }}>
-                                <div className="col">
-                                    <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
-                                        <img src="usdt.png" width="30%" alt="usdt" />
-                                    </Button>
-                                </div>
-                                {/* <div className="col">
+                        <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="4g" aria-label="First group" name="amount"
+                            style={{ boxShadow: "1px 3px 8px #0f1fb0", fontFamily: "Black Ops One", fontSize: "25px", marginTop: "5px", marginBottom: "5px", marginInline: "10px", textShadow: "1px 1px 5px #000000", }}
+                            onClick={(nftamount) => handleNFT(nftamount, "value")}>
+                            <Button variant="outline-success" defaultValue="1">1</Button>
+                            <Button variant="outline-info" defaultValue="5">5</Button>
+                            <Button variant="outline-secondary" defaultValue="10">10</Button>
+                            <Button variant="outline-warning" defaultValue="50">50</Button>
+                            <Button className="stakegoldeffect2" variant="outline-dark" defaultValue="100">100</Button>
+                        </ButtonGroup>
+                        <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "18px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
+                            PAYMENT (Only 140 Matic)
+                        </h6>
+                        <div className="row px-3 pb-1 pt-1 row-style"
+                            style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", }}>
+                            {/* <div className="col">
+                                <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
+                                    <img src="usdt.png" width="30%" alt="usdt" />
+                                </Button>
+                            </div> */}
+                            {/* <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src={"FNFT.png"} width="30%" alt="fnft" />
                                 </Button>
                             </div> */}
-                                <div className="col">
-                                    <Button variant="outline-dark" className="Button-style" onClick={mintnative} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
-                                        <img src="matic.png" width="30%" alt="matic" />
-                                    </Button>
-                                </div>
-                                <div>
-                                    <label id="txout pb-2" style={{ color: "#39FF14", marginTop: "5px", fontWeight: "500", textShadow: "1px 1px 2px #000000", }}>
-                                        <p style={{ fontSize: "15px" }}>Transfer Status</p>
-                                    </label>
-                                </div>
+                            <div className="col">
+                                <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
+                                    <img src="matic.png" width="30%" alt="matic" />
+                                </Button>
+                            </div>
+                            <div>
+                                <label id="txout pb-2" style={{ color: "#39FF14", marginTop: "5px", fontWeight: "500", textShadow: "1px 1px 2px #000000", }}>
+                                    <p style={{ fontSize: "15px" }}>Transfer Status</p>
+                                </label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div id="table" className="row container-fluid px-8 pt-1 mt-2 mb-1">
-                    <div className="header container">
+            </div>
+            <div id="table" className="row container-fluid px-8 pt-1 mt-2 mb-1">
+                <div className="header container">
+                    <div
+                        style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000" }}>
+                        Fantasy NFT Staking Pool Active Rewards
+                    </div>
+                    <table className="table px-3 table-bordered table-dark" style={{ fontSize: "20px" }}>
+                        <thead className="thead-light">
+                            <tr>
+                                <th scope="col">Collection</th>
+                                <th scope="col">Rewards Per Day</th>
+                                <th scope="col">Exchangeable Items</th>
+                            </tr>
+                        </thead>
+                        <tbody style={{ fontSize: "18px" }}>
+                            <tr>
+                                <td>Discovery</td>
+                                <td className="amount" data-test-id="rewards-summary-ads">
+                                    <span className="amount">0.50</span>&nbsp;
+                                    <span className="currency">FOT</span>
+                                </td>
+                                <td className="exchange">
+                                    <span className="amount">2</span>&nbsp;
+                                    <span className="currency">NFTs/M</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Angel & Devil</td>
+                                <td className="amount" data-test-id="rewards-summary-ac">
+                                    <span className="amount">2.50</span>&nbsp;
+                                    <span className="currency">FOT</span>
+                                </td>
+                                <td className="exchange">
+                                    <span className="amount">10</span>&nbsp;
+                                    <span className="currency">NFTs/M</span>
+                                </td>
+                            </tr>
+                            <tr className="stakegoldeffect">
+                                <td>Chaos</td>
+                                <td className="amount" data-test-id="rewards-summary-one-time">
+                                    <span className="amount">1</span>&nbsp;
+                                    <span className="currency">FOT™</span>
+                                </td>
+                                <td className="exchange">
+                                    <span className="amount">25 NFTs/M or </span>
+                                    <span className="currency">100 FOT/M</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div className="table">
                         <div
-                            style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000" }}>
-                            Fantasy NFT Staking Pool Active Rewards
+                            style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000", }}>
+                            FOT Token Stake Farms
                         </div>
-                        <table className="table px-3 table-bordered table-dark" style={{ fontSize: "20px" }}>
-                            <thead className="thead-light">
+                        <table className="table table-bordered table-dark" style={{ borderRadius: "14px" }}>
+                            <thead className="thead-light" style={{ fontSize: "20px" }}>
                                 <tr>
-                                    <th scope="col">Collection</th>
-                                    <th scope="col">Rewards Per Day</th>
-                                    <th scope="col">Exchangeable Items</th>
+                                    <th scope="col">Farm Pools</th>
+                                    <th scope="col">Harvest Daily Earnings</th>
                                 </tr>
                             </thead>
                             <tbody style={{ fontSize: "18px" }}>
                                 <tr>
-                                    <td>Discovery</td>
+                                    <td>Stake FOT to Earn FOT</td>
                                     <td className="amount" data-test-id="rewards-summary-ads">
-                                        <span className="amount">0.50</span>&nbsp;
-                                        <span className="currency">FOT</span>
-                                    </td>
-                                    <td className="exchange">
-                                        <span className="amount">2</span>&nbsp;
-                                        <span className="currency">NFTs/M</span>
+                                        <span className="amount">0.01</span>&nbsp;
+                                        <span className="currency">Per FOT</span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Angel & Devil</td>
+                                    <td>Stake FOT to Earn FOT™</td>
                                     <td className="amount" data-test-id="rewards-summary-ac">
-                                        <span className="amount">2.50</span>&nbsp;
-                                        <span className="currency">FOT</span>
-                                    </td>
-                                    <td className="exchange">
-                                        <span className="amount">10</span>&nbsp;
-                                        <span className="currency">NFTs/M</span>
-                                    </td>
-                                </tr>
-                                <tr className="stakegoldeffect">
-                                    <td>Chaos</td>
-                                    <td className="amount" data-test-id="rewards-summary-one-time">
-                                        <span className="amount">1</span>&nbsp;
-                                        <span className="currency">FOT™</span>
-                                    </td>
-                                    <td className="exchange">
-                                        <span className="amount">25 NFTs/M or </span>
-                                        <span className="currency">100 FOT/M</span>
+                                        <span className="amount">0.005</span>&nbsp;
+                                        <span className="currency">Per FOT™</span>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div className="table">
-                            <div
-                                style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000", }}>
-                                FOT Token Stake Farms
-                            </div>
-                            <table className="table table-bordered table-dark" style={{ borderRadius: "14px" }}>
-                                <thead className="thead-light" style={{ fontSize: "20px" }}>
-                                    <tr>
-                                        <th scope="col">Farm Pools</th>
-                                        <th scope="col">Harvest Daily Earnings</th>
-                                    </tr>
-                                </thead>
-                                <tbody style={{ fontSize: "18px" }}>
-                                    <tr>
-                                        <td>Stake FOT to Earn FOT</td>
-                                        <td className="amount" data-test-id="rewards-summary-ads">
-                                            <span className="amount">0.01</span>&nbsp;
-                                            <span className="currency">Per FOT</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Stake FOT to Earn FOT™</td>
-                                        <td className="amount" data-test-id="rewards-summary-ac">
-                                            <span className="amount">0.005</span>&nbsp;
-                                            <span className="currency">Per FOT™</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <tbody>
-                                <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
-                                    <td>
-                                        * FOT™ can be access Special Mint =&gt; High className
-                                        Fantasy NFT
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </div>
+                        <tbody>
+                            <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
+                                <td>
+                                    * FOT™ can be access Special Mint =&gt; High className
+                                    Fantasy NFT
+                                </td>
+                            </tr>
+                        </tbody>
                     </div>
                 </div>
-                <h1 className="flex justify-center" style={{ color: "white", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
-                    Fantasy NFT Staking Open in Aug 2022
-                </h1>
-                {/* <div id="stakingvault">
+            </div>
+            <h1 className="flex justify-center" style={{ color: "white", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
+                Fantasy NFT Staking Open in Aug 2022
+            </h1>
+            {/* <div id="stakingvault">
                     <h5 className="flex justify-center p-2" style={{ color: "orange", fontWeight: "300" }}>
                         Please Connect To Your Wallet First
                     </h5>
@@ -827,8 +773,8 @@ export default function AppFunctional() {
                             </div>
                         </div>
                     </div>
-                </div> */}
-            </div>
-        )
-    }
+                // </div> */}
+        </div>
+    )
 }
+
