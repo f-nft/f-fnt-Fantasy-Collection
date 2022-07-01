@@ -37,12 +37,13 @@ const providerOptions = {
     },
     walletlink: {
         package: WalletLink,
-        options: { 
-            appName: "f-nft Polygon", 
-            infuraId: "50f6635fbcc742f18ce7a2a5cbe73ffa", 
-            rpc: "", chainId: 137, 
-            appLogoUrl: null, 
-            darkMode: true, },
+        options: {
+            appName: "f-nft Polygon",
+            infuraId: "50f6635fbcc742f18ce7a2a5cbe73ffa",
+            rpc: "", chainId: 137,
+            appLogoUrl: null,
+            darkMode: true,
+        },
     },
 };
 
@@ -163,7 +164,6 @@ export default function AppFunctional() {
         return processArray([rwdArray])
 
     }
-
 
     useEffect(() => {
         const init = async () => {
@@ -340,13 +340,19 @@ export default function AppFunctional() {
         try {
             var _mintAmount = Number(outvalue);
             var mintRate = Number(await contract.methods.cost().call());
-            var totalAmount = mintRate * _mintAmount * 100;
+            var maticRate = 100
+            var totalAmount = mintRate * _mintAmount * maticRate;
             await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
                 Web3Alc.eth.getBlock("pending").then((block) => {
                     var baseFee = Number(block.baseFeePerGas);
                     var maxPriority = Number(tip);
                     var maxFee = baseFee + maxPriority;
-                    contract.methods.mint(account, _mintAmount).send({ from: account, value: String(totalAmount), maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
+                    contract.methods.mint(account, _mintAmount).send({
+                        from: account, value:
+                            String(totalAmount),
+                        maxFeePerGas: maxFee,
+                        maxPriorityFeePerGas: maxPriority
+                    });
                 })
                     .catch((err) => alert(err.message));
             })
@@ -355,7 +361,6 @@ export default function AppFunctional() {
             alert(error);
         }
     }
-
 
     async function mint0() {
         var _pid = "0";
@@ -461,7 +466,6 @@ export default function AppFunctional() {
         window.location.reload();
     };
 
-
     async function metamint() {
         //mint for metamask polygon network
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -484,7 +488,7 @@ export default function AppFunctional() {
                 method: "eth_sendTransaction", params: [{
                     from: accounts[0],
                     to: NFTCONTRACT,
-                    value: web3.utils.toWei((200).toString(), "ether"),
+                    value: web3.utils.toWei((0.02).toString(), "ether"),
                     gas: "30000",
                     gasPriceinWei: "1000",
                 }]
@@ -502,8 +506,28 @@ export default function AppFunctional() {
             alert(error);
         }
     }
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <div className="items-center justify-start p-2 text-center">
+            <Modal.Dialog>
+                <Modal.Header closeButton>
+                    <Modal.Title>FANTASY NFT MINTING ON POLYGON NETWORK</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Please connect to Metamask with Polygon network
+                        If you not setup Polygon Network for Metamask: Please follow this step
+                        https://coinmarketcap.com/alexandria/article/connect-metamask-to-polygon-network
+                    </p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    <input id="connectbtn" onClick={connectWallet} defaultValue="Connect Your Wallet" />
+                </Modal.Footer>
+            </Modal.Dialog>
             <nav className="navbar full-width navbar-expand-md navbar-dark mb-3">
                 <div className="container-fluid">
                     <div className="navbar-brand px-5" style={{ fontWeight: "800", fontSize: "22px" }} href="#"></div>
@@ -548,17 +572,17 @@ export default function AppFunctional() {
                 <div className="nftminted row px-3 p-3 center">
                     <div className="col">
                         <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
+                        <div>
+                            <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
+                                NFT Minted
+                            </h1>
+                        </div>
+                        <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
+                            {balance.result}/10,000
+                        </h4>
                     </div>
                     <div className="col justify-center">
                         <div className="row container-fluid">
-                            <div>
-                                <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
-                                    NFT Minted
-                                </h1>
-                            </div>
-                            <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
-                                {balance.result}/10,000
-                            </h4>
                             <h5>Your Wallet Address</h5>
                             <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
                                 <label htmlFor="floatingInput">Please Connect Wallet</label>
@@ -579,7 +603,7 @@ export default function AppFunctional() {
                             <Button className="stakegoldeffect2" variant="outline-dark" defaultValue="100">100</Button>
                         </ButtonGroup>
                         <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "18px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
-                            WHAT DO YOU WANT TO PAY?
+                            PAYMENT
                         </h6>
                         <div className="row px-3 pb-1 pt-1 row-style"
                             style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", }}>
@@ -588,12 +612,11 @@ export default function AppFunctional() {
                                     <img src="usdt.png" width="30%" alt="usdt" />
                                 </Button>
                             </div>
-                            <div className="col">
+                            {/* <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src={"FNFT.png"} width="30%" alt="fnft" />
                                 </Button>
-                            </div>
-
+                            </div> */}
                             <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={mintnative} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src="matic.png" width="30%" alt="matic" />
@@ -611,7 +634,7 @@ export default function AppFunctional() {
             <div id="table" className="row container-fluid px-8 pt-1 mt-2 mb-1">
                 <div className="header container">
                     <div
-                        style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000", }}>
+                        style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000" }}>
                         Fantasy NFT Staking Pool Active Rewards
                     </div>
                     <table className="table px-3 table-bordered table-dark" style={{ fontSize: "20px" }}>
@@ -698,83 +721,85 @@ export default function AppFunctional() {
                     </div>
                 </div>
             </div>
-            <h1 className="flex justify-center" style={{ color: "white", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
-                Fantasy NFT Staking Vault{" "}
-            </h1>
-            <h5 className="flex justify-center p-2" style={{ color: "orange", fontWeight: "300" }}>
-                Please Connect To Your Wallet First
-            </h5>
-            <Button className="btn" onClick={enable} style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000", }}>
-                Enable Staking
-            </Button>
-            <div id="vault" className="flex flex-wrap md:w-65 items-center p-3 px-3" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #000000", textShadow: "1px 1px 2px #000000", border: "15px", fontFamily: "Rambla", backgroundImage: [`url(${moving})`], backgroundPosition: ["center"], backgroundRepeat: ["repeat-z"], backgroundSize: ["100%"], backgroundBlendMode: ["ovelay"], }}>
-                <div className="row">
-                    <div className="d-flex justify-content-around">
-                        <div className="align-self-start stakingrewards flow-row flex-1 basis-1 items-center p-3" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: "Rambla", minWidth: "250px", maxWidth: "250px", maxHeight: "300px", minHeight: "300px", }}>
-                            <h4 style={{ color: "#FFFFFF", fontWeight: "300" }}>
-                                Your Vault Activity
-                            </h4>
-                            <h6 style={{ color: "#FFFFFF" }}>Verify Staked Amount</h6>
-                            <Button onClick={verify} id="verify" style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }}>
-                                Verify
-                            </Button>
-                            <table className="table mt-3 mb-5 px-3 table-dark">
-                                <tbody>
-                                    <tr>
-                                        <td style={{ fontSize: "16px" }}>
-                                            Your Staked NFTs:
-                                            <span style={{ backgroundColor: "#ffffff00", fontSize: "18px", color: "#39FF14", fontWeight: "500", textShadow: "1px 1px 2px #000000", }} id="yournfts"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{ fontSize: "16px" }}>Total Staked NFTs:<span style={{ backgroundColor: "#ffffff00", fontSize: "18px", color: "#39FF14", fontWeight: "500", textShadow: "1px 1px 2px #000000" }} id="stakedbalance"></span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style={{ fontSize: "16px" }}>
-                                            <Button className="mb-3" onClick={unstakeall} style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000", }}>
-                                                Unstake All
-                                            </Button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <img className="align-self-center" src="logonew.png" width="200" alt="feature" />
-                        <div className=" align-self-end stakingrewards flex-1 basis-1 items-center p-3" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: "Rambla", minWidth: "250px", maxWidth: "250px", maxHeight: "300px", minHeight: "300px", }}>
-                            <h4 style={{ color: "#FFFFFF", fontWeight: "300" }}>
-                                Staking Rewards
-                            </h4>
-                            <Button onClick={rewardinfo} style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000", }}>
-                                Earned FOT Rewards
-                            </Button>
-                            <div id="earned" style={{ color: "#39FF14", marginTop: "5px", fontSize: "25px", fontWeight: "500", textShadow: "1px 1px 2px #000000", }}>
-                                <p style={{ fontSize: "20px" }}>Earned Tokens</p>
-                            </div>
-                            <div className="col-12 mt-2">
-                                <div style={{ color: "white" }}>Claim Rewards</div>
-                                <Button onClick={claimit} style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000", }} className="mb-2">
-                                    Claim
+            <div id="stakingvault">
+                <h1 className="flex justify-center" style={{ color: "white", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
+                    Fantasy NFT Staking Vault
+                </h1>
+                <h5 className="flex justify-center p-2" style={{ color: "orange", fontWeight: "300" }}>
+                    Please Connect To Your Wallet First
+                </h5>
+                <Button className="btn" onClick={enable} style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000", }}>
+                    Enable Staking
+                </Button>
+                <div id="vault" className="flex flex-wrap md:w-65 items-center p-3 px-3" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #000000", textShadow: "1px 1px 2px #000000", border: "15px", fontFamily: "Rambla", backgroundImage: [`url(${moving})`], backgroundPosition: ["center"], backgroundRepeat: ["repeat-z"], backgroundSize: ["100%"], backgroundBlendMode: ["ovelay"], }}>
+                    <div className="row">
+                        <div className="d-flex justify-content-around">
+                            <div className="align-self-start stakingrewards flow-row flex-1 basis-1 items-center p-3" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: "Rambla", minWidth: "250px", maxWidth: "250px", maxHeight: "300px", minHeight: "300px", }}>
+                                <h4 style={{ color: "#FFFFFF", fontWeight: "300" }}>
+                                    Your Vault Activity
+                                </h4>
+                                <h6 style={{ color: "#FFFFFF" }}>Verify Staked Amount</h6>
+                                <Button onClick={verify} id="verify" style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000" }}>
+                                    Verify
                                 </Button>
+                                <table className="table mt-3 mb-5 px-3 table-dark">
+                                    <tbody>
+                                        <tr>
+                                            <td style={{ fontSize: "16px" }}>
+                                                Your Staked NFTs:
+                                                <span style={{ backgroundColor: "#ffffff00", fontSize: "18px", color: "#39FF14", fontWeight: "500", textShadow: "1px 1px 2px #000000", }} id="yournfts"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style={{ fontSize: "16px" }}>Total Staked NFTs:<span style={{ backgroundColor: "#ffffff00", fontSize: "18px", color: "#39FF14", fontWeight: "500", textShadow: "1px 1px 2px #000000" }} id="stakedbalance"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style={{ fontSize: "16px" }}>
+                                                <Button className="mb-3" onClick={unstakeall} style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000", }}>
+                                                    Unstake All
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <img className="align-self-center" src="logonew.png" width="200" alt="feature" />
+                            <div className=" align-self-end stakingrewards flex-1 basis-1 items-center p-3" style={{ borderRadius: "25px", boxShadow: "1px 1px 15px #ffffff", fontFamily: "Rambla", minWidth: "250px", maxWidth: "250px", maxHeight: "300px", minHeight: "300px", }}>
+                                <h4 style={{ color: "#FFFFFF", fontWeight: "300" }}>
+                                    Staking Rewards
+                                </h4>
+                                <Button onClick={rewardinfo} style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000", }}>
+                                    Earned FOT Rewards
+                                </Button>
+                                <div id="earned" style={{ color: "#39FF14", marginTop: "5px", fontSize: "25px", fontWeight: "500", textShadow: "1px 1px 2px #000000", }}>
+                                    <p style={{ fontSize: "20px" }}>Earned Tokens</p>
+                                </div>
+                                <div className="col-12 mt-2">
+                                    <div style={{ color: "white" }}>Claim Rewards</div>
+                                    <Button onClick={claimit} style={{ backgroundColor: "#ffffff10", boxShadow: "1px 1px 5px #000000", }} className="mb-2">
+                                        Claim
+                                    </Button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="grid grid-flow-row-dense items-center grid-cols-4 grid-rows-3 ...">
-                        <div className="col-span-2 row-span-4 p-2">
-                            <div className="flex-non justify-center items-center pb-2">
-                                <img className="flex flex-2 justify-start react-logo" src="FNFT.png" alt="logo" />
-                                <div id="listnft" className="row">
-                                    <div id="titlelist" className="row center">
-                                        <h2 className="row center" style={{ color: "white", border: "1px", paddingInline: "1px", borderRadius: "5px", boxShadow: "1px 1px 5px #000000", }}>
-                                            NFTs VAULT
-                                        </h2>
-                                        <Button
-                                            className="btn" onClick={refreshPage} style={{ backgroundColor: "red", border: "1px", padding: "1px", borderRadius: "5px", boxShadow: "1px 1px 5px #000000", maxWidth: "200px", }}>
-                                            Refresh NFT Vault
-                                        </Button>
+                        <div className="grid grid-flow-row-dense items-center grid-cols-4 grid-rows-3 ...">
+                            <div className="col-span-2 row-span-4 p-2">
+                                <div className="flex-non justify-center items-center pb-2">
+                                    <img className="flex flex-2 justify-start react-logo" src="FNFT.png" alt="logo" />
+                                    <div id="listnft" className="row">
+                                        <div id="titlelist" className="row center">
+                                            <h2 className="row center" style={{ color: "white", border: "1px", paddingInline: "1px", borderRadius: "5px", boxShadow: "1px 1px 5px #000000", }}>
+                                                NFTs VAULT
+                                            </h2>
+                                            <Button
+                                                className="btn" onClick={refreshPage} style={{ backgroundColor: "red", border: "1px", padding: "1px", borderRadius: "5px", boxShadow: "1px 1px 5px #000000", maxWidth: "200px", }}>
+                                                Refresh NFT Vault
+                                            </Button>
+                                        </div>
                                     </div>
+                                    <ListNft />
                                 </div>
-                                <ListNft />
                             </div>
                         </div>
                     </div>
