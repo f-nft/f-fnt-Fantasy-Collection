@@ -28,6 +28,8 @@ var contract = null;
 var vaultcontract = null;
 var web3 = null;
 var isWalletConnect = false;
+const totalPrice = null;
+const nftdata = false;
 
 const Web3Alc = createAlchemyWeb3("https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk");
 const moralisapikey = "1ByvMyujsaXkDVTlnUjQIje5e09J2zLHGaS2P6JytHVA1LxfAPPYE8UdOpEjc6ca";
@@ -442,8 +444,6 @@ export default function AppFunctional() {
         window.location.reload();
     };
 
-    const totalPrice = null;
-    const nftdata = false
 
     async function metamint() {
         //mint for metamask polygon network
