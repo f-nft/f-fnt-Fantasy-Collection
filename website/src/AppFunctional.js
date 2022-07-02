@@ -534,8 +534,24 @@ export default function AppFunctional() {
                     </div>
                 )}
             </nav>
+            {items.map(item => (
+                <motion.div layoutId={item.nftpics} onClick={() => setSelectedId(item.nftpics)}>
+                    <motion.h5>{item.subtitle}</motion.h5>
+                    <motion.h2>{item.title}</motion.h2>
+                </motion.div>
+            ))}
+
+            <AnimatePresence>
+                {selectedId && (
+                    <motion.div layoutId={selectedId}>
+                        <motion.h5>{item.subtitle}</motion.h5>
+                        <motion.h2>{item.title}</motion.h2>
+                        <motion.button onClick={() => setSelectedId(null)} />
+                    </motion.div>
+                )}
+            </AnimatePresence>
             <div id="nftminter" className="flex-1 justify-between items-center p-5">
-                <div className="nftminted row px-3 p-3 center">
+                <div className="nftminted row px-3 p-3 center" id="nftpics">
                     <div className="col">
                         {/* <Card /> */}
                         <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
@@ -599,7 +615,7 @@ export default function AppFunctional() {
                 </div>
             </div>
             <div id="table" className="row container-fluid px-8 pt-1 mt-2 mb-1">
-                <div className="header container">
+                <div className="header container" id="title">
                     <div
                         style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000" }}>
                         Fantasy NFT Staking Pool Active Rewards
