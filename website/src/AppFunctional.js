@@ -585,7 +585,7 @@ export default function AppFunctional() {
                                 </Button>
                             </div> */}
                             <div className="col">
-                                <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
+                                <Button variant="outline-dark" className="Button-style" bsStyle="primary" bsSize="small" active onClick={metamint} style={{ border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src="matic.png" width="30%" alt="matic" />
                                 </Button>
                             </div>
