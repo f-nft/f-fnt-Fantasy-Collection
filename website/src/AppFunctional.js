@@ -567,7 +567,7 @@ export default function AppFunctional() {
                             <Button variant="outline-info" defaultValue="5">5</Button>
                             <Button variant="outline-secondary" defaultValue="10">10</Button>
                             <Button variant="outline-warning" defaultValue="50">50</Button> */}
-                            <Button className="stakegoldeffect2" variant="outline-dark" defaultValue="1">1 ( 120 Matic )</Button>
+                            <Button className="stakegoldeffect2" variant="outline-dark" defaultValue="1"> 01 NFT</Button>
                         </ButtonGroup>
                         <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "18px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
                             PAYMENT (Only 120 Matic)
