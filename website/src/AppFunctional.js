@@ -540,13 +540,12 @@ export default function AppFunctional() {
                 )}
             </nav>
             <div id="nftsell">
-            {items.map(item => (
+            {/* {items.map(item => (
                 <motion.div layoutId={item.nftpics} onClick={() => setSelectedId(item.nftpics)}>
                     <motion.h5>{item.subtitle}</motion.h5>
                     <motion.h2>{item.title}</motion.h2>
                 </motion.div>
             ))}
-
             <AnimatePresence>
                 {selectedId && (
                     <motion.div layoutId={selectedId}>
@@ -555,7 +554,7 @@ export default function AppFunctional() {
                         <motion.button onClick={() => setSelectedId(null)} />
                     </motion.div>
                 )}
-            </AnimatePresence>
+            </AnimatePresence> */}
             <div id="nftminter" className="flex-1 justify-between items-center p-5">
                 <div className="nftminted row px-3 p-3 center" id="nftpics">
                     <div className="col">
