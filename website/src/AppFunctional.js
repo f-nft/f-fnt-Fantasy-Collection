@@ -2,6 +2,11 @@
 import "./App.css";
 import "./index.css";
 import { Button, ButtonGroup } from "react-bootstrap";
+import {
+    motion,
+    useMotionValue,
+    useTransform,
+  } from "framer-motion"
 import Modal from 'react-bootstrap/Modal';
 import React, { useEffect, useState } from 'react';
 import "sf-font";
@@ -534,6 +539,7 @@ export default function AppFunctional() {
                     </div>
                 )}
             </nav>
+            <div id="nftsell">
             {items.map(item => (
                 <motion.div layoutId={item.nftpics} onClick={() => setSelectedId(item.nftpics)}>
                     <motion.h5>{item.subtitle}</motion.h5>
@@ -571,11 +577,11 @@ export default function AppFunctional() {
                                 <label htmlFor="floatingInput">Please Connect Wallet</label>
                             </div>
                         </div>
-                        <div>
+                        {/* <div>
                             <label style={{ fontWeight: "200", fontSize: "20px", textShadow: "1px 1px 2px #000000", }}>
                                 Select NFT Quantity
                             </label>
-                        </div>
+                        </div> */}
                         <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="4g" aria-label="First group" name="amount"
                             style={{ boxShadow: "1px 3px 8px #0f1fb0", fontFamily: "Black Ops One", fontSize: "25px", marginTop: "5px", marginBottom: "5px", marginInline: "10px", textShadow: "1px 1px 5px #000000", }}
                             onClick={(nftamount) => handleNFT(nftamount, "value")}>
@@ -583,9 +589,9 @@ export default function AppFunctional() {
                             <Button variant="outline-info" defaultValue="5">5</Button>
                             <Button variant="outline-secondary" defaultValue="10">10</Button>
                             <Button variant="outline-warning" defaultValue="50">50</Button> */}
-                            <Button className="stakegoldeffect2" variant="outline-dark" defaultValue="1"> 01 NFT</Button>
+                            <Button className="stakegoldeffect2" variant="outline-dark" defaultValue="1">MINT</Button>
                         </ButtonGroup>
-                        <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "18px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
+                        <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
                             PAYMENT (Only 120 Matic)
                         </h6>
                         <div className="row px-3 pb-1 pt-1 row-style"
@@ -618,17 +624,17 @@ export default function AppFunctional() {
                 <div className="header container" id="title">
                     <div
                         style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000" }}>
-                        Fantasy NFT Staking Pool Active Rewards
+                        Fantasy NFT Staking Rewards
                     </div>
                     <table className="table px-3 table-bordered table-dark" style={{ fontSize: "20px" }}>
-                        <thead className="thead-light table-primary">
+                        <thead className="thead-light table-primary" id="title">
                             <tr>
                                 <th scope="col">Collection</th>
                                 <th scope="col">Rewards Per Day</th>
                                 <th scope="col">Exchangeable Items</th>
                             </tr>
                         </thead>
-                        <tbody style={{ fontSize: "18px" }}>
+                        <tbody style={{ fontSize: "18px" }} id="subtitle">
                             <tr>
                                 <td>Discovery</td>
                                 <td className="amount" data-test-id="rewards-summary-ads">
@@ -703,6 +709,7 @@ export default function AppFunctional() {
                         </tbody>
                     </div>
                 </div>
+            </div>
             </div>
             <h1 className="flex justify-center" style={{ color: "white", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
                 Fantasy NFT Staking Open in Aug 2022
