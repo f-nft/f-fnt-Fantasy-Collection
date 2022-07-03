@@ -3,11 +3,12 @@ import "./App.css";
 import "./index.css";
 import { Button, ButtonGroup } from "react-bootstrap";
 import {
+    motion,
     useMotionValue,
     useTransform,
 } from "framer-motion";
 import Carousel from 'react-bootstrap/Carousel';
-import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion';
+import { AnimatePresence } from 'framer-motion/dist/framer-motion';
 import Modal from 'react-bootstrap/Modal';
 import React, { useEffect, useState } from 'react';
 import "sf-font";
@@ -582,6 +583,9 @@ export default function AppFunctional() {
                                 Select NFT Quantity
                             </label>
                         </div> */}
+                            <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
+                                PAYMENT (Only 120 Matic)
+                            </h6>
                             <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="4g" aria-label="First group" name="amount"
                                 style={{ boxShadow: "1px 3px 8px #0f1fb0", fontFamily: "Black Ops One", fontSize: "25px", marginTop: "5px", marginBottom: "5px", marginInline: "10px", textShadow: "1px 1px 5px #000000", }}
                                 onClick={(nftamount) => handleNFT(nftamount, "value")}>
@@ -591,9 +595,7 @@ export default function AppFunctional() {
                             <Button variant="outline-warning" defaultValue="50">50</Button> */}
                                 <Button className="stakegoldeffect2" variant="outline-dark" onClick={metamint} defaultValue="1">MINT</Button>
                             </ButtonGroup>
-                            <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
-                                PAYMENT (Only 120 Matic)
-                            </h6>
+
                             <div className="row px-3 pb-1 pt-1 row-style"
                                 style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", }}>
                                 {/* <div className="col">
