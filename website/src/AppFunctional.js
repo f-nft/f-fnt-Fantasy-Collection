@@ -6,8 +6,9 @@ import {
     motion,
     useMotionValue,
     useTransform,
-  } from "framer-motion";
-import {AnimatePresence, motion} from 'framer-motion/dist/framer-motion';
+} from "framer-motion";
+import Carousel from 'react-bootstrap/Carousel';
+import { AnimatePresence, motion } from 'framer-motion/dist/framer-motion';
 import Modal from 'react-bootstrap/Modal';
 import React, { useEffect, useState } from 'react';
 import "sf-font";
@@ -541,175 +542,185 @@ export default function AppFunctional() {
                 )}
             </nav>
             <div id="nftsell">
-            {items.map(item => (
-                <motion.div layoutId={item.nftpics} onClick={() => setSelectedId(item.nftpics)}>
-                    <motion.h5>{item.subtitle}</motion.h5>
-                    <motion.h2>{item.title}</motion.h2>
-                </motion.div>
-            ))}
-            <AnimatePresence>
-                {selectedId && (
-                    <motion.div layoutId={selectedId}>
+                {items.map(item => (
+                    <motion.div layoutId={item.nftpics} onClick={() => setSelectedId(item.nftpics)}>
                         <motion.h5>{item.subtitle}</motion.h5>
                         <motion.h2>{item.title}</motion.h2>
-                        <motion.button onClick={() => setSelectedId(null)} />
                     </motion.div>
-                )}
-            </AnimatePresence>
-            <div id="nftminter" className="flex-1 justify-between items-center p-5">
-                <div className="nftminted row px-3 p-3 center" id="nftpics">
-                    <div className="col">
-                        {/* <Card /> */}
-                        <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
-                        <div>
-                            <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
-                                NFT Minted
-                            </h1>
-                        </div>
-                        <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
-                            {balance.result}/10,000
-                        </h4>
-                    </div>
-                    <div className="col justify-center">
-                        <div className="row container-fluid">
-                            <h5>Your Wallet Address</h5>
-                            <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
-                                <label htmlFor="floatingInput">Please Connect Wallet</label>
+                ))}
+                <AnimatePresence>
+                    {selectedId && (
+                        <motion.div layoutId={selectedId}>
+                            <motion.h5>{item.subtitle}</motion.h5>
+                            <motion.h2>{item.title}</motion.h2>
+                            <motion.button onClick={() => setSelectedId(null)} />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+                <div id="nftminter" className="flex-1 justify-between items-center p-5">
+                    <div className="nftminted row px-3 p-3 center" id="nftpics">
+                        <div className="col">
+                            {/* <Card /> */}
+                            <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
+                            <div>
+                                <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
+                                    NFT Minted
+                                </h1>
                             </div>
+                            <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
+                                {balance.result}/10,000
+                            </h4>
                         </div>
-                        {/* <div>
+                        <div className="col justify-center">
+                            <div className="row container-fluid">
+                                <h5>Your Wallet Address</h5>
+                                <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
+                                    <label htmlFor="floatingInput">Please Connect Wallet</label>
+                                </div>
+                            </div>
+                            {/* <div>
                             <label style={{ fontWeight: "200", fontSize: "20px", textShadow: "1px 1px 2px #000000", }}>
                                 Select NFT Quantity
                             </label>
                         </div> */}
-                        <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="4g" aria-label="First group" name="amount"
-                            style={{ boxShadow: "1px 3px 8px #0f1fb0", fontFamily: "Black Ops One", fontSize: "25px", marginTop: "5px", marginBottom: "5px", marginInline: "10px", textShadow: "1px 1px 5px #000000", }}
-                            onClick={(nftamount) => handleNFT(nftamount, "value")}>
-                            {/* <Button variant="outline-success" defaultValue="1">1</Button>
+                            <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="4g" aria-label="First group" name="amount"
+                                style={{ boxShadow: "1px 3px 8px #0f1fb0", fontFamily: "Black Ops One", fontSize: "25px", marginTop: "5px", marginBottom: "5px", marginInline: "10px", textShadow: "1px 1px 5px #000000", }}
+                                onClick={(nftamount) => handleNFT(nftamount, "value")}>
+                                {/* <Button variant="outline-success" defaultValue="1">1</Button>
                             <Button variant="outline-info" defaultValue="5">5</Button>
                             <Button variant="outline-secondary" defaultValue="10">10</Button>
                             <Button variant="outline-warning" defaultValue="50">50</Button> */}
-                            <Button className="stakegoldeffect2" variant="outline-dark" onClick={metamint} defaultValue="1">MINT</Button>
-                        </ButtonGroup>
-                        <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
-                            PAYMENT (Only 120 Matic)
-                        </h6>
-                        <div className="row px-3 pb-1 pt-1 row-style"
-                            style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", }}>
-                            {/* <div className="col">
+                                <Button className="stakegoldeffect2" variant="outline-dark" onClick={metamint} defaultValue="1">MINT</Button>
+                            </ButtonGroup>
+                            <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
+                                PAYMENT (Only 120 Matic)
+                            </h6>
+                            <div className="row px-3 pb-1 pt-1 row-style"
+                                style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", }}>
+                                {/* <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src="usdt.png" width="30%" alt="usdt" />
                                 </Button>
                             </div> */}
-                            {/* <div className="col">
+                                {/* <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={mint0} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src={"FNFT.png"} width="30%" alt="fnft" />
                                 </Button>
                             </div> */}
-                            {/* <div className="col">
+                                {/* <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src="matic.png" width="30%" alt="matic" />
                                 </Button>
                             </div> */}
-                            <div>
-                                <label id="txout pb-2" style={{ color: "#39FF14", marginTop: "5px", fontWeight: "500", textShadow: "1px 1px 2px #000000", }}>
-                                    <p style={{ fontSize: "15px" }}>Transfer Status</p>
-                                </label>
+                                <div>
+                                    <label id="txout pb-2" style={{ color: "#39FF14", marginTop: "5px", fontWeight: "500", textShadow: "1px 1px 2px #000000", }}>
+                                        <p style={{ fontSize: "15px" }}>Transfer Status</p>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="table" className="row container-fluid px-8 pt-1 mt-2 mb-1">
-                <div className="header container" id="title">
-                    <div
-                        style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000" }}>
-                        Fantasy NFT Staking Rewards
-                    </div>
-                    <table className="table px-3 table-bordered table-dark" style={{ fontSize: "20px" }}>
-                        <thead className="thead-light table-primary" id="title">
-                            <tr>
-                                <th scope="col">Collection</th>
-                                <th scope="col">Rewards Per Day</th>
-                                <th scope="col">Exchangeable Items</th>
-                            </tr>
-                        </thead>
-                        <tbody style={{ fontSize: "18px" }} id="subtitle">
-                            <tr>
-                                <td>Discovery</td>
-                                <td className="amount" data-test-id="rewards-summary-ads">
-                                    <span className="amount">0.50</span>&nbsp;
-                                    <span className="currency">FOT</span>
-                                </td>
-                                <td className="exchange">
-                                    <span className="amount">2</span>&nbsp;
-                                    <span className="currency">NFTs/M</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Angel & Devil</td>
-                                <td className="amount" data-test-id="rewards-summary-ac">
-                                    <span className="amount">2.50</span>&nbsp;
-                                    <span className="currency">FOT</span>
-                                </td>
-                                <td className="exchange">
-                                    <span className="amount">10</span>&nbsp;
-                                    <span className="currency">NFTs/M</span>
-                                </td>
-                            </tr>
-                            <tr className="stakegoldeffect">
-                                <td>Chaos</td>
-                                <td className="amount" data-test-id="rewards-summary-one-time">
-                                    <span className="amount">1</span>&nbsp;
-                                    <span className="currency">FOT™</span>
-                                </td>
-                                <td className="exchange">
-                                    <span className="amount">25 NFTs/M or </span>
-                                    <span className="currency">100 FOT/M</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div className="table">
+                <div className="row container-fluid p-5" id="nftprice">
+                    <Carousel variant="dark">
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://cdn.discordapp.com/attachments/945707668398567424/992446135950119092/Purple_Gradient_Technology_Webinar_Certificate.gif"
+                                alt="First slide" />
+                        </Carousel.Item>
+                    </Carousel >
+                </div>
+                <div id="table" className="row container-fluid p-5">
+                    <div className="header container" id="title">
                         <div
-                            style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000", }}>
-                            FOT Token Stake Farms
+                            style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000" }}>
+                            Fantasy NFT Staking Rewards
                         </div>
-                        <table className="table table-bordered table-dark" style={{ borderRadius: "14px" }}>
-                            <thead className="thead-light table-primary" style={{ fontSize: "20px" }}>
+                        <table className="table px-3 table-bordered table-dark" style={{ fontSize: "20px" }}>
+                            <thead className="thead-light table-primary" id="title">
                                 <tr>
-                                    <th scope="col">Farm Pools</th>
-                                    <th scope="col">Harvest Daily Earnings</th>
+                                    <th scope="col">Collection</th>
+                                    <th scope="col">Rewards Per Day</th>
+                                    <th scope="col">Exchangeable Items</th>
                                 </tr>
                             </thead>
-                            <tbody style={{ fontSize: "18px" }}>
+                            <tbody style={{ fontSize: "18px" }} id="subtitle">
                                 <tr>
-                                    <td>Stake FOT to Earn FOT</td>
+                                    <td>Discovery</td>
                                     <td className="amount" data-test-id="rewards-summary-ads">
-                                        <span className="amount">0.01</span>&nbsp;
-                                        <span className="currency">Per FOT</span>
+                                        <span className="amount">0.50</span>&nbsp;
+                                        <span className="currency">FOT</span>
+                                    </td>
+                                    <td className="exchange">
+                                        <span className="amount">2</span>&nbsp;
+                                        <span className="currency">NFTs/M</span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Stake FOT to Earn FOT™</td>
+                                    <td>Angel & Devil</td>
                                     <td className="amount" data-test-id="rewards-summary-ac">
-                                        <span className="amount">0.005</span>&nbsp;
-                                        <span className="currency">Per FOT™</span>
+                                        <span className="amount">2.50</span>&nbsp;
+                                        <span className="currency">FOT</span>
+                                    </td>
+                                    <td className="exchange">
+                                        <span className="amount">10</span>&nbsp;
+                                        <span className="currency">NFTs/M</span>
+                                    </td>
+                                </tr>
+                                <tr className="stakegoldeffect">
+                                    <td>Chaos</td>
+                                    <td className="amount" data-test-id="rewards-summary-one-time">
+                                        <span className="amount">1</span>&nbsp;
+                                        <span className="currency">FOT™</span>
+                                    </td>
+                                    <td className="exchange">
+                                        <span className="amount">25 NFTs/M or </span>
+                                        <span className="currency">100 FOT/M</span>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <tbody>
-                            <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
-                                <td>
-                                    * FOT™ can be access Special Mint =&gt; High className
-                                    Fantasy NFT
-                                </td>
-                            </tr>
-                        </tbody>
+                        <div className="table">
+                            <div
+                                style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000", }}>
+                                FOT Token Stake Farms
+                            </div>
+                            <table className="table table-bordered table-dark" style={{ borderRadius: "14px" }}>
+                                <thead className="thead-light table-primary" style={{ fontSize: "20px" }}>
+                                    <tr>
+                                        <th scope="col">Farm Pools</th>
+                                        <th scope="col">Harvest Daily Earnings</th>
+                                    </tr>
+                                </thead>
+                                <tbody style={{ fontSize: "18px" }}>
+                                    <tr>
+                                        <td>Stake FOT to Earn FOT</td>
+                                        <td className="amount" data-test-id="rewards-summary-ads">
+                                            <span className="amount">0.01</span>&nbsp;
+                                            <span className="currency">Per FOT</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Stake FOT to Earn FOT™</td>
+                                        <td className="amount" data-test-id="rewards-summary-ac">
+                                            <span className="amount">0.005</span>&nbsp;
+                                            <span className="currency">Per FOT™</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <tbody>
+                                <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
+                                    <td>
+                                        * FOT™ can be access Special Mint =&gt; High className
+                                        Fantasy NFT
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
             <h1 className="flex justify-center" style={{ color: "white", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
                 Fantasy NFT Staking Open in Aug 2022
