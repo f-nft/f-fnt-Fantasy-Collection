@@ -3,7 +3,6 @@ import "./App.css";
 import "./index.css";
 import { Button, ButtonGroup } from "react-bootstrap";
 import {
-    motion,
     useMotionValue,
     useTransform,
 } from "framer-motion";
