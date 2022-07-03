@@ -6,7 +6,8 @@ import {
     motion,
     useMotionValue,
     useTransform,
-  } from "framer-motion"
+  } from "framer-motion";
+import {AnimatePresence, motion} from 'framer-motion/dist/framer-motion';
 import Modal from 'react-bootstrap/Modal';
 import React, { useEffect, useState } from 'react';
 import "sf-font";
@@ -540,7 +541,7 @@ export default function AppFunctional() {
                 )}
             </nav>
             <div id="nftsell">
-            {/* {items.map(item => (
+            {items.map(item => (
                 <motion.div layoutId={item.nftpics} onClick={() => setSelectedId(item.nftpics)}>
                     <motion.h5>{item.subtitle}</motion.h5>
                     <motion.h2>{item.title}</motion.h2>
@@ -554,7 +555,7 @@ export default function AppFunctional() {
                         <motion.button onClick={() => setSelectedId(null)} />
                     </motion.div>
                 )}
-            </AnimatePresence> */}
+            </AnimatePresence>
             <div id="nftminter" className="flex-1 justify-between items-center p-5">
                 <div className="nftminted row px-3 p-3 center" id="nftpics">
                     <div className="col">
@@ -588,7 +589,7 @@ export default function AppFunctional() {
                             <Button variant="outline-info" defaultValue="5">5</Button>
                             <Button variant="outline-secondary" defaultValue="10">10</Button>
                             <Button variant="outline-warning" defaultValue="50">50</Button> */}
-                            <Button className="stakegoldeffect2" variant="outline-dark" defaultValue="1">MINT</Button>
+                            <Button className="stakegoldeffect2" variant="outline-dark" onClick={metamint} defaultValue="1">MINT</Button>
                         </ButtonGroup>
                         <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
                             PAYMENT (Only 120 Matic)
@@ -605,11 +606,11 @@ export default function AppFunctional() {
                                     <img src={"FNFT.png"} width="30%" alt="fnft" />
                                 </Button>
                             </div> */}
-                            <div className="col">
+                            {/* <div className="col">
                                 <Button variant="outline-dark" className="Button-style" onClick={metamint} style={{ border: "0.2px", borderRadius: "14px", boxShadow: "1px 1px 5px #000000", }}>
                                     <img src="matic.png" width="30%" alt="matic" />
                                 </Button>
-                            </div>
+                            </div> */}
                             <div>
                                 <label id="txout pb-2" style={{ color: "#39FF14", marginTop: "5px", fontWeight: "500", textShadow: "1px 1px 2px #000000", }}>
                                     <p style={{ fontSize: "15px" }}>Transfer Status</p>
