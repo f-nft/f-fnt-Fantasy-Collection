@@ -22,7 +22,7 @@
     "eslint-plugin-react": "^7.30.0",
     "ethers": "^5.6.9",
     "font-awesome": "^4.7.0",
-    "framer-motion": "^6.3.11",
+    "framer-motion": "^4.1.17",
     "moralis": "^1.8.0",
     "react-animation-components": "^1.0.2",
     "react-dom": "^18.1.0",
