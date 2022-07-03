@@ -5,10 +5,9 @@ import { Button, ButtonGroup } from "react-bootstrap";
 import {
     motion,
     useMotionValue,
-    useTransform,
+    useTransform
 } from "framer-motion";
 import Carousel from 'react-bootstrap/Carousel';
-import { AnimatePresence } from 'framer-motion/dist/framer-motion';
 import Modal from 'react-bootstrap/Modal';
 import React, { useEffect, useState } from 'react';
 import "sf-font";
@@ -233,211 +232,211 @@ export default function AppFunctional() {
         window.location.reload();
     }
 
-    async function verify() {
-        try {
-            var accounts = await ethereum.request({ method: "eth_accounts" });
-            account = accounts[0];
+    // async function verify() {
+    //     try {
+    //         var accounts = await ethereum.request({ method: "eth_accounts" });
+    //         account = accounts[0];
 
-            var getstakednfts = await vaultcontract.methods.tokensOfOwner(account).call();
-            document.getElementById("yournfts").textContent = getstakednfts;
-            var getbalance = Number(
-                await vaultcontract.methods.balanceOf(account).call()
-            );
-            document.getElementById("stakedbalance").textContent = getbalance;
-        } catch (error) {
-            alert(error);
-        }
-    }
+    //         var getstakednfts = await vaultcontract.methods.tokensOfOwner(account).call();
+    //         document.getElementById("yournfts").textContent = getstakednfts;
+    //         var getbalance = Number(
+    //             await vaultcontract.methods.balanceOf(account).call()
+    //         );
+    //         document.getElementById("stakedbalance").textContent = getbalance;
+    //     } catch (error) {
+    //         alert(error);
+    //     }
+    // }
 
-    async function enable() {
-        try {
-            contract.methods.setApprovalForAll(STAKINGCONTRACT, true).send({ from: account })
-                .then()
-                .catch((err) => alert(err.message));
-        } catch (err) {
-            alert(err.message);
-        }
-    }
+    // async function enable() {
+    //     try {
+    //         contract.methods.setApprovalForAll(STAKINGCONTRACT, true).send({ from: account })
+    //             .then()
+    //             .catch((err) => alert(err.message));
+    //     } catch (err) {
+    //         alert(err.message);
+    //     }
+    // }
 
-    async function rewardinfo() {
-        var rawnfts;
-        try {
-            rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
-            const arraynft = Array.from(rawnfts.map(Number));
-            const tokenid = arraynft.filter(Number);
-            var rwdArray = [];
-            tokenid.forEach(async (id) => {
-                var rawearn = await vaultcontract.methods
-                    .earningInfo(account, [id])
-                    .call();
-                var array = Array.from(rawearn.map(Number));
-                array.forEach(async (item) => {
-                    var earned = String(item).split(",")[0];
-                    var earnedrwd = Web3.utils.fromWei(earned);
-                    var rewardx = Number(earnedrwd).toFixed(2);
-                    var numrwd = Number(rewardx);
-                    rwdArray.push(numrwd);
-                });
-            });
-        } catch (error) {
-            alert(error);
-        }
+    // async function rewardinfo() {
+    //     var rawnfts;
+    //     try {
+    //         rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
+    //         const arraynft = Array.from(rawnfts.map(Number));
+    //         const tokenid = arraynft.filter(Number);
+    //         var rwdArray = [];
+    //         tokenid.forEach(async (id) => {
+    //             var rawearn = await vaultcontract.methods
+    //                 .earningInfo(account, [id])
+    //                 .call();
+    //             var array = Array.from(rawearn.map(Number));
+    //             array.forEach(async (item) => {
+    //                 var earned = String(item).split(",")[0];
+    //                 var earnedrwd = Web3.utils.fromWei(earned);
+    //                 var rewardx = Number(earnedrwd).toFixed(2);
+    //                 var numrwd = Number(rewardx);
+    //                 rwdArray.push(numrwd);
+    //             });
+    //         });
+    //     } catch (error) {
+    //         alert(error);
+    //     }
 
-        function delay() {
-            return new Promise((resolve) => setTimeout(resolve, 300));
-        }
-        async function delayedLog(item) {
-            await delay();
-            try {
-                var sum = item.reduce((a, b) => a + b, 0);
-                var formatsum = Number(sum).toFixed(2);
-                document.getElementById("earned").textContent = formatsum;
-            } catch (error) {
-                alert(error);
-            }
-        }
-        async function processArray(rwdArray) {
-            for (const item of rwdArray) {
-                await delayedLog(item);
-            }
-        }
-        return processArray([rwdArray]);
-    }
+    //     function delay() {
+    //         return new Promise((resolve) => setTimeout(resolve, 300));
+    //     }
+    //     async function delayedLog(item) {
+    //         await delay();
+    //         try {
+    //             var sum = item.reduce((a, b) => a + b, 0);
+    //             var formatsum = Number(sum).toFixed(2);
+    //             document.getElementById("earned").textContent = formatsum;
+    //         } catch (error) {
+    //             alert(error);
+    //         }
+    //     }
+    //     async function processArray(rwdArray) {
+    //         for (const item of rwdArray) {
+    //             await delayedLog(item);
+    //         }
+    //     }
+    //     return processArray([rwdArray]);
+    // }
 
-    async function claimit() {
-        try {
-            var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
-            const arraynft = Array.from(rawnfts.map(Number));
-            const tokenid = arraynft.filter(Number);
-            await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
-                Web3Alc.eth.getBlock("pending").then((block) => {
-                    var baseFee = Number(block.baseFeePerGas);
-                    var maxPriority = Number(tip);
-                    var maxFee = maxPriority + baseFee;
-                    tokenid.forEach(async (id) => {
-                        await vaultcontract.methods.claim([id]).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
-                    });
-                })
-                    .catch((err) => alert(err.message));
-            })
-                .catch((err) => alert(err.message));
-        } catch (error) {
-            alert(error);
-        }
-    }
+    // async function claimit() {
+    //     try {
+    //         var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
+    //         const arraynft = Array.from(rawnfts.map(Number));
+    //         const tokenid = arraynft.filter(Number);
+    //         await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+    //             Web3Alc.eth.getBlock("pending").then((block) => {
+    //                 var baseFee = Number(block.baseFeePerGas);
+    //                 var maxPriority = Number(tip);
+    //                 var maxFee = maxPriority + baseFee;
+    //                 tokenid.forEach(async (id) => {
+    //                     await vaultcontract.methods.claim([id]).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
+    //                 });
+    //             })
+    //                 .catch((err) => alert(err.message));
+    //         })
+    //             .catch((err) => alert(err.message));
+    //     } catch (error) {
+    //         alert(error);
+    //     }
+    // }
 
-    async function unstakeall() {
-        try {
-            var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
-            const arraynft = Array.from(rawnfts.map(Number));
-            const tokenid = arraynft.filter(Number);
-            await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
-                Web3Alc.eth.getBlock("pending").then((block) => {
-                    var baseFee = Number(block.baseFeePerGas);
-                    var maxPriority = Number(tip);
-                    var maxFee = maxPriority + baseFee;
-                    tokenid.forEach(async (id) => {
-                        await vaultcontract.methods.unstake([id]).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
-                    });
-                })
-                    .catch((err) => alert(err.message));
-            })
-                .catch((err) => alert(err.message));
-        } catch (error) {
-            alert(error);
-        }
-    }
+    // async function unstakeall() {
+    //     try {
+    //         var rawnfts = await vaultcontract.methods.tokensOfOwner(account).call();
+    //         const arraynft = Array.from(rawnfts.map(Number));
+    //         const tokenid = arraynft.filter(Number);
+    //         await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+    //             Web3Alc.eth.getBlock("pending").then((block) => {
+    //                 var baseFee = Number(block.baseFeePerGas);
+    //                 var maxPriority = Number(tip);
+    //                 var maxFee = maxPriority + baseFee;
+    //                 tokenid.forEach(async (id) => {
+    //                     await vaultcontract.methods.unstake([id]).send({ from: account, maxFeePerGas: maxFee, maxPriorityFeePerGas: maxPriority, });
+    //                 });
+    //             })
+    //                 .catch((err) => alert(err.message));
+    //         })
+    //             .catch((err) => alert(err.message));
+    //     } catch (error) {
+    //         alert(error);
+    //     }
+    // }
 
-    async function mintnative() {
-        try {
-            var _mintAmount = Number(outvalue);
-            var mintRate = Number(await contract.methods.cost().call());
-            var maticRate = 100
-            var totalAmount = mintRate * _mintAmount * maticRate;
-            await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
-                Web3Alc.eth.getBlock("pending").then((block) => {
-                    var baseFee = Number(block.baseFeePerGas);
-                    var maxPriority = Number(tip);
-                    var maxFee = baseFee + maxPriority;
-                    contract.methods.mint(account, _mintAmount).send({
-                        from: account, value:
-                            String(totalAmount),
-                        maxFeePerGas: maxFee,
-                        maxPriorityFeePerGas: maxPriority
-                    });
-                })
-                    .catch((err) => alert(err.message));
-            })
-                .catch((err) => alert(err.message));
-        } catch (error) {
-            alert(error);
-        }
-    }
+    // async function mintnative() {
+    //     try {
+    //         var _mintAmount = Number(outvalue);
+    //         var mintRate = Number(await contract.methods.cost().call());
+    //         var maticRate = 100
+    //         var totalAmount = mintRate * _mintAmount * maticRate;
+    //         await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+    //             Web3Alc.eth.getBlock("pending").then((block) => {
+    //                 var baseFee = Number(block.baseFeePerGas);
+    //                 var maxPriority = Number(tip);
+    //                 var maxFee = baseFee + maxPriority;
+    //                 contract.methods.mint(account, _mintAmount).send({
+    //                     from: account, value:
+    //                         String(totalAmount),
+    //                     maxFeePerGas: maxFee,
+    //                     maxPriorityFeePerGas: maxPriority
+    //                 });
+    //             })
+    //                 .catch((err) => alert(err.message));
+    //         })
+    //             .catch((err) => alert(err.message));
+    //     } catch (error) {
+    //         alert(error);
+    //     }
+    // }
 
-    async function mint0() {
-        var _pid = "0";
-        var erc20address;
-        var currency;
-        var mintRate;
-        var _mintAmount = Number(outvalue);
-        var totalAmount = mintRate * _mintAmount;
-        try {
-            erc20address = await contract.methods.getCryptotoken(_pid).call();
-            currency = new web3.eth.Contract(TOKENABI, erc20address);
-            mintRate = await contract.methods.getNFTCost(_pid).call();
+    // async function mint0() {
+    //     var _pid = "0";
+    //     var erc20address;
+    //     var currency;
+    //     var mintRate;
+    //     var _mintAmount = Number(outvalue);
+    //     var totalAmount = mintRate * _mintAmount;
+    //     try {
+    //         erc20address = await contract.methods.getCryptotoken(_pid).call();
+    //         currency = new web3.eth.Contract(TOKENABI, erc20address);
+    //         mintRate = await contract.methods.getNFTCost(_pid).call();
 
-            await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
-                Web3Alc.eth.getBlock("pending").then((block) => {
-                    var baseFee = Number(block.baseFeePerGas);
-                    var maxPriority = Number(tip);
-                    var maxFee = maxPriority + baseFee;
-                    currency.methods.approve(NFTCONTRACT, String(totalAmount))
-                        .send({
-                            from: account,
-                            maxFeePerGas: maxFee,
-                            maxPriorityFeePerGas: maxPriority
-                        })
-                        .then(
-                            currency.methods.transfer(NFTCONTRACT, String(totalAmount))
-                                .send(
-                                    {
-                                        from: account,
-                                        maxFeePerGas: maxFee,
-                                        maxPriorityFeePerGas: maxPriority
-                                    },
-                                    async function (error, transactionHash) {
-                                        console.log("Transfer Submitted, Hash: ", transactionHash);
-                                        let transactionReceipt = null;
-                                        while (transactionReceipt == null) {
-                                            transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
-                                            await sleep(expectedBlockTime);
-                                        }
-                                        window.console = {
-                                            log: function (str) {
-                                                var out = document.createElement("div");
-                                                out.appendChild(document.createTextNode(str));
-                                                document.getElementById("txout").appendChild(out);
-                                            },
-                                        };
-                                        console.log("Transfer Complete", transactionReceipt);
-                                        contract.methods.mintpid(account, _mintAmount, _pid).send({
-                                            from: account, maxFeePerGas:
-                                                maxFee, maxPriorityFeePerGas:
-                                                maxPriority,
-                                        });
-                                    }
-                                )
-                        )
-                        .catch((err) => alert(err.message));
-                })
-                    .catch((err) => alert(err.message));
-            })
-                .catch((err) => alert(err.message));
-        }
-        catch (error) {
-            alert(error);
-        }
-    }
+    //         await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+    //             Web3Alc.eth.getBlock("pending").then((block) => {
+    //                 var baseFee = Number(block.baseFeePerGas);
+    //                 var maxPriority = Number(tip);
+    //                 var maxFee = maxPriority + baseFee;
+    //                 currency.methods.approve(NFTCONTRACT, String(totalAmount))
+    //                     .send({
+    //                         from: account,
+    //                         maxFeePerGas: maxFee,
+    //                         maxPriorityFeePerGas: maxPriority
+    //                     })
+    //                     .then(
+    //                         currency.methods.transfer(NFTCONTRACT, String(totalAmount))
+    //                             .send(
+    //                                 {
+    //                                     from: account,
+    //                                     maxFeePerGas: maxFee,
+    //                                     maxPriorityFeePerGas: maxPriority
+    //                                 },
+    //                                 async function (error, transactionHash) {
+    //                                     console.log("Transfer Submitted, Hash: ", transactionHash);
+    //                                     let transactionReceipt = null;
+    //                                     while (transactionReceipt == null) {
+    //                                         transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+    //                                         await sleep(expectedBlockTime);
+    //                                     }
+    //                                     window.console = {
+    //                                         log: function (str) {
+    //                                             var out = document.createElement("div");
+    //                                             out.appendChild(document.createTextNode(str));
+    //                                             document.getElementById("txout").appendChild(out);
+    //                                         },
+    //                                     };
+    //                                     console.log("Transfer Complete", transactionReceipt);
+    //                                     contract.methods.mintpid(account, _mintAmount, _pid).send({
+    //                                         from: account, maxFeePerGas:
+    //                                             maxFee, maxPriorityFeePerGas:
+    //                                             maxPriority,
+    //                                     });
+    //                                 }
+    //                             )
+    //                     )
+    //                     .catch((err) => alert(err.message));
+    //             })
+    //                 .catch((err) => alert(err.message));
+    //         })
+    //             .catch((err) => alert(err.message));
+    //     }
+    //     catch (error) {
+    //         alert(error);
+    //     }
+    // }
 
     const refreshPage = () => {
         window.location.reload();
