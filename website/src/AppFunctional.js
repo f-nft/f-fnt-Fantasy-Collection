@@ -2,11 +2,6 @@
 import "./App.css";
 import "./index.css";
 import { Button, ButtonGroup } from "react-bootstrap";
-import {
-    motion,
-    useMotionValue,
-    useTransform
-} from "framer-motion";
 import Carousel from 'react-bootstrap/Carousel';
 import Modal from 'react-bootstrap/Modal';
 import React, { useEffect, useState } from 'react';
@@ -541,21 +536,6 @@ export default function AppFunctional() {
                 )}
             </nav>
             <div id="nftsell">
-                {items.map(item => (
-                    <motion.div layoutId={item.nftpics} onClick={() => setSelectedId(item.nftpics)}>
-                        <motion.h5>{item.subtitle}</motion.h5>
-                        <motion.h2>{item.title}</motion.h2>
-                    </motion.div>
-                ))}
-                <AnimatePresence>
-                    {selectedId && (
-                        <motion.div layoutId={selectedId}>
-                            <motion.h5>{item.subtitle}</motion.h5>
-                            <motion.h2>{item.title}</motion.h2>
-                            <motion.button onClick={() => setSelectedId(null)} />
-                        </motion.div>
-                    )}
-                </AnimatePresence>
                 <div id="nftminter" className="flex-1 justify-between items-center p-5">
                     <div className="nftminted row px-3 p-3 center" id="nftpics">
                         <div className="col">
