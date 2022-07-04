@@ -502,7 +502,7 @@ export default function AppFunctional() {
                     <Button className="navbar-toggler" type="Button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </Button>
-                    <div className="collapse navbar-collapse" id="navbarCollapse">
+                    {/* <div className="collapse navbar-collapse" id="navbarCollapse">
                         <ul
                             className="navbar-nav me-auto mb-2 px-3 mb-md-0"
                             style={{ fontSize: "22px" }}>
@@ -522,7 +522,7 @@ export default function AppFunctional() {
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> */}
                 </div>
                 {!isWalletConnect ? (
                     <div className="p-3">
@@ -562,11 +562,11 @@ export default function AppFunctional() {
                                 Select NFT Quantity
                             </label>
                         </div> */}
-                            <h6 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
+                            <h3 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
                                 PAYMENT (Only 120 Matic)
-                            </h6>
-                            <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="4g" aria-label="First group" name="amount"
-                                style={{ boxShadow: "1px 3px 8px #0f1fb0", fontFamily: "Black Ops One", fontSize: "25px", marginTop: "5px", marginBottom: "5px", marginInline: "10px", textShadow: "1px 1px 5px #000000", }}
+                            </h3>
+                            <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="8g" aria-label="First group" name="amount"
+                                style={{ boxShadow: "1px 3px 8px #0f1fb0", fontFamily: "Black Ops One", fontSize: "25px", marginTop: "5px", marginBottom: "5px", marginInline: "20px", textShadow: "1px 1px 5px #000000", }}
                                 onClick={(nftamount) => handleNFT(nftamount, "value")}>
                                 {/* <Button variant="outline-success" defaultValue="1">1</Button>
                             <Button variant="outline-info" defaultValue="5">5</Button>
