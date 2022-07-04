@@ -480,9 +480,9 @@ export default function AppFunctional() {
 
     return (
         <div className="items-center justify-start p-2 text-center">
-            {/* <Modal.Dialog>
+            <Modal.Dialog>
                 <Modal.Header closeButton>
-                    <Modal.Title>FANTASY NFT MINTING ON POLYGON NETWORK</Modal.Title>
+                    <Modal.Title>FANTASY NFT MINTING POLYGON NETWORK</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <p>Please connect to Metamask with Polygon network
@@ -494,7 +494,7 @@ export default function AppFunctional() {
                     <Button variant="secondary" onClick={!show} defaultValue="Close" />
                     <Button id="connectbtn" onClick={connectWallet} defaultValue="Connect Your Wallet" />
                 </Modal.Footer>
-            </Modal.Dialog> */}
+            </Modal.Dialog>
             <nav className="navbar full-width navbar-expand-md navbar-dark mb-3">
                 <div className="container-fluid">
                     <div className="navbar-brand px-5" style={{ fontWeight: "800", fontSize: "22px" }} href="#"></div>
@@ -574,7 +574,6 @@ export default function AppFunctional() {
                             <Button variant="outline-warning" defaultValue="50">50</Button> */}
                                 <Button className="stakegoldeffect2" variant="outline-dark" onClick={metamint} defaultValue="1">MINT</Button>
                             </ButtonGroup>
-
                             <div className="row px-3 pb-1 pt-1 row-style"
                                 style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", }}>
                                 {/* <div className="col">
@@ -607,7 +606,31 @@ export default function AppFunctional() {
                             <img
                                 className="d-block w-100"
                                 src="https://cdn.discordapp.com/attachments/945707668398567424/992446135950119092/Purple_Gradient_Technology_Webinar_Certificate.gif"
-                                alt="First slide" />
+                                alt="39usd" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://media.discordapp.net/attachments/945707668398567424/992446135950119092/Purple_Gradient_Technology_Webinar_Certificate.gif"
+                                alt="69usd" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://media.discordapp.net/attachments/945707668398567424/992447131698864138/GIF_3.gif"
+                                alt="239usd" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://cdn.discordapp.com/attachments/945707668398567424/992447738497220678/GIF_4.gif"
+                                alt="799usd" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://cdn.discordapp.com/attachments/945707668398567424/992448514753843270/GIF_5.gif"
+                                alt="1999usd" />
                         </Carousel.Item>
                     </Carousel >
                 </div>
