@@ -601,7 +601,7 @@ export default function AppFunctional() {
                     </div>
                 </div>
                 <div className="row container-fluid p-5" id="nftprice">
-                    <Carousel variant="dark">
+                    <Carousel Indicators="light" variant="light" data-bs-interval="3000">
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
