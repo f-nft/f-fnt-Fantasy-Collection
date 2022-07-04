@@ -525,7 +525,8 @@ export default function AppFunctional() {
                 </div>
                 {!isWalletConnect ? (
                     <div className="p-3">
-                        <input id="connectbtn" type="Button" className="stakegoldeffect2 connectbutton font-blk" onClick={connectWallet} style={{ fontSize: "20px", border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla" }} defaultValue="Connect Your Wallet" />
+                        <input id="connectbtn" type="Button" className="stakegoldeffect2 connectbutton font-blk" onClick={connectWallet} 
+                        style={{ fontSize: "20px", border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla" }} defaultValue="Connect Your Wallet" />
                     </div>
                 ) : (
                     <div className="p-3">
@@ -534,52 +535,41 @@ export default function AppFunctional() {
                     </div>
                 )}
             </nav>
-            {items.map(item => (
-                <motion.div layoutId={item.nftpics} onClick={() => setSelectedId(item.nftpics)}>
-                    <motion.h5>{item.subtitle}</motion.h5>
-                    <motion.h2>{item.title}</motion.h2>
-                </motion.div>
-            ))}
-
-            <AnimatePresence>
-                {selectedId && (
-                    <motion.div layoutId={selectedId}>
-                        <motion.h5>{item.subtitle}</motion.h5>
-                        <motion.h2>{item.title}</motion.h2>
-                        <motion.button onClick={() => setSelectedId(null)} />
-                    </motion.div>
-                )}
-            </AnimatePresence>
-            <div id="nftminter" className="flex-1 justify-between items-center p-5">
-                <div className="nftminted row px-3 p-3 center" id="nftpics">
-                    <div className="col">
-                        {/* <Card /> */}
-                        <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
-                        <div>
-                            <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
-                                NFT Minted
-                            </h1>
+            <div id="nftsell">
+                <div id="nftminter" className="flex-1 justify-between items-center p-5">
+                    <div className="nftminted center" id="nftpics">
+                        <div className="col">
+                            {/* <Card /> */}
+                            <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
+                            <div>
+                                <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
+                                    NFT Minted
+                                </h1>
+                            </div>
+                            <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
+                                {balance.result}/10,000
+                            </h4>
                         </div>
-                        <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
-                            {balance.result}/10,000
-                        </h4>
-                    </div>
-                    <div className="col justify-center">
-                        <div className="row container-fluid">
-                            <h5>Your Wallet Address</h5>
-                            <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
-                                <label htmlFor="floatingInput">Please Connect Wallet</label>
+                        <div className="col center">
+                            <div className="row container-fluid">
+                                <h5>Your Wallet Address</h5>
+                                <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
+                                    <label htmlFor="floatingInput">Please Connect Wallet</label>
+                                </div>
                             </div>
                         </div>
-                        <div>
+                        {/* <div>
                             <label style={{ fontWeight: "200", fontSize: "20px", textShadow: "1px 1px 2px #000000", }}>
                                 Select NFT Quantity
                             </label>
-                        </div>
-                        <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="4g" aria-label="First group" name="amount"
-                            style={{ boxShadow: "1px 3px 8px #0f1fb0", fontFamily: "Black Ops One", fontSize: "25px", marginTop: "5px", marginBottom: "5px", marginInline: "10px", textShadow: "1px 1px 5px #000000", }}
-                            onClick={(nftamount) => handleNFT(nftamount, "value")}>
-                            {/* <Button variant="outline-success" defaultValue="1">1</Button>
+                        </div> */}
+                            <h3 className="center" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
+                                PAYMENT (Only 140 Matic)
+                            </h3>
+                            <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="10g" aria-label="First group" name="amount"
+                                style={{ boxShadow: "1px 3px 8px #0f1fb0", fontFamily: "Black Ops One", fontSize: "25px", marginTop: "5px", marginBottom: "5px", marginInline: "20px", textShadow: "1px 1px 5px #ffffff" }}
+                                onClick={(nftamount) => handleNFT(nftamount, "value")}>
+                                {/* <Button variant="outline-success" defaultValue="1">1</Button>
                             <Button variant="outline-info" defaultValue="5">5</Button>
                             <Button variant="outline-secondary" defaultValue="10">10</Button>
                             <Button variant="outline-warning" defaultValue="50">50</Button> */}
@@ -613,58 +603,42 @@ export default function AppFunctional() {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="table" className="row container-fluid px-8 pt-1 mt-2 mb-1">
-                <div className="header container" id="title">
-                    <div
-                        style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000" }}>
-                        Fantasy NFT Staking Pool Active Rewards
-                    </div>
-                    <table className="table px-3 table-bordered table-dark" style={{ fontSize: "20px" }}>
-                        <thead className="thead-light table-primary">
-                            <tr>
-                                <th scope="col">Collection</th>
-                                <th scope="col">Rewards Per Day</th>
-                                <th scope="col">Exchangeable Items</th>
-                            </tr>
-                        </thead>
-                        <tbody style={{ fontSize: "18px" }}>
-                            <tr>
-                                <td>Discovery</td>
-                                <td className="amount" data-test-id="rewards-summary-ads">
-                                    <span className="amount">0.50</span>&nbsp;
-                                    <span className="currency">FOT</span>
-                                </td>
-                                <td className="exchange">
-                                    <span className="amount">2</span>&nbsp;
-                                    <span className="currency">NFTs/M</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Angel & Devil</td>
-                                <td className="amount" data-test-id="rewards-summary-ac">
-                                    <span className="amount">2.50</span>&nbsp;
-                                    <span className="currency">FOT</span>
-                                </td>
-                                <td className="exchange">
-                                    <span className="amount">10</span>&nbsp;
-                                    <span className="currency">NFTs/M</span>
-                                </td>
-                            </tr>
-                            <tr className="stakegoldeffect">
-                                <td>Chaos</td>
-                                <td className="amount" data-test-id="rewards-summary-one-time">
-                                    <span className="amount">1</span>&nbsp;
-                                    <span className="currency">FOT™</span>
-                                </td>
-                                <td className="exchange">
-                                    <span className="amount">25 NFTs/M or </span>
-                                    <span className="currency">100 FOT/M</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div className="table">
+                <div className="row container-fluid p-5" id="nftprice">
+                    <Carousel Indicators="light" variant="light" data-bs-interval="3000">
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://media.discordapp.net/attachments/945707668398567424/993388829627129866/1.gif"
+                                alt="39usd" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://media.discordapp.net/attachments/945707668398567424/993388829920735322/2.gif"
+                                alt="69usd" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://media.discordapp.net/attachments/945707668398567424/993388830667325460/3.gif"
+                                alt="239usd" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://media.discordapp.net/attachments/945707668398567424/993388831061585950/4.gif"
+                                alt="799usd" />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="https://media.discordapp.net/attachments/945707668398567424/993388831522947183/5.gif"
+                                alt="1999usd" />
+                        </Carousel.Item>
+                    </Carousel >
+                </div>
+                <div id="table" className="row container-fluid p-5">
+                    <div className="header container" id="title">
                         <div
                             style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000", }}>
                             FOT Token Stake Farms
