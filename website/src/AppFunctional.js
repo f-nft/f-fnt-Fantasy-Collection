@@ -65,7 +65,7 @@ export default function AppFunctional() {
 
     const [nftdata, setNftData] = useState();
 
-    const maxPriority = maxPriority + 18;
+    // const maxPriority = maxPriority + 18;
 
     async function connectWallet() {
         //if outside modal is clicked, close modal and return to main page in catch block
