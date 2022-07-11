@@ -605,31 +605,31 @@ export default function AppFunctional() {
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="https://media.discordapp.net/attachments/945707668398567424/993388829627129866/1.gif"
+                                src="https://cdn.discordapp.com/attachments/945707668398567424/992446135950119092/Purple_Gradient_Technology_Webinar_Certificate.gif"
                                 alt="39usd" />
                         </Carousel.Item>
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="https://media.discordapp.net/attachments/945707668398567424/993388829920735322/2.gif"
+                                src="https://media.discordapp.net/attachments/945707668398567424/992446135950119092/Purple_Gradient_Technology_Webinar_Certificate.gif"
                                 alt="69usd" />
                         </Carousel.Item>
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="https://media.discordapp.net/attachments/945707668398567424/993388830667325460/3.gif"
+                                src="https://media.discordapp.net/attachments/945707668398567424/992447131698864138/GIF_3.gif"
                                 alt="239usd" />
                         </Carousel.Item>
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="https://media.discordapp.net/attachments/945707668398567424/993388831061585950/4.gif"
+                                src="https://cdn.discordapp.com/attachments/945707668398567424/992447738497220678/GIF_4.gif"
                                 alt="799usd" />
                         </Carousel.Item>
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="https://media.discordapp.net/attachments/945707668398567424/993388831522947183/5.gif"
+                                src="https://cdn.discordapp.com/attachments/945707668398567424/992448514753843270/GIF_5.gif"
                                 alt="1999usd" />
                         </Carousel.Item>
                     </Carousel >
@@ -716,7 +716,7 @@ export default function AppFunctional() {
                             <tbody>
                                 <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
                                     <td>
-                                        * Only FOT™ can be access Special Mint =&gt; High Quality
+                                        * FOT™ can be access Special Mint =&gt; High className
                                         Fantasy NFT
                                     </td>
                                 </tr>
@@ -726,7 +726,7 @@ export default function AppFunctional() {
                 </div>
             </div>
             <h1 className="flex justify-center" style={{ color: "white", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
-                Fantasy NFT Staking Coming Soon
+                Fantasy NFT Staking Open in Aug 2022
             </h1>
             {/* <div id="stakingvault">
                     <h5 className="flex justify-center p-2" style={{ color: "orange", fontWeight: "300" }}>
