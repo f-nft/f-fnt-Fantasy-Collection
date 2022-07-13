@@ -643,11 +643,57 @@ body
   font-family: "Blaka", cursive;
   font-family: "Fascinate", cursive;
   font-family: "Ubuntu", sans-serif;
-  background: linear-gradient(270deg, #474747, #474747);
+  background: #f8f9fa !important;
     background-size: 400% 400%;
     -webkit-animation: AnimationStake 5s ease infinite;
       -moz-animation: AnimationStake 5s ease infinite;
       animation: AnimationStake 5s ease infinite;
+}
+#herodiv{
+  border: 3px solid black;
+  width: 50%;
+  margin-top: 120px;
+  font-family: 'Fredoka One', cursive;
+  font-size:26px;
+  font-weight: bolder;
+  height: max-content;
+}
+#totalmint{
+  font-weight: 800 !important;
+}
+#leftCol{
+  border-right: 2px solid red;
+
+}
+ul{
+  justify-content: left!important;
+  color:"red";
+  
+}
+li{
+  list-style-type:none;
+}
+#CardId{
+  height: 20em;
+  width: max-content;
+  margin-inline: auto;
+  text-align: center;
+  padding-block: auto;
+  padding-inline: auto;
+
+
+}
+.CardClass{
+  background-color: #3a1617 !important;
+ 
+}
+.cardheading{
+  margin-top: 2em !important;
+  }
+.footerparagraph{
+  margin-top: 2em !important;
+  font-weight: 800 !important;
+  font-size: "2em";
 }
 
 

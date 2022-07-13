@@ -19,7 +19,14 @@ import moving from "./images/moving.gif";
 import ListNft from "./components/Listnft";
 import  MyCarousel  from "./components/CarouselComponent";
 import { ethers } from "ethers";
-import {Container,Row} from "react-bootstrap";
+import {Container,Row,Col} from "react-bootstrap";
+import hero from "./images/hero.png";
+import about from "./images/about.png"
+import ImageScroller from 'react-image-scroller';
+import AOS from 'aos';
+import "aos/dist/aos.css";
+import { Card} from "react-bootstrap";
+import footerimg from './images/footer.png';
 
 
 const { ethereum } = window;
@@ -198,10 +205,19 @@ export default function AppFunctional() {
     const [nftdata, setNftData] = useState();
 
     const maxPriority = 0;
+    useEffect(() => {
+         AOS.init({
+            duration: 1000,
+            once: true,
+            
+        });
+        AOS.refresh();
+    }, []);
 
 
 
     useEffect(() => {
+       
         const init = async () => {
             web3Modal.clearCachedProvider();
             await axios.get(polygonscanapi + `?module=stats&action=tokensupply&contractaddress=${NFTCONTRACT}&apikey=${polygonscanapikey}`)
@@ -280,54 +296,256 @@ export default function AppFunctional() {
     }
 
     return (
-        <Container fluid>
-         <div className="grid items-center justify-start p-2 text-center">
-            <div id="nftsell">
-                <Row id="nftminter" className="flex-1 justify-between items-center p-5">
-                    <div className="nftminted row px-3 p-3 center" id="nftpics">
-                        <div className="col-md" style={{color:"#b30062"}}>
-                            <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
-                            <div>
-                                <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
-                                    NFT Minted
-                                </h1>
-                            </div>
-                            <h4 style={{ fontFamily: "Black Ops One", textShadow: "1px 1px 2px #000000", }}>
-                                {balance.result}/10,000
-                            </h4>
-                        </div>
-                        <div className="col-md justify-center">
-                            <div className="row container-fluid">
-                                <h5 style={{color:"#b30062"}}>Your Wallet Address</h5> 
-                                <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
+        <div data-aos="fade-up">
+        <Container fluid style={{width:"100%"}}>
+            {/* create a hero div for image */}
+            <div className="hero mt-4" style={{textAlign:"center"}}>
+                {/* image for hero */}
+                <img src={hero} alt="hero" style={{width:"80%",marginTop:"50px"}}/>
+
+                {/* create a container with border radius */}
+                <div className="container" style={{padding:"20px"}} id="herodiv">
+                    21000 Unique Rogue's. <br/>
+                    Fantasy NFT Staking Rewards<br/><br/>
+
+                    <p>Pre-minting (October 2022)</p> <br/>
+                    <h5 style={{color:"red"}}>Your Wallet Address</h5> 
+                                <div id="wallet-address" style={{ fontSize: "15px"}}>
                                     <label htmlFor="floatingInput">Please Connect Wallet</label>
                                 </div>
-                            </div>
-                            <h3 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", marginBottom: "1px", textShadow: "1px 1px 2px #000000",color:"#b30062" }}>
-                                PAYMENT (Only 120 Matic)
-                            </h3>
-                            <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="8g" aria-label="First group" name="amount"
-                                style={{ boxShadow: "1px 3px 8px #0f1fb0", fontFamily: "Black Ops One", fontSize: "25px", marginTop: "5px", marginBottom: "5px", marginInline: "20px", textShadow: "1px 1px 5px #000000" }}>
-                                <Button className="stakegoldeffect2" variant="outline-dark" onClick={metamint} defaultValue="1">MINT</Button>
-                            </ButtonGroup>
-                            <div className="row px-3 pb-1 pt-1 row-style"
-                                style={{ marginTop: "1px", fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", }}>
-                                <div>
-                                    <label id="txout pb-2" style={{ color: "#39FF14", marginTop: "5px", fontWeight: "500", textShadow: "1px 1px 2px #000000", }}>
+                     <p style={{fontWeight:"bold"}} id="totalmint">{balance.result}/10,000</p>
+
+                {/* Button with red background and white text */}
+                <Button onClick={metamint}
+                style={{width:"6em", fontSize: "26px", border: "0.2px", borderRadius: "15px",fontFamily: "Rambla",backgroundColor:"#e50303" }}
+                >
+                    Mint
+                </Button> <br/>
+                 <h6>PAYMENT (Only 120 Matic)</h6>
+                        </div>
+                             <div>
+                                    <label id="txout pb-2" style={{ color: "red", marginTop: "5px", fontWeight: "500", textShadow: "1px 1px 2px #000000", }}>
                                         <p style={{ fontSize: "15px" }}>Transfer Status</p>
                                     </label>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+                </Container>
+         <div className="grid items-center justify-start p-2 text-center">
+            <div id="nftsell">
+                <Row id="nftminter" className="flex-1 justify-between items-center p-5">
+                
                 </Row>
-          <MyCarousel/>
-                <Table responsive="sm" size="sm">
-                    <div className="header container" id="title">
-                        <div
-                            style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000" }}>
+        <Container fluid style={{backgroundColor:"black"}}>
+                 <MyCarousel/>
+                 {/* Row with 2 columns */}
+                 <Row data-aos="slide-left" style={{color:"white",fontSize:"46px",fontWeight:"bold",marginTop:"5em"}}>
+                    <Col sm={6} data-aos="fade-zoom-in">
+                        What is F-NFTs? <br/>
+                        <p style={{fontSize:"18px",marginTop:"5em"}}>
+                        Non-Fungible Token, concretely means an indivisible token, that is to say, 
+                        an asset exchangeable on the blockchain, but not a crypto-currency. Snoop Dog, Activision or Atari,
+                         and big companies like artists are getting into Nfts, Reasons to care about Nfts An interesting 
+                         technology NFTS is now one of the pillars of the blockchain ecosystem, 
+                         if you missed Crypto-currencies or are not interested in them, NFTS will be a very good introduction to discovering what blockchain is.
+                         </p>
+                    </Col>
+                    <Col sm={6}>
+                        <img src={about} alt="about" style={{width:"100%"}}/>
+                    </Col>
+                 </Row>
+        </Container>
+        <ImageScroller>
+            <img src={about} alt="image1" style={{width:"100%"}}/>
+            <img src={about} alt="image1" style={{width:"100%"}}/>
+            <img src={about} alt="image1" style={{width:"100%"}}/>
+            <img src={about} alt="image1" style={{width:"100%"}}/>
+            <img src={about} alt="image1" style={{width:"100%"}}/>
+            <img src={about} alt="image1" style={{width:"100%"}}/>
+        </ImageScroller>
+        {/* create 3 cards and replace them with table columns */}
+        <Row style={{fontFamily: "Black Ops One" ,color:"white"}}>
+              <div
+                            style={{ fontSize: "25px", borderRadius: "14px", color: "red", fontWeight: "300", fontFamily: "Black Ops One"
+                           , marginTop:"3em",marginBottom:"3em" }}>
                             Fantasy NFT Staking Rewards
                         </div>
+            <Card style={{ width: '18rem'}} id="CardId"  className="CardClass">
+              <Card.Body>
+                        <h2 style={{color:"white"}}>
+                            Discovery
+                        </h2>
+                        <h4 className="cardheading">Reward</h4>
+                        <p>
+                            0.50 FOT
+                        </p>
+                        <h4 className="cardheading">Exchangeable Items</h4>
+                        <p>
+                            2 NFTs/M
+                        </p>
+                    </Card.Body>
+            </Card>
+            <Card style={{ width: '18rem' }} id="CardId"  className="CardClass">
+                    <Card.Body>
+                        <h2 style={{color:"white"}}>
+                            Angel & Devil
+                        </h2>
+                         <h4 className="cardheading">Reward</h4>
+                        <p>
+                            2.50 FOT
+                        </p>
+                         <h4 className="cardheading">Exchangeable Items</h4>
+                        <p>
+                            10 NFTs/M
+                        </p>
+                    </Card.Body>
+            </Card>
+            <Card style={{ width: '18rem' }} id="CardId" className="CardClass">
+                
+                    <Card.Body>
+                        <h2 style={{color:"white"}}>
+                        Chaos
+                        </h2>
+                         <h4 className="cardheading">Reward</h4>
+                        <p>
+                            1 FOT
+                        </p>
+                         <h4 className="cardheading">Exchangeable Items</h4>
+                        <p>
+                            25 NFTs/M or 100 FOT/M
+                        </p>    
+                    </Card.Body>
+            </Card>
+                <div style={{ marginBlock:"2em",color:"red", fontSize: "12px", fontStyle: "italic" }}>
+                    * Only FOT™ can be access Special Mint =&gt; High Quality
+                                        Fantasy NFT
+                </div>
+        </Row>
+              
+            </div>
+            <h1 className="flex justify-center" style={{ color: "red", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
+                Fantasy NFT Staking Coming Soon
+            </h1>
+        </div>
+        
+        {/* a new div with black background */}
+        <Row style={{ backgroundColor: "#000000", textAlign:"center",color:"white" }}>
+
+            <h2 style={{fontWeight:"bold"}}>RoadMap</h2>
+            <Col sm={6} id="leftCol">
+                <h2 style={{color:"red"}}>2022 Q3</h2>
+                <ul>
+                <li>
+                    Lauch Website 
+                </li>
+                <li>
+                    Launch Mobile App
+                </li>
+                <li>
+                    Launch Desktop App
+                </li>
+                <li>
+                    Launch DApp
+                </li>
+                    </ul>
+
+                  <h2 style={{color:"red",marginTop:"6em"}}>2022 Q5</h2>
+                <ul>
+                <li>
+                    Lauch Website 
+                </li>
+                <li>
+                    Launch Mobile App
+                </li>
+                <li>
+                    Launch Desktop App
+                </li>
+                <li>
+                    Launch DApp
+                </li>
+                    </ul>
+                </Col>
+            <Col sm={6} >
+                   <h2 style={{marginTop:"4em",color:"red"}}>2022 Q2</h2>
+                   <ul>
+                <li>
+                    Lauch Website 
+                </li>
+                <li>
+                    Launch Mobile App
+                </li>
+                <li>
+                    Launch Desktop App
+                </li>
+                <li>
+                    Launch DApp
+                </li>
+                    </ul>
+
+                     <h2 style={{marginTop:"8em",color:"red"}}>2022 Q1</h2>
+                   <ul>
+                <li>
+                    Lauch Website 
+                </li>
+                <li>
+                    Launch Mobile App
+                </li>
+                <li>
+                    Launch Desktop App
+                </li>
+                <li>
+                    Launch DApp
+                </li>
+                    </ul>
+                </Col>
+                <h2 style={{marginBlock:"2em"}}>Farm Pools</h2>
+                <p>
+                    While we are populating the world of Fantasy NFTs, we are also working on the Lucky Wheel.<br/>
+                    The Lucky Wheel is a game that will be launched in the coming months.
+
+                </p>
+                <h2 style={{color:"red",marginTop:"3em"}}>FOT Token Stake Farms</h2>
+                <p style={{fontSize:"18px",fontWeight:"bold"}}>
+                    Staked FOT to Earn FOT <br/>
+                    0.01 Per FOT
+                </p>
+                 <p style={{fontSize:"18px",fontWeight:"bold",marginTop:"2em"}}>
+                    Staked FOT to Earn FOT <br/>
+                    0.005 Per FOT
+                </p>
+
+                
+
+
+            </Row>
+        {/* Footer */}
+        <Row>
+            <Col sm={6}>
+                <h2 style={{color:"red",marginTop:"2em"}}>F-Fnt-Fantasy-Collection</h2>
+                <p className="footerparagraph">
+                    Staked FOT to Earn FOT <br/>
+                    Which NFT will you get?<br/>
+                    Join the FOT Token Stake Farms and earn FOT<br/>
+                </p>
+                {/* Discord icon */}
+               
+                </Col>
+            <Col sm={6}>
+                <img src={footerimg} alt="footer" style={{width:"100%"}}/>
+                </Col>
+        </Row>
+            <div style={{textAlign:"center",marginTop:"2em"}}>
+            <h5>All Rights Reserved © 2020 F-Fnt-Fantasy-Collection</h5>
+            </div>
+        </div>
+    )
+}
+
+
+
+
+/*   <Table responsive="sm" size="sm">
+                    <div className="header container" id="title">
+                      
                         <table className="table px-3 table-bordered table-dark" style={{ fontSize: "20px" }}>
                             <thead className="thead-light table-primary" id="title">
                                 <tr>
@@ -373,34 +591,7 @@ export default function AppFunctional() {
                             </tbody>
                         </table>
                         <Table>
-                            <div
-                                style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000", }}>
-                                FOT Token Stake Farms
-                            </div>
-                            <table className="table table-bordered table-dark" style={{ borderRadius: "14px" }}>
-                                <thead className="thead-light table-primary" style={{ fontSize: "20px" }}>
-                                    <tr>
-                                        <th scope="col">Farm Pools</th>
-                                        <th scope="col">Harvest Daily Earnings</th>
-                                    </tr>
-                                </thead>
-                                <tbody style={{ fontSize: "18px" }}>
-                                    <tr>
-                                        <td>Stake FOT to Earn FOT</td>
-                                        <td className="amount" data-test-id="rewards-summary-ads">
-                                            <span className="amount">0.01</span>&nbsp;
-                                            <span className="currency">Per FOT</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Stake FOT to Earn FOT™</td>
-                                        <td className="amount" data-test-id="rewards-summary-ac">
-                                            <span className="amount">0.005</span>&nbsp;
-                                            <span className="currency">Per FOT™</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                       
                             <tbody>
                                 <tr style={{ fontSize: "12px", fontStyle: "italic" }}>
                                     <td>
@@ -411,12 +602,4 @@ export default function AppFunctional() {
                             </tbody>
                         </Table>
                     </div>
-                </Table>
-            </div>
-            <h1 className="flex justify-center" style={{ color: "white", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
-                Fantasy NFT Staking Coming Soon
-            </h1>
-        </div>
-        </Container>
-    )
-}
+                </Table> */
