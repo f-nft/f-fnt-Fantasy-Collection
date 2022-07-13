@@ -1,7 +1,6 @@
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'sf-font';
-import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import {connectWallet,disconnectWallet} from '../AppFunctional'
@@ -24,41 +23,41 @@ function MyNavBar() {
     }, [loggedin]);
     return (
         <div>
-      <Navbar collapseOnSelect expand="lg" bg="none" variant="dark" className="CustomNav" >
+      <Navbar collapseOnSelect expand="lg" bg="light" variant="light" className="CustomNav" >
 
           <Navbar.Brand href="#home">
             {/* add image in Navbar brand */}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
+            <Nav className="mx-auto">
                <ul className='navbar-nav me-auto mb-2 px-3 mb-md-0' style={{ fontSize: '22px' }}>
                         <li className='nav-item'>
-                            <a className='nav-link active' aria-current='page' to='/'style={{color:"#b30062"}}>Dashboard</a>
+                            <a className='nav-link active' aria-current='page' to='/'style={{color:"#e50303"}}>Dashboard</a>
                         </li>
                         <li className='nav-item'>
-                            <a className='nav-link' to='/about' style={{color:"#b30062"}}>List NFTs</a>
+                            <a className='nav-link' to='/about' style={{color:"#e50303"}}>List NFTs</a>
                         </li>
                         <li className='nav-item'>
-                            <a className='nav-link' to='/'style={{color:"#b30062"}}>Upgrade NFTs</a>
+                            <a className='nav-link' to='/'style={{color:"#e50303"}}>Upgrade NFTs</a>
                         </li>
                     </ul>
             </Nav>
                 {loggedin==="false" ? (
                     <div className="p-3">
-                        <Button id="connectbtn" className="stakegoldeffect2 connectbutton font-blk" onClick={connectWallet} style={{ fontSize: "17px", border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla" }}>
+                        <Button id="connectbtn"  onClick={connectWallet} style={{ fontSize: "17px", border: "0.2px", borderRadius: "15px",fontFamily: "Rambla",backgroundColor:"#e50303" }}>
                             Connect Your Wallet
                         </Button>
                     </div>
                 ) : (
                     <div className="p-3">
-                        <Button id="connectbtn" className="stakegoldeffect2 connectbutton font-blk" onClick={disconnectWallet} style={{ fontSize: "17px", border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla" }}>
+                        <Button id="connectbtn" onClick={disconnectWallet} style={{ fontSize: "17px", border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla",backgroundColor:"#e50303" }}>
                                 Disconnect Wallet
                             </Button>
                     </div>
                 )}
                  <div className="p-3">
-                 <Button id="connectbtn" className="stakegoldeffect2 connectbutton font-blk" onClick={handleShow} style={{ fontSize: "17px", border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla" }}>
+                 <Button id="connectbtn" onClick={handleShow} style={{ fontSize: "17px", border: "0.2px", borderRadius: "15px", fontFamily: "Rambla",backgroundColor:"#e50303" }}>
                                 Select Network
                             </Button>
                             </div>
