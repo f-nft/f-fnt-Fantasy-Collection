@@ -78,16 +78,20 @@ export default function NetworkOptions() {
 
   return (
     <div className="credit-card w-full lg:w-1/2 sm:w-auto shadow-lg mx-auto rounded-xl bg-white">
-      <main className="mt-4 p-4" style={{textAlign:"center"}}>
+      <main className="mt-1 p-4" style={{textAlign:"center"}}>
         <h4 className="text-xl font-semibold text-gray-700 text-center">
           Change MetaMask network
         </h4>
         <div className="mt-4">
-          <Button onClick={() => handleNetworkSwitch("polygon")} className="mt-2 mb-2 btn btn-primary submit-button focus:ring focus:outline-none w-full">
+          <Button onClick={() => handleNetworkSwitch("polygon")}
+          style={{borderRadius: "10px", backgroundColor: "#00bcd4", color: "white"}} 
+          className="mt-2 mb-2 btn btn-primary submit-button focus:ring focus:outline-none w-full">
             Switch to Polygon
           </Button>
           <br/>
-          <Button onClick={() => handleNetworkSwitch("bsc")} className="mt-2 mb-2 bg-warning border-warning btn submit-button focus:ring focus:outline-none w-full">
+          <Button onClick={() => handleNetworkSwitch("bsc")} 
+            style={{borderRadius: "10px", color: "white"}} 
+          className="mt-2 mb-2 bg-danger border-warning btn submit-button focus:ring focus:outline-none w-full">
             Switch to BSC
           </Button>
           <ErrorMessage message={error} />

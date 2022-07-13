@@ -696,7 +696,13 @@ li{
   font-size: "2em";
 }
 
-
+@media screen and (min-width: 500px)
+{
+  .CardClass{
+    margin-top: 2em !important;
+    
+  }
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

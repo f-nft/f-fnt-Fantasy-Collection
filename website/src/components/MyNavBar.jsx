@@ -64,17 +64,9 @@ function MyNavBar() {
           </Navbar.Collapse>
       </Navbar>
          <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Select Network</Modal.Title>
-        </Modal.Header>
         <Modal.Body>
             <NetworkOptions/>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
         </div>
     );
