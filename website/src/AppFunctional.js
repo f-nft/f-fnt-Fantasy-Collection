@@ -2,36 +2,54 @@
 import "./App.css";
 import "./index.css";
 import { Button, ButtonGroup } from "react-bootstrap";
-import Carousel from 'react-bootstrap/Carousel';
+import {Table} from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 import "sf-font";
 import axios from "axios";
 import ABI from "./config/ABI.json";
 import VAULTABI from "./config/VAULTABI.json";
+import TOKENABI from "./config/TOKENABI.json";
 import { NFTCONTRACT, STAKINGCONTRACT, polygonscanapi, moralisapi } from "./config/config";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import WalletLink from "walletlink";
 import Web3 from "web3";
+import { createAlchemyWeb3 } from "@alch/alchemy-web3";
+import moving from "./images/moving.gif";
+import ListNft from "./components/Listnft";
+import  MyCarousel  from "./components/CarouselComponent";
 import { ethers } from "ethers";
-const { ethereum } = window;
+import {Container,Row} from "react-bootstrap";
 
+
+const { ethereum } = window;
 var account = null;
 var contract = null;
 var vaultcontract = null;
 var web3 = null;
 var isWalletConnect = false;
 
-// const Web3Alc = createAlchemyWeb3("https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk");
+const Web3Alc = createAlchemyWeb3("https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk");
 const moralisapikey = "1ByvMyujsaXkDVTlnUjQIje5e09J2zLHGaS2P6JytHVA1LxfAPPYE8UdOpEjc6ca";
 const polygonscanapikey = "QW34TJU2T87NCU4HWKR7TGUEC1I8TYVDHW";
 
+
 const providerOptions = {
-    binancechainwallet: { package: true },
-    walletconnect: {
-        package: WalletConnectProvider,
-        options: { infuraId: "50f6635fbcc742f18ce7a2a5cbe73ffa" },
-    },
+    //Binance Chain Mainnet
+     binancechainwallet: { package: true },
+     bsc:{
+        package: true,
+        rpcUrl: "https://api.binance.com/api/v3/ticker/price?symbol=BNTUSDT"
+
+     },
+
+     //Coinbase Wallet
+     walletconnect: {
+        //Wallet Connect
+         package: WalletConnectProvider,
+         options: { infuraId: "50f6635fbcc742f18ce7a2a5cbe73ffa" },
+     },
+     //MetaMask Mainnet
     walletlink: {
         package: WalletLink,
         options: {
@@ -44,26 +62,22 @@ const providerOptions = {
     },
 };
 
+
 const web3Modal = new Web3Modal({
     network: "mainnet",
     theme: "dark",
     cacheProvider: false,
     providerOptions,
 });
-
-export default function AppFunctional() {
-    const [balance, setBalance] = useState([]);
-    const [nftdata, setNftData] = useState();
-
-    async function connectWallet() {
+ export async function connectWallet() {
         //if outside modal is clicked, close modal and return to main page in catch block
         try {
             var provider = await web3Modal.connect()
             web3 = new Web3(provider);
+           
         }
         catch (error) {
             alert("Please select a wallet");
-            console.log(error);
             return;
         }
         isWalletConnect = true;
@@ -76,6 +90,7 @@ export default function AppFunctional() {
             account = accounts[0];
             isWalletConnect = true;
 
+            // account = await web3.eth.getAccounts().then((accounts) => accounts[0]);
 
             console.log("Account selected " + account);
         } catch (err) {
@@ -91,8 +106,8 @@ export default function AppFunctional() {
         catch (err) {
             console.log(err);
         }
-
         await provider.send("eth_requestAccounts").catch((err) => alert(err));
+        // var accounts = await web3.eth.getAccounts().catch((err) => alert(err));
 
         account = accounts[0];
         document.getElementById("wallet-address").textContent = account;
@@ -103,14 +118,18 @@ export default function AppFunctional() {
             .tokensOfOwner(account)
             .call()
             .catch((err) => alert(err));
-        document.getElementById("yournfts").textContent = getstakednfts;
+
+        // document.getElementById("yournfts").textContent = getstakednfts;
+        // var getbalance = await web3.eth
+        //   .getBalance(account)
+        //   .catch((err) => alert(err));
         var getbalance = Number(
             await vaultcontract.methods
                 .balanceOf(account)
                 .call()
                 .catch((err) => alert(err))
         );
-        document.getElementById("stakedbalance").textContent = getbalance;
+        // document.getElementById("stakedbalance").textContent = getbalance;
         //get account balance
         console.log("Account balance is " + getbalance);
 
@@ -143,7 +162,7 @@ export default function AppFunctional() {
             await delay();
             var sum = item.reduce((a, b) => a + b, 0);
             var formatsum = Number(sum).toFixed(2);
-            document.getElementById("earned").textContent = formatsum;
+            // document.getElementById("earned").textContent = formatsum;
         }
         async function processArray(rwdArray) {
             for (const item of rwdArray) {
@@ -154,13 +173,36 @@ export default function AppFunctional() {
 
     }
 
+      //disconnectWallet function
+    export async function disconnectWallet() {
+        isWalletConnect = false;
+        localStorage.setItem('isWalletConnected', false)
+        web3Modal.clearCachedProvider();
+        web3 = null;
+        account = null;
+        contract = null;
+        vaultcontract = null;
+        document.getElementById("wallet-address").textContent = "";
+        // document.getElementById("yournfts").textContent = "";
+        // document.getElementById("stakedbalance").textContent = "";
+        // document.getElementById("earned").textContent = "";
+        window.location.reload();
+    }
+
+export default function AppFunctional() {
+    const [show, setShow] = useState(false);
+    const [outvalue, setOutvalue] = useState();
+    const [balance, setBalance] = useState([]);
+    const [rawearn, setRawearn] = useState([]);
+
+    const [nftdata, setNftData] = useState();
+
+    const maxPriority = 0;
+
+
+
     useEffect(() => {
         const init = async () => {
-            //check if user is already logged in then connect wallet
-            if (localStorage.getItem("isWalletConnected") === "true") {
-                isWalletConnect = true;
-                connectWallet();
-            }
             web3Modal.clearCachedProvider();
             await axios.get(polygonscanapi + `?module=stats&action=tokensupply&contractaddress=${NFTCONTRACT}&apikey=${polygonscanapikey}`)
                 .then((outputa) => {
@@ -179,19 +221,23 @@ export default function AppFunctional() {
         };
         init();
     }, []);
-    //connect wallet
 
-    //disconnectWallet function
-    async function disconnectWallet() {
-        isWalletConnect = false;
-        localStorage.setItem('isWalletConnected', false)
-        web3Modal.clearCachedProvider();
-        web3 = null;
-        account = null;
-        contract = null;
-        vaultcontract = null;
+
+    // Modal State
+    const handleModal = () => setShow(!show)
+
+    const handleNFT = nftamount => setOutvalue(nftamount.target.value)
+
+    const sleep = (milliseconds) => {
+        return new Promise((resolve) => setTimeout(resolve, milliseconds));
+    };
+
+    const expectedBlockTime = 10000;
+
+    const refreshPage = () => {
         window.location.reload();
-    }
+    };
+
     async function metamint() {
         //mint for metamask polygon network
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -226,6 +272,7 @@ export default function AppFunctional() {
             }
             );
 
+
         }
         catch (error) {
             alert(error);
@@ -233,30 +280,12 @@ export default function AppFunctional() {
     }
 
     return (
-        <div className="grid items-center justify-start p-2 text-center">
-            <nav className="navbar full-width navbar-expand-md navbar-dark mb-3">
-                <div className="container-fluid">
-                    <div className="navbar-brand px-5" style={{ fontWeight: "800", fontSize: "22px" }} href="#"></div>
-                    <img className="react-logo" src="FNFT.png" width="20%" alt="logofnft" />
-                    <Button className="navbar-toggler" type="Button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </Button>
-                </div>
-                {!isWalletConnect ? (
-                    <div className="p-3">
-                        <input id="connectbtn" type="Button" className="stakegoldeffect2 connectbutton font-blk" onClick={connectWallet} style={{ fontSize: "20px", border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla" }} defaultValue="Connect Your Wallet" />
-                    </div>
-                ) : (
-                    <div className="p-3">
-                        <input id="connectbtn" type="Button" className="stakegoldeffect2 connectbutton font-blk" onClick={disconnectWallet}
-                            style={{ fontSize: "20px", border: "0.2px", borderRadius: "15px", boxShadow: "1px 1px 5px #000000", fontFamily: "Rambla" }} defaultValue="Disconnect Wallet" />
-                    </div>
-                )}
-            </nav>
+        <Container fluid>
+         <div className="grid items-center justify-start p-2 text-center">
             <div id="nftsell">
-                <div id="nftminter" className="flex-1 justify-between items-center p-5">
+                <Row id="nftminter" className="flex-1 justify-between items-center p-5">
                     <div className="nftminted row px-3 p-3 center" id="nftpics">
-                        <div className="col">
+                        <div className="col-md" style={{color:"#b30062"}}>
                             <img src="f-nft0-100.gif" width="79%" alt="fantasy" />
                             <div>
                                 <h1 className="pt-2" style={{ fontWeight: "500", fontFamily: "Blaka", textShadow: "1px 1px 2px #000000" }}>
@@ -267,14 +296,14 @@ export default function AppFunctional() {
                                 {balance.result}/10,000
                             </h4>
                         </div>
-                        <div className="col justify-center">
+                        <div className="col-md justify-center">
                             <div className="row container-fluid">
-                                <h5>Your Wallet Address</h5>
+                                <h5 style={{color:"#b30062"}}>Your Wallet Address</h5> 
                                 <div id="wallet-address" style={{ fontSize: "15px", color: "#39FF14", fontFamily: "Ubuntu", textShadow: "1px 1px 3px black", }}>
                                     <label htmlFor="floatingInput">Please Connect Wallet</label>
                                 </div>
                             </div>
-                            <h3 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", marginBottom: "1px", textShadow: "1px 1px 2px #000000", }}>
+                            <h3 className="pt-2" style={{ fontFamily: "Rambla", fontWeight: "300", fontSize: "12px", marginBottom: "1px", textShadow: "1px 1px 2px #000000",color:"#b30062" }}>
                                 PAYMENT (Only 120 Matic)
                             </h3>
                             <ButtonGroup variant="outline-dark" className="nftminter bg-gradient-to-r from-indigo-500" size="8g" aria-label="First group" name="amount"
@@ -291,42 +320,9 @@ export default function AppFunctional() {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="row container-fluid p-5" id="nftprice">
-                    <Carousel Indicators="light" variant="light" data-bs-interval="3000">
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="https://media.discordapp.net/attachments/945707668398567424/993388829627129866/1.gif"
-                                alt="39usd" />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="https://media.discordapp.net/attachments/945707668398567424/993388829920735322/2.gif"
-                                alt="69usd" />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="https://media.discordapp.net/attachments/945707668398567424/993388830667325460/3.gif"
-                                alt="239usd" />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="https://media.discordapp.net/attachments/945707668398567424/993388831061585950/4.gif"
-                                alt="799usd" />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="https://media.discordapp.net/attachments/945707668398567424/993388831522947183/5.gif"
-                                alt="1999usd" />
-                        </Carousel.Item>
-                    </Carousel >
-                </div>
-                <div id="table" className="row container-fluid p-5">
+                </Row>
+          <MyCarousel/>
+                <Table responsive="sm" size="sm">
                     <div className="header container" id="title">
                         <div
                             style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000" }}>
@@ -376,7 +372,7 @@ export default function AppFunctional() {
                                 </tr>
                             </tbody>
                         </table>
-                        <div className="table">
+                        <Table>
                             <div
                                 style={{ fontSize: "25px", borderRadius: "14px", color: "#ffffff", fontWeight: "300", fontFamily: "Black Ops One", textShadow: "1px 1px 5px #000000", }}>
                                 FOT Token Stake Farms
@@ -413,14 +409,14 @@ export default function AppFunctional() {
                                     </td>
                                 </tr>
                             </tbody>
-                        </div>
+                        </Table>
                     </div>
-                </div>
+                </Table>
             </div>
             <h1 className="flex justify-center" style={{ color: "white", fontWeight: "500", fontFamily: "Blaka", textShadow: "#fffff2", }}>
                 Fantasy NFT Staking Coming Soon
             </h1>
         </div>
+        </Container>
     )
 }
-
