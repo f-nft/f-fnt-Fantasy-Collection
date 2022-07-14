@@ -27,14 +27,15 @@ import AOS from 'aos';
 import "aos/dist/aos.css";
 import { Card} from "react-bootstrap";
 import footerimg from './images/footer.png';
+import Commonimg from './images/common.png'
 
 
 const { ethereum } = window;
 var account = null;
-var contract = null;
 var vaultcontract = null;
 var web3 = null;
 var isWalletConnect = false;
+var contract=null;
 
 const Web3Alc = createAlchemyWeb3("https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk");
 const moralisapikey = "1ByvMyujsaXkDVTlnUjQIje5e09J2zLHGaS2P6JytHVA1LxfAPPYE8UdOpEjc6ca";
@@ -95,6 +96,7 @@ const web3Modal = new Web3Modal({
             var accounts = await ethereum.request({ method: "eth_accounts" });
             console.log(accounts);
             account = accounts[0];
+            // contract = new web3.eth.Contract(ABI, NFTCONTRACT);
             isWalletConnect = true;
 
             // account = await web3.eth.getAccounts().then((accounts) => accounts[0]);
@@ -106,12 +108,15 @@ const web3Modal = new Web3Modal({
         }
         //get contract
         try {
-            contract = new web3.eth.Contract(ABI, NFTCONTRACT);
+            // contract = new web3.eth.Contract(ABI, NFTCONTRACT);
             vaultcontract = new web3.eth.Contract(VAULTABI, STAKINGCONTRACT);
             console.log("Contract loaded");
+            console.log(contract);
+            console.log(vaultcontract);
+
         }
         catch (err) {
-            console.log(err);
+            alert(err.message);
         }
         await provider.send("eth_requestAccounts").catch((err) => alert(err));
         // var accounts = await web3.eth.getAccounts().catch((err) => alert(err));
@@ -125,6 +130,7 @@ const web3Modal = new Web3Modal({
             .tokensOfOwner(account)
             .call()
             .catch((err) => alert(err));
+    
 
         // document.getElementById("yournfts").textContent = getstakednfts;
         // var getbalance = await web3.eth
@@ -294,6 +300,101 @@ export default function AppFunctional() {
             alert(error);
         }
     }
+    async function mint1() {
+			var _pid = "1";
+			var erc20address = await contract.methods.getCryptotoken(_pid).call();
+			var currency = new web3.eth.Contract(TOKENABI, erc20address);
+			var mintRate = await contract.methods.getNFTCost(_pid).call();
+			var _mintAmount = Number(outvalue);
+			var totalAmount = mintRate * _mintAmount;
+            try{
+                await Web3Alc.eth.getMaxPriorityFeePerGas().then((tip) => {
+				Web3Alc.eth.getBlock('pending').then((block) => {
+					var baseFee = Number(block.baseFeePerGas);
+					var maxPriority = Number(tip);
+					var maxFee = maxPriority + baseFee;
+					currency.methods.approve(NFTCONTRACT, String(totalAmount))
+						.send({
+							from: account
+						})
+						.then(currency.methods.transfer(NFTCONTRACT, String(totalAmount))
+							.send({
+								from: account,
+								maxFeePerGas: maxFee,
+								maxPriorityFeePerGas: maxPriority
+							},
+								async function (error, transactionHash) {
+									console.log("Transfer Submitted, Hash: ", transactionHash)
+									let transactionReceipt = null
+									while (transactionReceipt == null) {
+										transactionReceipt = await web3.eth.getTransactionReceipt(transactionHash);
+										await sleep(expectedBlockTime)
+									}
+									window.console = {
+										log: function (str) {
+											var out = document.createElement("div");
+											out.appendChild(document.createTextNode(str));
+											document.getElementById("txout").appendChild(out);
+										}
+									}
+									console.log("Transfer Complete", transactionReceipt);
+									contract.methods.mintpid(account, _mintAmount, _pid)
+										.send({
+											from: account,
+											maxFeePerGas: maxFee,
+											maxPriorityFeePerGas: maxPriority
+										});
+								}));
+				});
+			});
+            }
+            catch(err){
+                alert(err);
+            }
+			
+		}
+    async function metamint2() {
+        //mint for metamask polygon network
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        try {
+            if (!window.ethereum.selectedAddress) {
+                alert("Please unlock your MetaMask account");
+                return;
+            }
+
+            const accounts = await ethereum.request({ method: "eth_accounts" });
+            let balance = await provider.getBalance(accounts[0]);
+            if (balance.lt(ethers.utils.parseEther("0.1"))) {
+                alert("Please deposit at least 0.1 ETH to the MetaMask account");
+                return;
+            }
+            let bal = ethers.utils.formatEther(balance);
+            console.log(bal);
+            //pay for the NFT minting
+            ethereum.request({
+                method: "eth_sendTransaction", params: [{
+                    from: accounts[0],
+                    to: NFTCONTRACT,
+                    value: web3.utils.toWei((0.06).toString(), "ether"),
+                    gas: "30000",
+                    gasPriceinWei: "1000",
+                }]
+            }).then(function (response) {
+                console.log(response);
+            }
+            ).catch(function (error) {
+                console.log(error);
+            }
+            );
+
+
+        }
+        catch (error) {
+            alert(error);
+        }
+    }
+
+
 
     return (
         <div data-aos="fade-up">
@@ -316,7 +417,7 @@ export default function AppFunctional() {
                      <p style={{fontWeight:"bold"}} id="totalmint">{balance.result}/10,000</p>
 
                 {/* Button with red background and white text */}
-                <Button onClick={metamint}
+                <Button onClick={metamint2}
                 style={{width:"6em", fontSize: "26px", border: "0.2px", borderRadius: "15px",fontFamily: "Rambla",backgroundColor:"#e50303" }}
                 >
                     Mint
@@ -354,6 +455,64 @@ export default function AppFunctional() {
                     </Col>
                  </Row>
         </Container>
+        <Row style={{marginTop:"2em"}}>
+            <Col sm={6} style={{textAlign:"left"}}>
+                <h1 style={{fontWeight:"bold"}}>Rarity</h1>
+                <p style={{marginTop:"40px",fontSize:"18px",fontWeight:"bold"}}>
+                    Rarity is a decentralized platform that allows you to create your own unique collectible <br/>
+                    and sell it to other users.<br/>
+                    Each collectible is unique and can be sold to anyone for a price.<br/>
+                    You can also buy collectibles from other users.<br/>
+                </p>
+                {/* create a list of 5 buttons */}
+                <ul style={{marginTop:"2em"}}>
+                    <li>
+                        <Button style={{marginTop:"1em",width:"10em", fontSize: "18px", border: "0.2px", 
+                        borderRadius: "15px",fontFamily: "Rambla",backgroundColor:"#e50303" ,opacity:"34%",height:"46px"}}>
+                              <a href="/" style={{textDecoration:"none",color:"white"}}>
+                                Register
+                            </a>
+                        </Button>
+                    </li>
+                    <li>
+                        <Button style={{marginTop:"1em",width:"10em", fontSize: "18px", border: "0.2px", 
+                        borderRadius: "15px",fontFamily: "Rambla",backgroundColor:"#e50303",opacity:"45%",height:"46px" }}>
+                              <a href="/" style={{textDecoration:"none",color:"white"}}>
+                                Rare
+                            </a>
+                        </Button>
+                    </li>
+                    <li>
+                        <Button style={{marginTop:"1em",width:"10em", fontSize: "18px", border: "0.2px",
+                         borderRadius: "15px",fontFamily: "Rambla",backgroundColor:"#e50303",opacity:"55%",height:"46px" }}>
+                              <a href="/" style={{textDecoration:"none",color:"white"}}>
+                                Epic
+                            </a>
+                        </Button>
+                    </li>
+                    <li>
+                        <Button style={{marginTop:"1em",width:"10em", fontSize: "18px", border: "0.2px", 
+                        borderRadius: "15px",fontFamily: "Rambla",backgroundColor:"#e50303",opacity:"64%",height:"46px" }}>
+                              <a href="/" style={{textDecoration:"none",color:"white"}}>
+                                Exotic
+                            </a>
+                        </Button>
+                    </li>
+                    <li>
+                        <Button style={{marginTop:"1em",width:"10em", fontSize: "18px", border: "0.2px",
+                         borderRadius: "15px",fontFamily: "Rambla",backgroundColor:"#e50303",height:"46px" }}>
+                            <a href="/" style={{textDecoration:"none",color:"white"}}>
+                                Legendary
+                            </a>
+                        </Button>
+                    </li>
+                    </ul>
+
+                </Col>
+            <Col sm={6}>
+                <img src={Commonimg} alt="about2" style={{width:"100%"}}/>
+                </Col>
+        </Row>
         <ImageScroller>
             <img src={about} alt="image1" style={{width:"100%"}}/>
             <img src={about} alt="image1" style={{width:"100%"}}/>
