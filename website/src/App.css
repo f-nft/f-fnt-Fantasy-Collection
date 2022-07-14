@@ -665,6 +665,9 @@ body
   border-right: 2px solid red;
 
 }
+#rightCol{
+  border-left: 2px solid red;
+}
 ul{
   justify-content: left!important;
   color:"red";
@@ -695,7 +698,15 @@ li{
   font-weight: 800 !important;
   font-size: "2em";
 }
-
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color:red;
+  border-radius: 50%;
+  display: inline-block;
+  /* move dot towards exteme right */
+  margin-right: auto;
+}
 @media screen and (min-width: 500px)
 {
   .CardClass{
@@ -703,6 +714,7 @@ li{
     
   }
 }
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

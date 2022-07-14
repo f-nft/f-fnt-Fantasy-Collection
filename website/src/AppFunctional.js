@@ -28,6 +28,8 @@ import "aos/dist/aos.css";
 import { Card} from "react-bootstrap";
 import footerimg from './images/footer.png';
 import Commonimg from './images/common.png'
+import Video from './video/intro.mp4'
+import Video2 from './video/video2.mp4'
 
 
 const { ethereum } = window;
@@ -437,7 +439,10 @@ export default function AppFunctional() {
                 
                 </Row>
         <Container fluid style={{backgroundColor:"black"}}>
-                 <MyCarousel/>
+
+                 {/* <MyCarousel/> */}
+                 <video src={Video} width="90%" height="600" autoPlay="true" muted="true" loop="true" />
+            
                  {/* Row with 2 columns */}
                  <Row data-aos="slide-left" style={{color:"white",fontSize:"46px",fontWeight:"bold",marginTop:"5em"}}>
                     <Col sm={6} data-aos="fade-zoom-in">
@@ -591,8 +596,9 @@ export default function AppFunctional() {
 
             <h2 style={{fontWeight:"bold"}}>RoadMap</h2>
             <Col sm={6} id="leftCol">
-                <h2 style={{color:"red"}}>2022 Q3</h2>
+                <h2 style={{color:"red"}}>2022 Q3<span class="dot"></span></h2> 
                 <ul>
+                   
                 <li>
                     Lauch Website 
                 </li>
@@ -675,6 +681,7 @@ export default function AppFunctional() {
                 
 
 
+        <video src={Video2} width="100%" height="600" autoPlay="true" muted="true" loop="true" />
             </Row>
         {/* Footer */}
         <Row>
