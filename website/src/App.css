@@ -686,6 +686,12 @@ li{
 
 
 }
+/* change button color to red on hover */
+.btn:hover {
+  background-color: red !important;
+  opacity: 100% !important;
+}
+
 .CardClass{
   background-color: #3a1617 !important;
  

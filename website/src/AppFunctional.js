@@ -30,6 +30,8 @@ import footerimg from './images/footer.png';
 import Commonimg from './images/common.png'
 import Video from './video/intro.mp4'
 import Video2 from './video/video2.mp4'
+import { gsap, ScrollTrigger, Draggable, MotionPathPlugin } from "gsap/all";
+import IMAGES from "./components/ImagesImport";
 
 
 const { ethereum } = window;
@@ -211,6 +213,7 @@ export default function AppFunctional() {
     const [rawearn, setRawearn] = useState([]);
 
     const [nftdata, setNftData] = useState();
+    const [stateimges, setStateImges] = useState();
 
     const maxPriority = 0;
     useEffect(() => {
@@ -225,7 +228,28 @@ export default function AppFunctional() {
 
 
     useEffect(() => {
+        // conver IMAGES object to array
+        setStateImges(Object.values(IMAGES));
+        gsap.registerPlugin(ScrollTrigger, Draggable, MotionPathPlugin); 
        
+    
+        const t1 = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".content"}
+        });
+        // move the element from right to left corner
+        t1.to(".content1", {
+            duration: 2,       
+            x: -500,
+            ease: "power3.out"
+        });
+           t1.to(".content2", {
+            duration: 2,
+            x: 500,
+            ease: "power3.out"
+        });
+        
+
         const init = async () => {
             web3Modal.clearCachedProvider();
             await axios.get(polygonscanapi + `?module=stats&action=tokensupply&contractaddress=${NFTCONTRACT}&apikey=${polygonscanapikey}`)
@@ -302,6 +326,7 @@ export default function AppFunctional() {
             alert(error);
         }
     }
+    
     async function mint1() {
 			var _pid = "1";
 			var erc20address = await contract.methods.getCryptotoken(_pid).call();
@@ -441,7 +466,7 @@ export default function AppFunctional() {
         <Container fluid style={{backgroundColor:"black"}}>
 
                  {/* <MyCarousel/> */}
-                 <video src={Video} width="90%" height="600" autoPlay="true" muted="true" loop="true" />
+                 <video src={Video} width="90%" height="600" autoPlay={true} muted={true} loop={true} />
             
                  {/* Row with 2 columns */}
                  <Row data-aos="slide-left" style={{color:"white",fontSize:"46px",fontWeight:"bold",marginTop:"5em"}}>
@@ -472,7 +497,7 @@ export default function AppFunctional() {
                 {/* create a list of 5 buttons */}
                 <ul style={{marginTop:"2em"}}>
                     <li>
-                        <Button style={{marginTop:"1em",width:"10em", fontSize: "18px", border: "0.2px", 
+                        <Button className="custombutton" style={{marginTop:"1em",width:"10em", fontSize: "18px", border: "0.2px", 
                         borderRadius: "15px",fontFamily: "Rambla",backgroundColor:"#e50303" ,opacity:"34%",height:"46px"}}>
                               <a href="/" style={{textDecoration:"none",color:"white"}}>
                                 Register
@@ -515,25 +540,37 @@ export default function AppFunctional() {
 
                 </Col>
             <Col sm={6}>
-                <img src={Commonimg} alt="about2" style={{width:"100%"}}/>
+                <img src={Commonimg} alt="about4" style={{width:"100%"}}/>
                 </Col>
         </Row>
-        <ImageScroller>
-            <img src={about} alt="image1" style={{width:"100%"}}/>
-            <img src={about} alt="image1" style={{width:"100%"}}/>
-            <img src={about} alt="image1" style={{width:"100%"}}/>
-            <img src={about} alt="image1" style={{width:"100%"}}/>
-            <img src={about} alt="image1" style={{width:"100%"}}/>
-            <img src={about} alt="image1" style={{width:"100%"}}/>
-        </ImageScroller>
+        {/* single row with 6 image boxes */}
+        <div className="content">
+        <Row style={{marginTop:"6px"}} id="gsapid" className="content1">
+            {stateimges?.map((item,index)=>{
+                return(<Col sm={2} key={index}> <img src={item} alt="about2" style={{width:"100%"}}/></Col>)
+            } )}
+        </Row>
+        <Row style={{marginTop:"6px"}} id="gsapid2" className="content2" >
+            {stateimges?.map((item,index)=>{
+                return(<Col sm={2} key={index}> <img src={item} alt="about2" style={{width:"100%"}}/></Col>)
+            } )}
+        </Row>
+        <Row style={{marginTop:"6px"}} id="gsapid3" className="content1" >
+            {stateimges?.map((item,index)=>{
+                return(<Col sm={2} key={index}> <img src={item} alt="about2" style={{width:"100%"}}/></Col>)
+            } )}
+        </Row>
+        </div>
+
+
         {/* create 3 cards and replace them with table columns */}
-        <Row style={{fontFamily: "Black Ops One" ,color:"white"}}>
+        <Row  style={{fontFamily: "Black Ops One" ,color:"white"}}>
               <div
                             style={{ fontSize: "25px", borderRadius: "14px", color: "red", fontWeight: "300", fontFamily: "Black Ops One"
                            , marginTop:"3em",marginBottom:"3em" }}>
                             Fantasy NFT Staking Rewards
                         </div>
-            <Card style={{ width: '18rem'}} id="CardId"  className="CardClass">
+            <Card data-aos="slide-right" style={{ width: '18rem'}} id="CardId"  className="CardClass">
               <Card.Body>
                         <h2 style={{color:"white"}}>
                             Discovery
@@ -548,7 +585,7 @@ export default function AppFunctional() {
                         </p>
                     </Card.Body>
             </Card>
-            <Card style={{ width: '18rem' }} id="CardId"  className="CardClass">
+            <Card data-aos="slide-in" style={{ width: '18rem' }} id="CardId"  className="CardClass">
                     <Card.Body>
                         <h2 style={{color:"white"}}>
                             Angel & Devil
@@ -563,7 +600,7 @@ export default function AppFunctional() {
                         </p>
                     </Card.Body>
             </Card>
-            <Card style={{ width: '18rem' }} id="CardId" className="CardClass">
+            <Card data-aos="slide-left" style={{ width: '18rem' }} id="CardId" className="CardClass">
                 
                     <Card.Body>
                         <h2 style={{color:"white"}}>
@@ -677,11 +714,7 @@ export default function AppFunctional() {
                     Staked FOT to Earn FOT <br/>
                     0.005 Per FOT
                 </p>
-
-                
-
-
-        <video src={Video2} width="100%" height="600" autoPlay="true" muted="true" loop="true" />
+        <video src={Video2} height="600" autoPlay={true} muted={true} loop={true} />
             </Row>
         {/* Footer */}
         <Row>
