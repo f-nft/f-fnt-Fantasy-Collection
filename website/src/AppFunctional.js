@@ -596,7 +596,7 @@ export default function AppFunctional() {
 
             <h2 style={{fontWeight:"bold"}}>RoadMap</h2>
             <Col sm={6} id="leftCol">
-                <h2 style={{color:"red"}}>2022 Q3<span class="dot"></span></h2> 
+                <h2 style={{color:"red"}}>2022 Q3</h2> 
                 <ul>
                    
                 <li>
