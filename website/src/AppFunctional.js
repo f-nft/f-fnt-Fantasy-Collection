@@ -18,7 +18,7 @@ import MyCarousel from "./components/CarouselComponent";
 import { ethers } from "ethers";
 import { Container, Row, Col } from "react-bootstrap";
 import hero from "./images/hero.png";
-import about from "./images/about.png"
+import about from "./images/features.gif"
 import AOS from 'aos';
 import "aos/dist/aos.css";
 import { Card } from "react-bootstrap";
@@ -409,15 +409,11 @@ export default function AppFunctional() {
                 console.log(error);
             }
             );
-
-
         }
         catch (error) {
             alert(error);
         }
     }
-
-
 
     return (
         <div data-aos="fade-up">
@@ -429,10 +425,10 @@ export default function AppFunctional() {
 
                     {/* create a container with border radius */}
                     <div className="container" style={{ padding: "20px" }} id="herodiv">
-                        21000 Unique Rogue's. <br />
-                        Fantasy NFT Staking Rewards<br /><br />
-
-                        <p>Pre-minting (October 2022)</p> <br />
+                        10,000 Unique  <br />
+                        Fantasy NFT<br /><br />
+                        ß
+                        <p>Pre-minting (July 2022)</p> <br />
                         <h5 style={{ color: "red" }}>Your Wallet Address</h5>
                         <div id="wallet-address" style={{ fontSize: "15px" }}>
                             <label htmlFor="floatingInput">Please Connect Wallet</label>
@@ -498,7 +494,7 @@ export default function AppFunctional() {
                                         borderRadius: "15px", fontFamily: "Rambla", backgroundColor: "#e50303", opacity: "34%", height: "46px"
                                     }}>
                                         <a href="/" style={{ textDecoration: "none", color: "white" }}>
-                                            Register
+                                            INITIALIZATION 🚼
                                         </a>
                                     </Button>
                                 </li>
@@ -508,7 +504,7 @@ export default function AppFunctional() {
                                         borderRadius: "15px", fontFamily: "Rambla", backgroundColor: "#e50303", opacity: "45%", height: "46px"
                                     }}>
                                         <a href="/" style={{ textDecoration: "none", color: "white" }}>
-                                            Rare
+                                            RECLAMATION ♻️
                                         </a>
                                     </Button>
                                 </li>
@@ -518,7 +514,7 @@ export default function AppFunctional() {
                                         borderRadius: "15px", fontFamily: "Rambla", backgroundColor: "#e50303", opacity: "55%", height: "46px"
                                     }}>
                                         <a href="/" style={{ textDecoration: "none", color: "white" }}>
-                                            Epic
+                                            DISCOVER 🚀
                                         </a>
                                     </Button>
                                 </li>
@@ -528,7 +524,7 @@ export default function AppFunctional() {
                                         borderRadius: "15px", fontFamily: "Rambla", backgroundColor: "#e50303", opacity: "64%", height: "46px"
                                     }}>
                                         <a href="/" style={{ textDecoration: "none", color: "white" }}>
-                                            Exotic
+                                            ANGEL & DEVIL ☯️
                                         </a>
                                     </Button>
                                 </li>
@@ -538,7 +534,7 @@ export default function AppFunctional() {
                                         borderRadius: "15px", fontFamily: "Rambla", backgroundColor: "#e50303", height: "46px"
                                     }}>
                                         <a href="/" style={{ textDecoration: "none", color: "white" }}>
-                                            Legendary
+                                            CHAOS 🔞
                                         </a>
                                     </Button>
                                 </li>
@@ -641,20 +637,20 @@ export default function AppFunctional() {
 
                 <h2 style={{ fontWeight: "bold" }}>RoadMap</h2>
                 <Col sm={6} id="leftCol">
-                    <h2 style={{ color: "red" }}>2022 Q3</h2>
+                    <h2 style={{ color: "red" }}>Q1 2022</h2>
                     <ul>
 
                         <li>
-                            Lauch Website
+                            BRANDSTORM
                         </li>
                         <li>
-                            Launch Mobile App
+                            IDEAS FOR A 3D FASHION BRAND
                         </li>
                         <li>
-                            Launch Desktop App
+                            CREATED WITH OBJECTIVES
                         </li>
                         <li>
-                            Launch DApp
+                            CREATED WITH OBJECTIVES
                         </li>
                     </ul>
 
