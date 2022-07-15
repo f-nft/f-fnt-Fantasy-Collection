@@ -19,7 +19,6 @@ import { ethers } from "ethers";
 import { Container, Row, Col } from "react-bootstrap";
 import hero from "./images/hero.png";
 import about from "./images/about.png"
-import ImageScroller from 'react-image-scroller';
 import AOS from 'aos';
 import "aos/dist/aos.css";
 import { Card } from "react-bootstrap";
