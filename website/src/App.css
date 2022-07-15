@@ -540,63 +540,6 @@
   }
 }
 
-.react-logo
-{
-  display: inline-block;
-  border-radius: 50%;
-  border: 10px solid #00d8ff;
-
-  animation-name: rotate;
-  animation-duration: 8s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-}
-
-.react-logo,
-.react-logo:before,
-.react-logo:after
-{
-  position: absolute;
-  display: inline-block;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 10px solid #00d9ff00;
-}
-
-.nucleo,
-.react-logo,
-.react-logo:before,
-.react-logo:after
-{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nucleo
-{
-  width: 40px;
-  height: 40px;
-  border-radius: 100%;
-  background: #00d8ff;
-}
-
-.react-logo:before,
-.react-logo:after
-{
-  content: "";
-}
-
-.react-logo:after
-{
-  transform: rotate(-57deg);
-}
-
-.react-logo:before
-{
-  transform: rotate(57deg);
-}
 
 .title
 {
