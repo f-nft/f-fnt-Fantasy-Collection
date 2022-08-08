@@ -6,7 +6,7 @@ import MintModalStyleWrapper from "./MintNow.style";
 import mintImg from "../../../assets/images/icon/fnft.gif";
 import hoverShape from "../../../assets/images/icon/hov_shape_L.svg";
 import { MdPriceChange } from "react-icons/md";
-import { USDTPOLYABI }
+import { USDTPOLYABI } from "../../config/USDTPOLYABI.json";
 // import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 // import { NFTCONTRACT } from "../../config/config";
 // import { ETHNFTCONTRACT } from "../../config/ethconfig";
