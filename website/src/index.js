@@ -1,14 +1,16 @@
-import React from 'react';
-import * as ReactDOM from 'react-dom/client';
-import './App.css';
-import './index.css';
-import AppFunctional from './AppFunctional';
-import MyNavBar from './components/MyNavBar';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import ContextProvider from "./utils/ContextProvider";
+import App from "./app/App";
+import './polyfill';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
-  <React.StrictMode>
-    <MyNavBar />
-      <AppFunctional />
-  </React.StrictMode>
+  <ContextProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ContextProvider>
 );

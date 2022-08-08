@@ -1,0 +1,24 @@
+{ 
+    "info": [
+      {
+        "text": "Total Items",
+        "number": "10000",
+        "unit": ""
+      },
+      {
+        "text": "Total Owners",
+        "number": "896",
+        "unit": ""
+      },
+      {
+        "text": "Floor Price (ETH)",
+        "number": "0.05",
+        "unit": ""
+      },
+      {
+        "text": "Volume Traded (ETH)",
+        "number": "25.5",
+        "unit": "k"
+      }
+    ]
+}
