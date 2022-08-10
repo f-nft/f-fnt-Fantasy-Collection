@@ -3,11 +3,11 @@ import { FiX, FiChevronRight } from "react-icons/fi";
 import WalletModalStyleWrapper from "./WalletModal.style";
 import hoverShape from "../../../assets/images/icon/hov_shape_L.svg";
 import metamaskIcon from "../../../assets/images/icon/MetaMask.svg";
-import Web3 from 'web3';
-import { NFTCONTRACT } from '../../config/config';
+import Web3 from "web3";
+import { NFTCONTRACT } from "../../config/config";
 import { BSCNFTCONTRACT } from "../../config/bscconfig";
 import { ETHNFTCONTRACT } from "../../config/ethconfig";
-import ABI from '../../config/ABI.json';
+import ABI from "../../config/ABI.json";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 const PolygonRpc = "https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk";
@@ -43,7 +43,7 @@ const WalletModal = () => {
       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
        //eslint-disable-next-line
       if (chainId == 0x89) {
-        var crypto = "Polygon";
+        var crypto = "Polygon Network";
         setStateCrypto(crypto);
 
         // Get contract instance
@@ -65,9 +65,10 @@ const WalletModal = () => {
         // Show Crypto of ChainId connected
         setStateChainId(chainId);
       }
-
+      
+      // eslint-disable-next-line
       else if (chainId == 0x1) {
-        crypto = "Ethereum";
+        crypto = "Ethereum Network";
         setStateCrypto(crypto);
 
         // Get contract instance
