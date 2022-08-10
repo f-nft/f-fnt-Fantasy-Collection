@@ -21,7 +21,8 @@ const GlobalStyles = createGlobalStyle`
 
 html,
 body {
-    font-size: 16px; 
+    font-size: 16px;
+    margin-top: 10;
     vertical-align: baseline;
     font-weight: 500;
     line-height: 1.6;

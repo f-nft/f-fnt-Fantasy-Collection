@@ -64,7 +64,7 @@ const Banner = () => {
   return (
     <>
       <BannerV1Wrapper id="home">
-        <div className="container" style={{ marginTop: "-200px" }}>
+        <div className="container" style={{ marginTop: " 10cpx" }}>
           <div className="row">
             <div className="col-lg-6">
               <div className="f-nft_v1_baner_left">
