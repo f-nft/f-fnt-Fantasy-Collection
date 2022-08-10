@@ -4,15 +4,15 @@ import WalletModalStyleWrapper from "./WalletModal.style";
 import hoverShape from "../../../assets/images/icon/hov_shape_L.svg";
 import metamaskIcon from "../../../assets/images/icon/MetaMask.svg";
 import Web3 from "web3";
-import { NFTCONTRACT } from "../../config/config";
-import { BSCNFTCONTRACT } from "../../config/bscconfig";
-import { ETHNFTCONTRACT } from "../../config/ethconfig";
+import { NFTCONTRACT } from "../../config/config.js";
+import { BSCNFTCONTRACT } from "../../config/bscconfig.js";
+import { ETHNFTCONTRACT } from "../../config/ethconfig.js";
 import ABI from "../../config/ABI.json";
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 
 const PolygonRpc = "https://polygon-mainnet.g.alchemy.com/v2/qqfXh-S-3dEdCR-orpw_NY06qvD0EFKk";
 const EthRpc = "https://eth-mainnet.g.alchemy.com/v2/wsIm0J69yBeB3UItacaaDKy1yOFkDcl5";
-const BscRpc = "https://api.bscscan.com/api?module=proxy&action=eth_getBlockByNumber&tag=0xa11446&boolean=true&apikey=46Y2MZHAZTE34SD1WQ32BUF42BTDYBY76A"
+const BscRpc = "https://api.bscscan.com/api?module=proxy&action=eth_getBlockByNumber&tag=pending&boolean=true&apikey=46Y2MZHAZTE34SD1WQ32BUF42BTDYBY76A"
 var contract = null;
 
 const WalletModal = () => {
@@ -65,7 +65,7 @@ const WalletModal = () => {
         // Show Crypto of ChainId connected
         setStateChainId(chainId);
       }
-      
+
       // eslint-disable-next-line
       else if (chainId == 0x1) {
         crypto = "Ethereum Network";
