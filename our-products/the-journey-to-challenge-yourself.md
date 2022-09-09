@@ -2,7 +2,7 @@
 description: Experience the outstanding features of legendary equipment
 cover: ../.gitbook/assets/banner.jpg
 coverY: 0
-layout: editorial
+layout: landing
 ---
 
 # The Journey to challenge yourself

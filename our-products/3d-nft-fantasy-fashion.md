@@ -2,11 +2,12 @@
 description: >-
   3D assets will turn your 2D side-scrolling worlds upside down by bringing a
   magnificent three-dimensional experience of your favorite games
+layout: landing
 ---
 
 # 3D NFT Fantasy Fashion
 
-![First 0 - 100 samplers in Fantasty Collections](<../.gitbook/assets/f-nft 0 - 100.gif>)
+![First 0 - 100 samplers in Fantasty Collections](../website/public/f-nft0-100.gif)
 
 When converted to NFTs, 3D assets will turn your 2D side-scrolling worlds upside down by bringing a magnificent three-dimensional experience of your favorite games. Instead of being limited to the details of pixel art, you can now see more realistic sentiment and movement.&#x20;
 

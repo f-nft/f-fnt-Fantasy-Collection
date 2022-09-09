@@ -6,8 +6,9 @@ coverY: 0
 
 # Official links
 
-<img src="../.gitbook/assets/Asset 4.png" alt="👉" data-size="line">Twitter [https://twitter.com/Fashion\_\_NFT](https://twitter.com/Fashion\_\_NFT) \
+<img src="../.gitbook/assets/discord-icon.svg" alt="" data-size="line">Discord [https://discord.gg/58KS9smeCV](https://discord.gg/58KS9smeCV)
 
+<img src="../.gitbook/assets/Asset 4.png" alt="👉" data-size="line">Twitter [https://twitter.com/Fashion\_\_NFT](https://twitter.com/Fashion\_\_NFT)&#x20;
 
 <img src="../.gitbook/assets/Asset 1.png" alt="👉" data-size="line">Facebook [https://www.facebook.com/f.nft.metaverse](https://www.facebook.com/f.nft.metaverse)&#x20;
 
@@ -21,4 +22,4 @@ coverY: 0
 
 <img src="../.gitbook/assets/Asset 2.png" alt="🎁" data-size="line">Instagram [https://www.instagram.com/fnft2022](https://www.instagram.com/fnft2022)
 
-<img src="../.gitbook/assets/free-medium-icon-2177-thumb.png" alt="👉" data-size="line">Medium [https://medium.com/@pnft56061/f-nft-revolution-of-fashion-33d1f796860a](https://medium.com/@pnft56061/f-nft-revolution-of-fashion-33d1f796860a)
+_**`Medium`**_ [https://medium.com/@pnft56061/f-nft-revolution-of-fashion-33d1f796860a](https://medium.com/@pnft56061/f-nft-revolution-of-fashion-33d1f796860a)
