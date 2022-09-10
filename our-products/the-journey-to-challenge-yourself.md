@@ -46,10 +46,6 @@ _<mark style="color:blue;">**User Guide ------>**</mark>_
 * [x] <mark style="color:blue;">Equipment: Collar / Gloves / Shoulder / Under</mark>
   * [x] <mark style="color:blue;">Equip 3 pieces of equipment at the same time</mark>
 
-###
-
-
-
 ### PHASE 4️⃣ - ANGEL & DEVIL ☯️:
 
 * Game details APP GAME VR is being prepared "Character initialization (use the summon Angel / Devil ticket) earn per day / month.
@@ -76,5 +72,3 @@ _<mark style="color:blue;">**User Guide ------>**</mark>_
 * [x] <mark style="color:red;">Equipment: Collar / Gloves / Shoulder / Under and Wing included Dragon</mark>
 * [x] <mark style="color:red;">Equipment: Collar / Gloves / Shoulder / Unde and Wing included Dragon</mark>
   * [x] <mark style="color:red;">Equip 5 pieces of equipment at the same time</mark>
-
-###
