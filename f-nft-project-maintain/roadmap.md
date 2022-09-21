@@ -8,7 +8,7 @@ description: The journey of development and improvement
 
 ### Q1 2022 - BRANDSTORM
 
-IDEAS FOR A 3D FASHION BRAND CREATED WITH OBJECTIVES TO BRING A REAL VALUE TO THE NFT COMMUNITY
+IDEAS FOR A 3D FASHION BRAND CREATED WITH OBJECTIVES TO BRING REAL VALUE TO THE NFT COMMUNITY
 
 ### Q2 2022 - MARKET ANALYTICS
 
@@ -20,15 +20,16 @@ SALES REACH 1% OF THE MARKET
 
 ### Q4 2022 - DOMINATE THE MARKET
 
-10% MARKET SHARES; DEVELOP NEXT APPLICATION
+10% MARKET SHARES; DEVELOP THE NEXT APPLICATION
 
 ### Q1 2023 - APPLICATION
 
-OPEN BETA MOST USER INTERFACE APP FOR TRAIL UPGRADE - COLLECTIONS - AR WEAR INTEGRATION TO OTHER PLATFORM
+OPEN BETA MOST USER INTERFACE APP FOR TRAIL UPGRADE - COLLECTIONS - AR WEAR INTEGRATION TO OTHER PLATFORM\
+ESPECIALLY ==> _<mark style="color:yellow;">**WEAR TO EARN**</mark>_
 
 ### Q2 2023 - TOP NFT BRAND
 
-100% GROWTH; REACH 100K USERS; REVENUE REACH MORE THAN 200,000$Block-based
+100% GROWTH; REACH 100K USERS; REVENUE REACH MORE THAN $100,000 Block-based
 
 {% hint style="info" %}
 WHY DISCLAIMER
@@ -38,24 +39,9 @@ Information is non-binding and subject to change. It is intended only to give po
 The directors, partners, and advisors of 3D NFT FANTASY FASHION reserve the right to alter the models and information provided in this whitepaper as the business progresses and evolves
 {% endhint %}
 
-web3 syncing development​:
+web3 syncing development​
 
 ```
-const ethers = Moralis.web3Library;
-
-const daiAddress = "dai.tokens.ethers.eth";
-const daiAbi = [
-  "function name() view returns (string)",
-  "function symbol() view returns (string)",
-  "function balanceOf(address) view returns (uint)",
-  "function transfer(address to, uint amount)",
-  "event Transfer(address indexed from, address indexed to, uint amount)",
-];
-const daiContract = new ethers.Contract(daiAddress, daiAbi, provider);
-
-const name = await daiContract.name();
-console.log(name);
-// 'f-nft.us'
 ```
 
 <details>
