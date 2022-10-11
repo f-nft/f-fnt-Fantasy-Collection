@@ -48,6 +48,7 @@ web3 syncing development​
 
 <summary>The future of the internet and a shared 3D virtual universe that users can exist in perpetually. The next generation of this online reality will be across many metaverses that all have different characteristics and communities</summary>
 
-
+```
+```
 
 </details>
