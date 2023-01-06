@@ -45,7 +45,6 @@ const Banner = () => {
       setNftPriceBnb(nftPriceBnb);
       localStorage.setItem("nftPriceBnb", nftPriceBnb);
 
-
       const maticPrice = "https://api.binance.com/api/v3/ticker/price?symbol=MATICUSDT";
       const responseMatic = await fetch(maticPrice)
       var maticData = await responseMatic.json()
@@ -64,8 +63,9 @@ const Banner = () => {
   return (
     <>
       <BannerV1Wrapper id="home">
-        <div className="container" style={{ marginTop: " 10cpx" }}>
-          <div className="row">
+        <div className="container">
+        <div> <h3 style={{ marginTop: "-30px", alignContent: "center", color: "white" }}>Current Supported Polygon & Ethereum Network</h3></div>
+          <div className="row"  style={{ marginTop: " -50px" }}>
             <div className="col-lg-6">
               <div className="f-nft_v1_baner_left">
                 <h1>f-nft Fantasy</h1>
